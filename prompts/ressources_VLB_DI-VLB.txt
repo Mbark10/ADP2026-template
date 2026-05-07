@@ -1,0 +1,603 @@
+  ══════════════════════════════════════════════════════════════
+  RESSOURCES DIDACTIQUES — VOLLEY-BALL — DI-VLB
+  ADP 2026 — CRMEF Inezgane — Section EPS — BOUARGANE
+  Ressource d'entrée pour le prompt 1bis-A
+  ══════════════════════════════════════════════════════════════
+
+
+SECTION 1 — IDENTITÉ ET NIVEAU
+────────────────────────────────
+APS                            : Volley-ball
+Code projet                    : DI-VLB
+Volume cycle                   : 12 séances
+Niveau scolaire (arrière-plan) : 1ère à 6ème collège · 2nde lycée
+                                  (tranches 2 ans — arrière-plan indicatif)
+                                  Lu depuis feuille IDENTITÉ du fichier ADP2026_DI_VLB.xlsx
+Conduites observées            : Données issues des observables OBS-01 à OBS-06
+                                  (feuille OBSERVABLES + CODES — ADP2026_DI_VLB.xlsx)
+                                  Résumé : Les élèves présentent majoritairement
+                                  des conduites de Degré A (jeu en réaction, joueur passif,
+                                  renvoi direct à 1 touche, absence de lecture défensive,
+                                  aucune organisation collective, rôles non assurés).
+                                  Une frange émergente présente des conduites de Degré B
+                                  (jeu à 1-2 touches, zones avant/arrière amorcées,
+                                  participation intermittente, arbitrage avec aide).
+                                  Conduites de Degré C non observées de manière dominante.
+Niveau de contenu identifié    : 2
+                                  (conduites situées entre N1 et N2 Eduscol — cible du cycle :
+                                  progresser de N1 vers N2)
+Écart stade/conduites          : NON
+                                  (conduites observées cohérentes avec niveau scolaire collège
+                                  tranches 1ère-4ème — pas d'écart signalé dans les sources
+                                  disponibles)
+Signal didactique              : non disponible
+PDF collège lu                 : Images jointes — Fiche Volleyball Niveau 1 (image 3)
+                                  et Fiche Volleyball Niveau 2 (image 2)
+PDF lycée lu                   : N/A (niveau de contenu 2 — lycée non requis)
+Source données TD1             : mémoire de conversation — sorties identifiées :
+                                  P1 — Analyse_Ref_Volleybal_EquipeCOLL3_ADP2026.pdf
+                                       (référentiel d'observation — 3 critères · 3 niveaux)
+                                  P2 — ADP2026_DI_VLB.xlsx feuille IDENTITÉ
+                                       (niveau de contenu · niveau scolaire · écart stade)
+                                  P3 — ADP2026_DI_VLB.xlsx feuille OBSERVABLES + CODES
+                                       (grille · codes · conduites typiques A · B · C)
+                                  P4 — Volleyball_Evaluation_Grid_Replit.pdf
+                                       (grille de classe · aide-mémoire des observables clés)
+
+
+SECTION 2 — CORRESPONDANCE EDUSCOL ←→ GRILLE
+───────────────────────────────────────────────
+[MODE 1 — Depuis images Eduscol jointes et grille en mémoire — feuille OBSERVABLES + CODES]
+
+Correspondance appliquée (niveau de contenu 2) :
+  Eduscol N1 ←→ Degrés A et B de la grille
+  Eduscol N2 ←→ Degré C de la grille
+  Cible du cycle : progresser de N1 vers N2
+
+----------------------------------------------------------------------
+
+Eduscol N1 ←→ Degré A de la grille
+  Capacités extraites du PDF (image 3 — Niveau 1) :
+  N1-1 · Différencier les balles qui donnent du temps à son partenaire
+          de celles qui mettent l'adversaire en crise de temps
+  N1-2 · En fonction de son ordre d'intervention (1er ou 2ème à toucher
+          le ballon), différencier son rôle (réceptionneur, relayeur,
+          attaquant) et les actions à accomplir en conséquence
+  N1-3 · Se déplacer pour jouer le ballon équilibré et choisir un mode
+          d'intervention adapté
+  N1-4 · Sortir de l'alignement avec son partenaire pour faciliter
+          le relais, le soutien et/ou le renvoi dans le camp adverse
+  N1-5 · Communiquer pour s'identifier intervenant sur la balle
+  N1-6 · S'organiser pour occuper seul ou à deux l'espace de jeu
+
+  Conduites grille correspondantes (Degré A — codes C1-A · C2-A · C3-A) :
+  C1-A Jeu en réaction :
+    Actions individuelles, renvoi direct systématique.
+    Aucune organisation en attaque ni en défense.
+    Pas de différenciation des rôles ni des zones.
+  C1-A Jeu à 1 touche :
+    Jeu à 1 touche systématique. Pas de conservation de balle.
+    La balle est renvoyée immédiatement sans construction.
+  C2-A Joueur passif :
+    Volume de jeu faible, évite la balle ou intervient trop tard.
+    Contacts fortuits. Frappe à une seule main non maîtrisée.
+  C2-A Aucune lecture :
+    Mauvaise lecture de la trajectoire. Reste figé, aucun déplacement
+    défensif anticipé. Peu de contacts avec la balle.
+  C3-A Rôles insuffisamment assurés :
+    Recueille des données insuffisamment fiables. Fiche partiellement
+    ou mal renseignée. Vocabulaire imprécis ou absent.
+  C3-A Hésite, a besoin d'aide :
+    Hésite sur des actions difficiles à arbitrer. N'assume pas son rôle
+    sans soutien. Décisions arbitrales inexactes ou absentes.
+
+----------------------------------------------------------------------
+
+Eduscol N1 ←→ Degré B de la grille
+  Capacités extraites du PDF (image 3 — Niveau 1, partie haute) :
+  N1-7 · Repérer les résultats d'actions fiables liés aux pertes de
+          balles et conditions de marque
+  N1-8 · Évaluer de façon chiffrée l'efficacité d'une équipe en
+          établissant des rapports entre les données recueillies
+          (% de pertes de balles, % de points gagnés depuis et dans les
+          zones avant et arrière)
+  N1-9 · Communiquer les résultats des observations pour aider à la
+          formalisation d'un projet de jeu simple en attaque
+
+  Conduites grille correspondantes (Degré B — codes C1-B · C2-B · C3-B) :
+  C1-B Construction collective :
+    Progression vers une zone de renvoi favorable. Organisation simple,
+    différenciation limitée des rôles. Zones avant/arrière émergentes.
+  C1-B Jeu à 1-2 touches :
+    Jeu souvent à 1-2 touches. Conservation amorcée mais non stabilisée.
+    Construction collective fragile.
+  C2-B Joueur intermittent :
+    Participation intermittente ou désordonnée. Agit uniquement sur les
+    balles faciles. Frappes souvent explosives, non maîtrisées.
+  C2-B Lecture partielle :
+    Agit uniquement sur les balles faciles. Peu ou pas de déplacement
+    défensif. Frappes peu adaptées à la situation.
+  C3-B Rôles assumés (avec aide) :
+    Recueille des données globales, justes et fiables. Fiche globalement
+    renseignée. Utilise un vocabulaire correct mais limité.
+  C3-B Arbitre avec aide :
+    Assume le rôle d'arbitre avec de l'aide. Décisions généralement
+    justes. Utilise un vocabulaire correct mais limité.
+
+----------------------------------------------------------------------
+
+Eduscol N2 ←→ Degré C de la grille (cible du cycle)
+  Capacités extraites du PDF (image 2 — Niveau 2) :
+  N2-1 · Se placer en orientation partagée pour voir partenaires
+          et adversaires
+  N2-2 · Se déplacer rapidement pour jouer équilibré et se rendre
+          immédiatement disponible pour la frappe suivante
+  N2-3 · Donner l'énergie adaptée à la balle
+  N2-4 · Différencier les situations favorables d'attaque permettant
+          de marquer soit directement (en se mettant en jeu un attaquant)
+          soit les situations défavorables nécessitant de monter la balle
+          dans son camp afin de donner du temps à ses partenaires
+          pour renvoyer
+  N2-5 · Conserver le ballon dans son camp par une passe haute et oblique
+          vers l'avant ou conserver le ballon haut au centre du terrain
+          en situation de crise ; s'il est situé en zone avant, renvoyer
+          directement après avoir perçu une zone vulnérable chez
+          l'adversaire
+  N2-6 · Se déterminer en tant que soutien ou futur attaquant, se déplacer
+          et se placer en conséquence (enchaînement des actions)
+  N2-7 · S'orienter de façon partagée ; repérer les zones vulnérables ;
+          décider selon le contexte d'attaque (favorable ou défavorable)
+          de renvoyer pour marquer (en prenant de la vitesse ou de la
+          distance) ou de conserver pour faire progresser la balle
+  N2-8 · Repérer les zones mal défendues ; s'écarter du filet pour
+          offrir au passeur une possibilité de différer l'attaque ;
+          placer la balle dans une zone vulnérable ou produire une
+          trajectoire tendue pour mettre un adversaire en crise de temps
+  N2-9 · Elaborer un projet de jeu simple permettant de s'organiser à
+          deux ou à trois pour défendre sa cible et attaquer la cible
+          adverse
+  N2-10 · Repérer les fautes notamment au filet et effectuer les gestes
+           correspondants
+  N2-11 · Arbitrer à deux en se répartissant les rôles
+  N2-12 · Connaître le score à tout moment de la rencontre
+  N2-13 · Repérer une situation favorable et son exploitation
+  N2-14 · Rendre compte de l'efficacité des actions de l'équipe
+           et des joueurs observés
+
+  Conduites grille correspondantes (Degré C — codes C1-C · C2-C · C3-C) :
+  C1-C Intention de rupture :
+    Attaque intentionnelle de la cible, attaques placées ou accélérées.
+    Communication présente, rôles précis (passeur, réceptionneur,
+    attaquant). Replacement collectif effectif.
+  C1-C Jeu à 2-3 touches :
+    Jeu à 2-3 touches de balle organisé. Construction collective maîtrisée.
+    La conservation est intentionnelle et régulière.
+  C2-C Joueur engagé :
+    Participation active, se déplace pour aller chercher la balle.
+    Différenciation claire passe haute / manchette après déplacement.
+    Service assuré et placé. Capable de jouer au filet.
+  C2-C Lecture efficace :
+    Placement organisé en fonction du ballon. Déplacements efficaces
+    pour se replacer. Manchettes orientées vers le passeur.
+  C3-C Rôles assurés (en autonomie) :
+    Recueille des données différenciées et exploitables. Fiche complète
+    et exploitable. Vocabulaire précis et spécifique au VB.
+  C3-C Arbitre en autonomie :
+    Assure son rôle d'arbitre en autonomie. Décisions arbitrales justes
+    et rapides. Vocabulaire réglementaire précis et spécifique.
+
+[ENRICHISSEMENT — source externe]
+Complément sur la correspondance référentiel/conduites en Volley-ball :
+Source  : non disponible
+URL     : non disponible
+Apport  : non disponible
+Statut  : à valider par l'équipe avant intégration
+[FIN ENRICHISSEMENT]
+
+
+SECTION 3 — ANALYSE DES CAPACITÉS PAR NIVEAU
+───────────────────────────────────────────────
+[MODE 1 — Depuis images Eduscol jointes (image 2 et image 3)]
+
+CAPACITÉS NIVEAU 1 — 9 capacités extraites
+─────────────────────────────────────────────
+
+N1-1 · Différencier les balles qui donnent du temps à son partenaire
+        de celles qui mettent l'adversaire en crise de temps
+  Dimension    : décisionnelle · tactique
+  Lien grille  : degré A · code C1-A · conduite associée : jeu en
+                  réaction — aucune différenciation des rôles ni des zones
+  Statut       : absente chez majorité
+  Prérequis de : N2-4 (différencier situations favorables / défavorables)
+                 N2-7 (s'orienter — repérer zones vulnérables — décider)
+
+N1-2 · En fonction de son ordre d'intervention, différencier son rôle
+        (réceptionneur, relayeur, attaquant) et les actions à accomplir
+  Dimension    : décisionnelle · tactique
+  Lien grille  : degré A-B · code C1-A / C1-B · conduite associée :
+                  aucune différenciation des rôles (A) — zones émergentes (B)
+  Statut       : absente chez majorité (A dominant) · en construction (B)
+  Prérequis de : N2-6 (se déterminer futur attaquant ou soutien)
+                 N2-9 (élaborer un projet de jeu simple)
+
+N1-3 · Se déplacer pour jouer le ballon équilibré et choisir un mode
+        d'intervention adapté
+  Dimension    : technique · décisionnelle
+  Lien grille  : degré A-B · code C2-A / C2-B · conduite associée :
+                  joueur passif — évite la balle (A) · joueur intermittent (B)
+  Statut       : absente chez majorité (A dominant)
+  Prérequis de : N2-1 (se placer en orientation partagée)
+                 N2-2 (se déplacer rapidement — disponibilité frappe)
+
+N1-4 · Sortir de l'alignement avec son partenaire pour faciliter
+        le relais, le soutien et/ou le renvoi dans le camp adverse
+  Dimension    : tactique · collective
+  Lien grille  : degré A · code C1-A · conduite associée : renvoi direct
+                  systématique — aucune organisation collective
+  Statut       : absente chez majorité
+  Prérequis de : N2-6 (enchaînement des actions — soutien / attaquant)
+                 N2-9 (projet de jeu à deux ou trois)
+
+N1-5 · Communiquer pour s'identifier intervenant sur la balle
+  Dimension    : collective · tactique
+  Lien grille  : degré A · code C1-A · conduite associée : pas de
+                  communication entre joueurs
+  Statut       : absente chez majorité
+  Prérequis de : N2-9 (s'organiser à deux ou trois pour défendre
+                        et attaquer)
+
+N1-6 · S'organiser pour occuper seul ou à deux l'espace de jeu
+  Dimension    : tactique · collective
+  Lien grille  : degré A · code C1-A · conduite associée : aucune
+                  organisation collective en attaque ni en défense
+  Statut       : absente chez majorité
+  Prérequis de : N2-9 (projet de jeu simple — deux ou trois joueurs)
+                 N2-7 (décider de renvoyer ou de conserver)
+
+N1-7 · Repérer les résultats d'actions fiables liés aux pertes de balles
+        et conditions de marque
+  Dimension    : décisionnelle · autre (rôle observateur)
+  Lien grille  : degré B · code C3-B · conduite associée : rôles assumés
+                  avec aide — données globales correctes
+  Statut       : en construction (B émergent)
+  Prérequis de : N2-13 (repérer une situation favorable et son
+                         exploitation)
+                 N2-14 (rendre compte de l'efficacité des actions)
+
+N1-8 · Évaluer de façon chiffrée l'efficacité d'une équipe en
+        établissant des rapports entre les données recueillies
+  Dimension    : autre (rôle observateur) · décisionnelle
+  Lien grille  : degré B · code C3-B · conduite associée : fiche
+                  globalement renseignée — vocabulaire correct mais limité
+  Statut       : en construction (B émergent)
+  Prérequis de : N2-14 (rendre compte de l'efficacité des actions
+                         de l'équipe et des joueurs observés)
+
+N1-9 · Communiquer les résultats des observations pour aider à la
+        formalisation d'un projet de jeu simple en attaque
+  Dimension    : autre (rôle observateur) · collective
+  Lien grille  : degré B · code C3-B · conduite associée : données
+                  globales — fiche globalement renseignée
+  Statut       : en construction (B émergent)
+  Prérequis de : N2-9 (élaborer un projet de jeu simple à 2 ou 3)
+
+----------------------------------------------------------------------
+
+CAPACITÉS NIVEAU 2 — 14 capacités extraites
+──────────────────────────────────────────────
+
+N2-1 · Se placer en orientation partagée pour voir partenaires
+        et adversaires
+  Dimension       : tactique · décisionnelle
+  Lien grille     : degré C · code C1-C · conduite associée : intention
+                     de rupture — rôles précis — replacement collectif
+  Prérequis N1    : N1-3 (se déplacer équilibré · mode d'intervention)
+                    N1-6 (s'organiser pour occuper l'espace de jeu)
+  Accessible si   : élève capable de se déplacer avant la balle —
+                     conduite OBS-03 / OBS-04 en transition A vers B
+
+N2-2 · Se déplacer rapidement pour jouer équilibré et se rendre
+        immédiatement disponible pour la frappe suivante
+  Dimension       : technique · tactique
+  Lien grille     : degré C · code C2-C · conduite associée : joueur
+                     engagé — participation active — déplacements efficaces
+  Prérequis N1    : N1-3 (se déplacer équilibré · choix mode intervention)
+  Accessible si   : conduites OBS-03 en transition B · déplacement
+                     défensif amorcé
+
+N2-3 · Donner l'énergie adaptée à la balle
+  Dimension       : technique
+  Lien grille     : degré C · code C2-C · conduite associée : différenciation
+                     claire passe haute / manchette après déplacement
+  Prérequis N1    : N1-3 (mode d'intervention adapté)
+  Accessible si   : élève capable de différencier passe et manchette —
+                     OBS-03 sortie de Degré A
+
+N2-4 · Différencier les situations favorables / défavorables d'attaque
+  Dimension       : décisionnelle · tactique
+  Lien grille     : degré C · code C1-C / C2-C · conduite associée :
+                     attaque intentionnelle — zones vulnérables repérées
+  Prérequis N1    : N1-1 (différencier balles temps / crise)
+                    N1-2 (différencier son rôle selon ordre intervention)
+  Accessible si   : conduites OBS-01 et OBS-02 en transition B vers C
+
+N2-5 · Conserver le ballon dans son camp ou renvoyer directement
+        après perception d'une zone vulnérable adverse
+  Dimension       : décisionnelle · tactique
+  Lien grille     : degré C · code C1-C / C2-C · conduite associée :
+                     jeu à 2-3 touches organisé — conservation intentionnelle
+  Prérequis N1    : N1-1 · N1-2 · N1-6
+  Accessible si   : conduites OBS-01 et OBS-02 sortent de Degré A
+                     (touches multiples amorcées — OBS-02 Degré B stabilisé)
+
+N2-6 · Se déterminer en tant que soutien ou futur attaquant,
+        se déplacer et se placer en conséquence
+  Dimension       : décisionnelle · tactique
+  Lien grille     : degré C · code C1-C · conduite associée : rôles précis
+                     passeur / réceptionneur / attaquant — replacement
+  Prérequis N1    : N1-2 (différencier son rôle) · N1-4 (sortir
+                     de l'alignement)
+  Accessible si   : OBS-01 en Degré B stabilisé — rôles émergents
+
+N2-7 · S'orienter — repérer les zones vulnérables — décider de
+        renvoyer ou conserver
+  Dimension       : décisionnelle · tactique
+  Lien grille     : degré C · code C1-C / C2-C · conduite associée :
+                     attaques placées ou accélérées — zones mal défendues
+  Prérequis N1    : N1-1 · N1-2 · N1-6
+  Accessible si   : lecture du jeu adverse amorcée — OBS-01 et OBS-04
+                     en transition B
+
+N2-8 · Repérer les zones mal défendues · placer ou produire une
+        trajectoire tendue pour mettre adversaire en crise
+  Dimension       : technique · tactique
+  Lien grille     : degré C · code C2-C · conduite associée : service
+                     assuré et placé — capable de jouer au filet
+  Prérequis N1    : N1-1 · N1-3
+  Accessible si   : contrôle de direction des frappes amorcé — OBS-03
+                     en Degré B
+
+N2-9 · Élaborer un projet de jeu simple permettant de s'organiser
+        à deux ou trois pour défendre et attaquer
+  Dimension       : tactique · collective
+  Lien grille     : degré C · code C1-C · conduite associée : intention
+                     de rupture — communication présente — rôles précis
+  Prérequis N1    : N1-2 · N1-4 · N1-5 · N1-6
+  Accessible si   : conduites OBS-01 et OBS-02 consolidées en Degré B
+
+N2-10 · Repérer les fautes notamment au filet et effectuer les gestes
+         correspondants
+  Dimension       : autre (rôle arbitre)
+  Lien grille     : degré C · code C3-C · conduite associée : arbitre
+                     en autonomie — décisions arbitrales justes et rapides
+  Prérequis N1    : N1-7 (repérer résultats d'actions fiables)
+  Accessible si   : OBS-06 sorti de Degré A — arbitrage avec aide
+                     amorcé (OBS-06 Degré B stabilisé)
+
+N2-11 · Arbitrer à deux en se répartissant les rôles
+  Dimension       : autre (rôle arbitre) · collective
+  Lien grille     : degré C · code C3-C · conduite associée : rôles
+                     assurés en autonomie — fiche complète et exploitable
+  Prérequis N1    : N1-7 · N1-9
+  Accessible si   : OBS-05 et OBS-06 en Degré B stabilisé
+
+N2-12 · Connaître le score à tout moment de la rencontre
+  Dimension       : autre (rôle arbitre / observateur)
+  Lien grille     : degré C · code C3-C · conduite associée : rôles
+                     assurés en autonomie
+  Prérequis N1    : N1-7
+  Accessible si   : OBS-05 sorti de Degré A
+
+N2-13 · Repérer une situation favorable et son exploitation
+  Dimension       : décisionnelle · tactique
+  Lien grille     : degré C · code C1-C / C2-C · conduite associée :
+                     zones vulnérables repérées — attaque intentionnelle
+  Prérequis N1    : N1-1 · N1-7
+  Accessible si   : lecture du jeu adverse amorcée — OBS-04 en Degré B
+
+N2-14 · Rendre compte de l'efficacité des actions de l'équipe
+         et des joueurs observés
+  Dimension       : autre (rôle observateur)
+  Lien grille     : degré C · code C3-C · conduite associée : données
+                     différenciées et exploitables — fiche complète
+  Prérequis N1    : N1-8 · N1-9
+  Accessible si   : OBS-05 en Degré B stabilisé
+
+[ENRICHISSEMENT — source externe]
+Données complémentaires sur ces capacités en Volley-ball :
+Source  : non disponible
+URL     : non disponible
+Apport  : non disponible
+Statut  : à valider par l'équipe avant intégration
+[FIN ENRICHISSEMENT]
+
+
+SECTION 4 — LECTURE DES CONDUITES OBSERVÉES
+─────────────────────────────────────────────
+[MODE 1 — Depuis feuille OBSERVABLES + CODES — ADP2026_DI_VLB.xlsx]
+
+Conduite 1 : Organisation collective du jeu (OBS-01)
+  Degré grille associé      : A (dominant observé)
+  Code grille associé       : C1-A — Jeu en réaction
+                               Actions individuelles, renvoi direct systématique.
+                               Aucune organisation en attaque ni en défense.
+                               Pas de différenciation des rôles ni des zones.
+  Hypothèse explicative     : Ce comportement traduit le fait que les élèves
+                               n'ont pas encore construit de représentation
+                               partagée du jeu collectif : chaque joueur
+                               agit en solo sur la balle sans anticiper le
+                               rôle des partenaires ni identifier les zones
+                               de jeu à occuper.
+  Capacité Eduscol associée : N1-2 (différencier son rôle selon ordre
+                               d'intervention) · N1-6 (occuper l'espace
+                               de jeu à deux)
+  Capacités N2 bloquées     : N2-4 · N2-5 · N2-6 · N2-7 · N2-9
+
+----------------------------------------------------------------------
+
+Conduite 2 : Continuité et nombre de touches par échange (OBS-02)
+  Degré grille associé      : A (dominant observé)
+  Code grille associé       : C1-A — Jeu à 1 touche systématique
+                               Jeu à 1 touche systématique. Pas de conservation
+                               de balle. La balle est renvoyée immédiatement
+                               sans construction.
+  Hypothèse explicative     : Ce comportement traduit le fait que les élèves
+                               perçoivent la balle comme une contrainte à
+                               éliminer plutôt que comme un outil de
+                               construction collective : l'urgence du renvoi
+                               domine sur tout projet de jeu.
+  Capacité Eduscol associée : N1-1 (différencier balles qui donnent du temps)
+                               · N1-3 (se déplacer équilibré)
+  Capacités N2 bloquées     : N2-3 · N2-4 · N2-5 · N2-7 · N2-9
+
+----------------------------------------------------------------------
+
+Conduite 3 : Participation et volume de jeu individuel (OBS-03)
+  Degré grille associé      : A-B (transition observée)
+  Code grille associé       : C2-A — Joueur passif
+                               Volume de jeu faible, évite la balle ou
+                               intervient trop tard. Contacts fortuits.
+                               Frappe à une seule main non maîtrisée.
+  Hypothèse explicative     : Ce comportement traduit le fait que les élèves
+                               n'ont pas construit les repères posturaux et
+                               cinesthésiques permettant d'intercepter la balle
+                               en déplacement : l'absence de lecture anticipée
+                               conduit à l'évitement ou à l'intervention tardive.
+  Capacité Eduscol associée : N1-3 (se déplacer équilibré · mode intervention)
+  Capacités N2 bloquées     : N2-1 · N2-2 · N2-3 · N2-8
+
+----------------------------------------------------------------------
+
+Conduite 4 : Lecture de trajectoire et déplacements défensifs (OBS-04)
+  Degré grille associé      : A (dominant observé)
+  Code grille associé       : C2-A — Aucune lecture
+                               Mauvaise lecture de la trajectoire.
+                               Reste figé, aucun déplacement défensif anticipé.
+                               Peu de contacts avec la balle.
+  Hypothèse explicative     : Ce comportement traduit le fait que les élèves
+                               lisent la balle au moment du contact adverse
+                               et non au moment de la frappe — l'anticipation
+                               de trajectoire n'est pas encore construite :
+                               le corps reste figé faute de repères visuels
+                               précoces sur la balle et l'adversaire.
+  Capacité Eduscol associée : N1-1 (différencier balles temps / crise)
+                               · N1-3 (se déplacer · choix d'intervention)
+  Capacités N2 bloquées     : N2-1 · N2-2 · N2-7 · N2-8 · N2-13
+
+----------------------------------------------------------------------
+
+Conduite 5 : Fiabilité et exploitation des données d'observation (OBS-05)
+  Degré grille associé      : A-B (transition observée)
+  Code grille associé       : C3-A — Rôles insuffisamment assurés
+                               Recueille des données insuffisamment fiables.
+                               Fiche partiellement ou mal renseignée.
+                               Vocabulaire imprécis ou absent.
+  Hypothèse explicative     : Ce comportement traduit le fait que les élèves
+                               n'ont pas encore intégré les indicateurs
+                               observables du volleyball : ils ne savent pas
+                               quoi regarder ni comment le nommer,
+                               ce qui rend leurs relevés non exploitables.
+  Capacité Eduscol associée : N1-7 (repérer résultats d'actions fiables)
+                               · N1-8 (évaluer de façon chiffrée)
+  Capacités N2 bloquées     : N2-11 · N2-12 · N2-14
+
+----------------------------------------------------------------------
+
+Conduite 6 : Autonomie dans le rôle d'arbitre (OBS-06)
+  Degré grille associé      : A-B (transition observée)
+  Code grille associé       : C3-A — Hésite, a besoin d'aide
+                               Hésite sur des actions difficiles à arbitrer.
+                               N'assume pas son rôle sans soutien.
+                               Décisions arbitrales inexactes ou absentes.
+  Hypothèse explicative     : Ce comportement traduit le fait que les élèves
+                               ne maîtrisent pas encore le règlement de base
+                               du volleyball ni la posture d'arbitre :
+                               la décision arbitrale exige une lecture
+                               simultanée du jeu et des règles que les élèves
+                               n'ont pas encore automatisée.
+  Capacité Eduscol associée : N1-7 (repérer résultats d'actions fiables)
+                               · N1-9 (communiquer résultats observations)
+  Capacités N2 bloquées     : N2-10 · N2-11 · N2-12
+
+----------------------------------------------------------------------
+
+SYNTHÈSE DES LACUNES DOMINANTES
+─────────────────────────────────
+Lacune principale         : N1-3 — Se déplacer pour jouer le ballon équilibré
+                             et choisir un mode d'intervention adapté
+                             (capacité Eduscol la plus transversalement absente :
+                             bloque simultanément OBS-03 et OBS-04)
+Degrés concernés          : A — les deux (A dominant sur OBS-01 OBS-02 OBS-04)
+Codes dominants           : C1-A (jeu en réaction · jeu à 1 touche)
+                             C2-A (joueur passif · aucune lecture)
+Capacités cibles bloquées : 10 sur 14 capacités N2 non accessibles
+                             (N2-1 · N2-2 · N2-3 · N2-4 · N2-5 · N2-6
+                              N2-7 · N2-8 · N2-9 · N2-13)
+Conclusion                : La lacune d'ancrage prioritaire du cycle est
+                             la construction du déplacement équilibré avant
+                             contact avec la balle, combinée à la
+                             différenciation des rôles selon l'ordre
+                             d'intervention (N1-2). Ces deux capacités N1
+                             constituent le verrou didactique bloquant l'accès
+                             à la quasi-totalité des capacités N2 cibles.
+
+[ENRICHISSEMENT — source externe]
+Données sur cette lacune en Volley-ball dans la littérature :
+Source  : non disponible
+URL     : non disponible
+Apport  : non disponible
+Statut  : à valider par l'équipe avant intégration
+[FIN ENRICHISSEMENT]
+
+
+SECTION 5 — BILAN D'ENRICHISSEMENT
+─────────────────────────────────────
+Compléments proposés      : 3
+Compléments à valider     : 3
+URLs non vérifiables      : 3
+  (Section 2 — correspondance référentiel/conduites)
+  (Section 3 — données complémentaires sur les capacités)
+  (Section 4 — données sur la lacune dans la littérature)
+Recommandation            : Priorité de vérification — Section 3 (capacités N2) :
+                             une source certifiée sur la progression
+                             pédagogique en VB collège renforcerait l'analyse
+                             des prérequis. Consulter la littérature AEEPS
+                             ou les cahiers EPS pour un appui documentaire.
+
+
+SECTION 6 — MATIÈRE PRÉPARÉE POUR LE PROMPT 1bis-A
+─────────────────────────────────────────────────────
+Ce fichier est prêt à être joint au prompt 1bis-A.
+Il contient :
+  → Correspondance Eduscol ←→ Grille établie (Section 2)
+      Eduscol N1 ←→ Degrés A et B de la grille (9 capacités)
+      Eduscol N2 ←→ Degré C de la grille (14 capacités)
+      Cible du cycle : progresser de N1 vers N2
+  → Capacités par niveau numérotées et analysées (Section 3)
+      N1 : 9 capacités — dimension · lien grille · statut · prérequis N2
+      N2 : 14 capacités — dimension · lien grille · prérequis N1 · condition
+  → Conduites lues · lacunes identifiées (Section 4)
+      6 conduites analysées (OBS-01 à OBS-06)
+      Hypothèse explicative pour chacune
+      Capacités N2 bloquées identifiées conduite par conduite
+  → Lacune dominante signalée (Section 4)
+      N1-3 + N1-2 — verrou didactique principal
+      10 / 14 capacités N2 bloquées
+  → Enrichissements à valider (Section 5)
+      3 blocs à valider — aucune URL disponible à ce stade
+Le prompt 1bis-A construira à partir de cette matière :
+  → Le graphe de dépendances
+  → Les axes prioritaires
+  → Le point de décision enseignant
+
+  ══════════════════════════════════════════════════════════════
+  FIN — ressources_VLB_DI-VLB.txt
+  À valider par le formateur · À joindre au prompt 1bis-A
+  Sources PDF lues : images Eduscol Volleyball N1 et N2 (collège)
+                     pages lycée : N/A (niveau de contenu 2)
+  Source données TD1 : mémoire de conversation
+                       P1 — Analyse_Ref_Volleybal_EquipeCOLL3_ADP2026.pdf
+                       P2 — ADP2026_DI_VLB.xlsx feuille IDENTITÉ
+                       P3 — ADP2026_DI_VLB.xlsx feuille OBSERVABLES + CODES
+                       P4 — Volleyball_Evaluation_Grid_Replit.pdf
+  ══════════════════════════════════════════════════════════════
