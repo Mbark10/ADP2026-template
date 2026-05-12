@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Planificateur de Cycle — Volley-Ball | Acad. La Réunion</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #2563eb;
+    --primary-light: #eff6ff;
+    --primary-border: #bfdbfe;
+    --secondary: #f97316;
+    --secondary-light: #fff7ed;
+    --secondary-border: #fed7aa;
+    --accent: #059669;
+    --accent-light: #ecfdf5;
+    --accent-border: #a7f3d0;
+    --bg: #f3f4f8;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #1e293b;
+    --muted: #64748b;
+    --muted-bg: #f1f5f9;
+    --radius: 12px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ───── HEADER ───── */
+  header {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .logo {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 14px; color: #fff;
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--text);
+  }
+  .header-text p { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* ───── MAIN ───── */
+  main {
+    max-width: 1200px; margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* ───── SECTION LABELS ───── */
+  .section-label {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .12em;
+    color: var(--muted); margin-bottom: 14px;
+  }
+
+  /* ───── LEVEL CARDS ───── */
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px; margin-bottom: 32px;
+  }
+  .level-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: all .2s ease;
+    position: relative;
+    text-align: left;
+  }
+  .level-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .level-card.active-n1 { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+  .level-card.active-n2 { border-color: var(--secondary); background: var(--secondary-light); box-shadow: 0 0 0 3px rgba(249,115,22,.12); }
+  .level-card.active-n3 { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 0 0 3px rgba(5,150,105,.12); }
+  .level-icon { font-size: 24px; margin-bottom: 10px; }
+  .level-card h3 { font-weight: 700; font-size: 17px; }
+  .level-card .level-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .level-card .level-cv { font-size: 11px; color: var(--muted); margin-top: 8px; opacity: .8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .active-dot {
+    position: absolute; top: 12px; right: 12px;
+    width: 9px; height: 9px; border-radius: 50%;
+  }
+  .n1 .active-dot, .active-n1 .active-dot { background: var(--primary); }
+  .n2 .active-dot, .active-n2 .active-dot { background: var(--secondary); }
+  .n3 .active-dot, .active-n3 .active-dot { background: var(--accent); }
+
+  /* ───── LEVEL HEADER ───── */
+  .level-header {
+    display: flex; align-items: flex-start; gap: 20px;
+    flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .level-header-text { flex: 1; }
+  .level-title-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .level-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+  }
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; border: 1.5px solid;
+  }
+  .badge-n1 { border-color: var(--primary); color: var(--primary); }
+  .badge-n2 { border-color: var(--secondary); color: var(--secondary); }
+  .badge-n3 { border-color: var(--accent); color: var(--accent); }
+  .level-cv-full { font-size: 13px; color: var(--muted); max-width: 600px; }
+  .format-pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 8px;
+    background: var(--muted-bg); border: 1px solid var(--border);
+    font-size: 12px; color: var(--muted); white-space: nowrap;
+  }
+
+  /* ───── OBSTACLES BAR ───── */
+  .obstacles-bar {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 20px;
+    margin-bottom: 24px; overflow-x: auto;
+  }
+  .obstacles-bar h4 {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--muted); margin-bottom: 12px;
+  }
+  .obstacles-list { display: flex; align-items: center; gap: 8px; min-width: max-content; }
+  .obs-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border-radius: 8px;
+    background: var(--muted-bg); border: 1px solid var(--border);
+  }
+  .obs-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .n1 .obs-num { background: var(--primary); }
+  .n2 .obs-num { background: var(--secondary); }
+  .n3 .obs-num { background: var(--accent); }
+  .obs-text { font-size: 12px; color: var(--text); white-space: nowrap; }
+  .obs-arrow { color: var(--muted); font-size: 14px; }
+
+  /* ───── MAIN GRID ───── */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px; align-items: start;
+  }
+  @media (max-width: 900px) {
+    .content-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ───── TIMELINE ───── */
+  .timeline-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px; font-weight: 700; margin-bottom: 16px;
+  }
+  .timeline { position: relative; }
+  .timeline-item { position: relative; padding-left: 52px; margin-bottom: 12px; }
+  .timeline-line {
+    position: absolute; left: 22px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .timeline-item:last-child .timeline-line { display: none; }
+  .timeline-dot {
+    position: absolute; left: 13px; top: 18px;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800; color: #fff;
+    border: 2px solid var(--card);
+    z-index: 2;
+  }
+  .n1 .timeline-dot { background: var(--primary); }
+  .n2 .timeline-dot { background: var(--secondary); }
+  .n3 .timeline-dot { background: var(--accent); }
+
+  /* ───── SESSION CARD ───── */
+  .session-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .session-header {
+    padding: 14px 16px; cursor: pointer;
+    transition: background .15s;
+    user-select: none;
+  }
+  .session-header:hover { background: var(--muted-bg); }
+  .session-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .session-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .type-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 20px;
+    font-size: 10px; font-weight: 600;
+  }
+  .type-diagnostic { background: var(--muted-bg); color: var(--muted); }
+  .type-apprentissage { background: var(--primary-light); color: var(--primary); }
+  .type-evaluation { background: var(--accent-light); color: var(--accent); }
+  .session-num { font-size: 10px; color: var(--muted); }
+  .session-title { font-weight: 700; font-size: 14px; color: var(--text); }
+  .session-obj { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .session-focus {
+    display: flex; align-items: flex-start; gap: 6px;
+    margin-top: 10px; font-size: 11px; color: var(--muted); font-style: italic;
+  }
+  .chevron { font-size: 14px; color: var(--muted); flex-shrink: 0; margin-top: 2px; transition: transform .2s; }
+  .chevron.open { transform: rotate(180deg); }
+
+  .session-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
+  .session-body.open { display: block; }
+  .session-section { margin-top: 14px; }
+  .session-section h5 {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--muted); margin-bottom: 8px;
+  }
+  .session-section ul { list-style: none; }
+  .session-section ul li {
+    font-size: 12px; color: var(--text); padding: 3px 0;
+    padding-left: 14px; position: relative; line-height: 1.5;
+  }
+  .session-section ul li::before {
+    content: ''; position: absolute; left: 0; top: 9px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--muted); opacity: .5;
+  }
+  .session-acq {
+    padding: 10px 12px; border-radius: 8px;
+    background: var(--muted-bg); font-size: 12px; margin-top: 6px;
+    color: var(--text);
+  }
+  .bareme-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 6px; }
+  @media (max-width: 600px) { .bareme-grid { grid-template-columns: 1fr; } }
+  .bareme-item {
+    padding: 8px 10px; border-radius: 8px; border: 1px solid;
+    font-size: 11px;
+  }
+  .bareme-ind { border-color: var(--primary-border); background: var(--primary-light); }
+  .bareme-coll { border-color: var(--secondary-border); background: var(--secondary-light); }
+  .bareme-arb { border-color: var(--accent-border); background: var(--accent-light); }
+  .bareme-label { font-weight: 700; font-size: 10px; display: block; margin-bottom: 3px; }
+  .bareme-ind .bareme-label { color: var(--primary); }
+  .bareme-coll .bareme-label { color: var(--secondary); }
+  .bareme-arb .bareme-label { color: var(--accent); }
+
+  /* ───── CRITERIA PANEL ───── */
+  .criteria-panel {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+    position: sticky; top: 80px;
+  }
+  .criteria-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+  }
+  .criteria-accordion { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+  .crit-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px; cursor: pointer; background: var(--card);
+    transition: background .15s; user-select: none;
+    gap: 10px;
+  }
+  .crit-header:hover { background: var(--muted-bg); }
+  .crit-header-left { display: flex; align-items: center; gap: 8px; }
+  .crit-icon { font-size: 15px; }
+  .crit-label { font-size: 13px; font-weight: 600; }
+  .crit-chev { font-size: 12px; color: var(--muted); transition: transform .2s; }
+  .crit-chev.open { transform: rotate(180deg); }
+  .crit-body { display: none; border-top: 1px solid var(--border); padding: 12px 14px; background: var(--muted-bg); }
+  .crit-body.open { display: block; }
+  .crit-subtitle { font-size: 11px; color: var(--muted); font-style: italic; margin-bottom: 12px; }
+  .crit-level { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .crit-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 4px;
+  }
+  .dot-low { background: #ef4444; }
+  .dot-mid { background: var(--secondary); }
+  .dot-high { background: var(--accent); }
+  .crit-nv-label { font-size: 12px; font-weight: 700; color: var(--text); }
+  .crit-pts {
+    display: inline-block; font-size: 10px; font-family: monospace;
+    background: var(--card); border: 1px solid var(--border);
+    padding: 1px 6px; border-radius: 4px;
+    margin-left: 6px; color: var(--muted); vertical-align: middle;
+  }
+  .crit-desc { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+  /* ───── PRINT BUTTON ───── */
+  .toolbar {
+    display: flex; justify-content: flex-end; margin-bottom: 16px;
+  }
+  .btn-print {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 8px;
+    background: var(--primary); color: #fff;
+    border: none; cursor: pointer; font-size: 13px;
+    font-weight: 600; font-family: 'Inter', sans-serif;
+    transition: background .2s;
+  }
+  .btn-print:hover { background: #1d4ed8; }
+
+  /* ───── FOOTER ───── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    text-align: center;
+    font-size: 11px; color: var(--muted);
+    background: var(--card);
+  }
+
+  /* ───── LEVEL PANEL (show/hide) ───── */
+  .level-panel { display: none; }
+  .level-panel.active { display: block; }
+
+  /* ───── PRINT ───── */
+  @media print {
+    header { position: static; }
+    .btn-print, .toolbar { display: none; }
+    .level-panel { display: block !important; page-break-before: always; }
+    .session-body { display: block !important; }
+    .crit-body { display: block !important; }
+    .content-grid { grid-template-columns: 1fr; }
+    .criteria-panel { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header>
+  <div class="header-inner">
+    <div class="logo">VB</div>
+    <div class="header-text">
+      <h1>Planificateur de Cycle — Volley-Ball</h1>
+      <p>Référentiel didactique I.Chastain &amp; V.Vauloup — Académie de La Réunion</p>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ MAIN ═══════ -->
+<main>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimer / Exporter PDF</button>
+  </div>
+
+  <!-- ── LEVEL SELECTOR ── -->
+  <div class="section-label">Sélectionner le niveau de l'apprenant</div>
+  <div class="level-grid">
+    <button class="level-card n1 active-n1" onclick="showLevel('n1')">
+      <div class="active-dot"></div>
+      <div class="level-icon">🎯</div>
+      <h3>Niveau 1</h3>
+      <div class="level-sub">Renvoi de la balle</div>
+      <div class="level-cv">Renvoi de la balle seul ou avec l'aide d'un partenaire en exploitant la profondeur du terrain adverse</div>
+    </button>
+    <button class="level-card n2" onclick="showLevel('n2')">
+      <div class="active-dot" style="display:none"></div>
+      <div class="level-icon">⚡</div>
+      <h3>Niveau 2</h3>
+      <div class="level-sub">Attaque intentionnelle</div>
+      <div class="level-cv">Jeu d'attaque intentionnelle pour créer la rupture (balles en zone arrière, placées, accélérées)</div>
+    </button>
+    <button class="level-card n3" onclick="showLevel('n3')">
+      <div class="active-dot" style="display:none"></div>
+      <div class="level-icon">🛡️</div>
+      <h3>Niveau 3</h3>
+      <div class="level-sub">Attaque différée</div>
+      <div class="level-cv">Jeu d'attaque différée face à une défense qui s'organise</div>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       NIVEAU 1
+  ══════════════════════════════════════ -->
+  <div id="panel-n1" class="level-panel n1 active">
+
+    <div class="level-header">
+      <div class="level-header-text">
+        <div class="level-title-row">
+          <span class="level-title">Niveau 1</span>
+          <span class="badge badge-n1">Renvoi de la balle</span>
+        </div>
+        <p class="level-cv-full">Renvoi de la balle seul ou avec l'aide d'un partenaire en exploitant la profondeur du terrain adverse</p>
+      </div>
+      <div class="format-pill">🏐 2×2 — 4.5m×7m — Filet 2m-2m10</div>
+    </div>
+
+    <div class="obstacles-bar">
+      <h4>Obstacles didactiques</h4>
+      <div class="obstacles-list">
+        <div class="obs-item"><span class="obs-num">1</span><span class="obs-text">Adopter une attitude préparatoire à la frappe</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">2</span><span class="obs-text">Maîtriser la trajectoire du ballon</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">3</span><span class="obs-text">Prendre en compte son partenaire</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">4</span><span class="obs-text">Identifier le terrain adverse comme cible</span></div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- Timeline -->
+      <div>
+        <div class="timeline-title">Planification du cycle (9 séances)</div>
+        <div class="timeline">
+
+          <!-- S1 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">1</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div class="flex-1">
+                    <div class="session-meta">
+                      <span class="type-badge type-diagnostic">👁️ Diagnostic</span>
+                      <span class="session-num">Séance 1</span>
+                    </div>
+                    <div class="session-title">Évaluation diagnostique</div>
+                    <div class="session-obj">Observer et diagnostiquer le niveau initial des élèves</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Les trois critères sont observés pour établir le profil initial</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Contenu de la séance</h5>
+                  <ul>
+                    <li>Jeu 2×2, terrain 4.5m × 7m, filet 2m-2m10</li>
+                    <li>Engagement en passe ou ballon lancé à 2 mains (trajectoire montante)</li>
+                    <li>Joueurs côte à côte, temps de jeu 8 min</li>
+                    <li>Remplir la fiche d'évaluation diagnostique</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Observables</h5>
+                  <ul>
+                    <li>Balles tombées au sol sans être touchées (mobilité, lecture de trajectoire)</li>
+                    <li>Balles touchées mais non renvoyées dans le terrain adverse</li>
+                    <li>Balles renvoyées dans le terrain adverse (maîtrise des trajectoires)</li>
+                    <li>Zones de renvoi</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S2 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">2</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 2</span></div>
+                    <div class="session-title">Attitude préparatoire &amp; lecture de trajectoire</div>
+                    <div class="session-obj">Passer d'une attitude passive à une attitude préparatoire à la frappe</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : se préparer à la frappe, lire la trajectoire</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV1-SA1 : Se lancer la balle à 7-8m et courir la rattraper avant qu'elle tombe au sol</li>
+                    <li>AV1-SA2 : Envoyer le ballon au-dessus de soi, réaliser une action pendant la trajectoire puis le rattraper</li>
+                    <li>AV1-SA3 : 1×1 terrain 4.5×4.5m, après tour de plot, attraper à 2 mains sans bouger et renvoyer</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Attitude dynamique (jambes fléchies sur avant-pieds), lecture de trajectoire au départ du ballon, prise de décision, coordination des déplacements pour se rendre au point de chute</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S3 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">3</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 3</span></div>
+                    <div class="session-title">Maîtrise de la frappe de balle</div>
+                    <div class="session-obj">Passer d'une frappe aléatoire à une frappe maîtrisée (énergie et direction)</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : maîtrise des frappes et orientation des surfaces</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV2-SA1 : Jonglage 1 ballon par élève (passe, manchette, alterner frappes et hauteurs de trajectoires)</li>
+                    <li>AV2-SA1 : Échanges 1+1 de part et d'autre du filet haut — record d'échanges</li>
+                    <li>AV2-SA1 : 1×1 frappe de balle après 1 ou 2 rebonds au sol</li>
+                    <li>AV2-SA2 : Circuit avec 1 serveur au centre + 1 réceptionneur — trajectoire haute</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Maîtrise de la passe à 10 doigts (frappe au sommet du front, doigts écartés), manchette (frappe sur le 1/3 inf des avant-bras), service bas (dissociation bras frappeur / bras immobile)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S4 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">4</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 4</span></div>
+                    <div class="session-title">Match 1×1 &amp; consolidation des frappes</div>
+                    <div class="session-obj">Mettre en application les acquis en situation de match aménagé</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : renvoi en situation favorable et défavorable</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV2-SA3 : Match 1×1, terrain 4.5×7m, filet haut, 3 touches successives possibles</li>
+                    <li>Engagement en passe ou service bas selon niveau des élèves</li>
+                    <li>Travail de la dissociation bras-jambes, stabilisation des appuis</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Stabilisation des appuis au contact de la balle, frappe vers le haut et l'avant, orienter ses épaules vers le terrain adverse lors du renvoi</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S5 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">5</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 5</span></div>
+                    <div class="session-title">Communication &amp; prise en compte du partenaire</div>
+                    <div class="session-obj">Passer d'une centration sur soi à une prise en compte du partenaire</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité collective : organisation et communication PB/NPB</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV3-SA1 : Sur terrain 3×7m, 2 réceptionneurs + 2 serveurs — dire « j'ai » et envoyer haut au centre</li>
+                    <li>AV3-SA2 : Fontaine — groupe de 4 à 6 élèves, frapper la balle à tour de rôle vers le haut au-dessus d'une zone</li>
+                    <li>AV3-SA3 : Utilisation du partenaire relais (1re touche rebond, 2e balle bloquée au filet, 3e renvoi à 10 doigts)</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Parler, dire «j'ai» le plus tôt possible. NPB s'oriente vers le réceptionneur et se met à distance d'intervention. Orientation partagée : sortir de l'alignement avec son partenaire</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S6 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">6</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 6</span></div>
+                    <div class="session-title">Le terrain adverse comme cible à atteindre</div>
+                    <div class="session-obj">Passer d'une cible ballon à une cible terrain en zone arrière</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité collective : renvoi en profondeur et organisation</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV4-SA1 : Jeu 1×1, terrain 3×6m — 5 pts si balle en zone arrière, 1 pt sinon</li>
+                    <li>AV4-SA2 : S'envoyer la balle au niveau des 3m et renvoyer le plus loin possible (3 zones : 0-3m=1pt, 3-5m=3pts, 5-7m=5pts)</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Viser le terrain adverse lors du renvoi — orienter ses appuis et ses surfaces de frappe. Renvoyer dans la profondeur : fléchir les jambes et les bras pour plus de puissance</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S7 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">7</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 7</span></div>
+                    <div class="session-title">Situation de référence &amp; rôle d'arbitre</div>
+                    <div class="session-obj">Intégrer le rôle d'arbitre et observer en situation de jeu</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité dans le rôle d'arbitre et d'observateur</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Contenu</h5>
+                  <ul>
+                    <li>Matchs 2×2 avec rotation des rôles (joueur, arbitre, observateur)</li>
+                    <li>Utilisation de la fiche d'évaluation diagnostique comme fiche d'observation</li>
+                    <li>Travail sur les règles essentielles du volley-ball (fautes, règle des 3 touches, filet)</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Connaître les règles de base, signaler les fautes avec assurance, remplir une fiche d'observation avec des données fiables</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S8 -->
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">8</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 8</span></div>
+                    <div class="session-title">Consolidation globale</div>
+                    <div class="session-obj">Consolider toutes les acquisitions en situation de jeu</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Les trois critères en situation de jeu réel</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Contenu</h5>
+                  <ul>
+                    <li>Montante-descendante 1×1</li>
+                    <li>Matchs 2×2 avec choix de modalité : (−) balle bloquée + renvoi 10 doigts, (+) double touche, (++) sans aménagement</li>
+                    <li>Points zone arrière adversaire = 10 pts, zone avant = 1 pt pour valoriser la profondeur</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Choisir la modalité de jeu adaptée à son niveau. Renvoi long régulier en zone arrière, communication efficace avec le partenaire</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S9 — EVALUATION -->
+          <div class="timeline-item">
+            <div class="timeline-dot">9</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-evaluation">✅ Évaluation</span><span class="session-num">Séance 9</span></div>
+                    <div class="session-title">Évaluation sommative N1</div>
+                    <div class="session-obj">Évaluer les compétences acquises sur les 3 critères — note sur 20</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Évaluation des 3 critères — Note finale sur 20</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Dispositif d'évaluation</h5>
+                  <ul>
+                    <li>Phase 1 : Montante-descendante 1×1</li>
+                    <li>Phase 2 : Matchs en 2×2, équipes homogènes, terrain 4.5×14m, filet haut (2.10-2.24m)</li>
+                    <li>Service cuillère ou balle lancée à 2 mains depuis son camp</li>
+                    <li>Points zone arrière adverse = 10 pts | Zone avant = 1 pt</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Barèmes</h5>
+                  <div class="bareme-grid">
+                    <div class="bareme-item bareme-ind">
+                      <span class="bareme-label">⚡ Individuel /8</span>
+                      Joueur intermittent (0-3) → Efficace en situation favorable (3.5-5) → Mobile pour être efficace (5.5-8)
+                    </div>
+                    <div class="bareme-item bareme-coll">
+                      <span class="bareme-label">👥 Collectif /8</span>
+                      Gains matchs /2 + Renvoi court (0-2) → Renvoi long (2.5-4) → Renvoi très long (4.5-6)
+                    </div>
+                    <div class="bareme-item bareme-arb">
+                      <span class="bareme-label">⚖️ Arbitre /2+2</span>
+                      Rôles insuffisants (0-0.75) → Rôles assumés (1-1.5) → Rôles assurés (1.75-2) + CMS respect
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /timeline -->
+      </div><!-- /col-left -->
+
+      <!-- Critères -->
+      <div>
+        <div class="criteria-panel">
+          <div class="criteria-title">Critères d'observation</div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">👤</span><span class="crit-label">Efficacité individuelle</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body open">
+              <div class="crit-subtitle">Dans l'organisation collective — sur 8 pts</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Joueur intermittent <span class="crit-pts">0-3 pts</span></div><div class="crit-desc">En situation favorable : renvoi 2-5 ballons /10. En situation défavorable : conserve 1-3 ballons /10.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Efficace en situation favorable <span class="crit-pts">3.5-5 pts</span></div><div class="crit-desc">Renvoi 6-7 ballons /10. Conserve 5 ballons /10 en situation défavorable.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Joueur mobile pour être efficace <span class="crit-pts">5.5-8 pts</span></div><div class="crit-desc">Renvoi 7-8 ballons /10. Conserve 7-8 ballons /10 en situation défavorable.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">👥</span><span class="crit-label">Efficacité collective</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body">
+              <div class="crit-subtitle">Dans le gain du match — sur 6 pts + gains /2</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Renvoi court <span class="crit-pts">0-2 pts</span></div><div class="crit-desc">Renvoi court avec aménagement. Renvoi direct et court sans aménagement.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Renvoi long <span class="crit-pts">2.5-4 pts</span></div><div class="crit-desc">Renvoi à 2 avec aménagement. Renvoi direct long.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Renvoi très long <span class="crit-pts">4.5-6 pts</span></div><div class="crit-desc">Renvoi à 2 vers zone arrière (avec aménagement). Relais vers zone arrière.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">⚖️</span><span class="crit-label">Arbitre &amp; Observateur</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body">
+              <div class="crit-subtitle">CMS n°2 — Efficacité dans le rôle d'arbitre — sur 2 pts</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Rôles insuffisamment assurés <span class="crit-pts">0-0.75</span></div><div class="crit-desc">Méconnaissance des règles. De nombreuses fautes non-signalées.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Rôles assumés <span class="crit-pts">1-1.5</span></div><div class="crit-desc">Connaît globalement les règles. Hésite à signaler des actions difficiles.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Rôles assurés <span class="crit-pts">1.75-2</span></div><div class="crit-desc">Assume le rôle d'arbitre avec assurance et justesse.</div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /content-grid -->
+  </div><!-- /panel-n1 -->
+
+
+  <!-- ══════════════════════════════════════
+       NIVEAU 2
+  ══════════════════════════════════════ -->
+  <div id="panel-n2" class="level-panel n2">
+
+    <div class="level-header">
+      <div class="level-header-text">
+        <div class="level-title-row">
+          <span class="level-title">Niveau 2</span>
+          <span class="badge badge-n2">Attaque intentionnelle</span>
+        </div>
+        <p class="level-cv-full">Jeu d'attaque intentionnelle pour créer la rupture (balles envoyées en zone arrière, balles placées, balles accélérées)</p>
+      </div>
+      <div class="format-pill">🏐 2×2 — 4.5m×12m — Filet 2m-2m24</div>
+    </div>
+
+    <div class="obstacles-bar">
+      <h4>Obstacles didactiques</h4>
+      <div class="obstacles-list">
+        <div class="obs-item"><span class="obs-num">1</span><span class="obs-text">Différencier trajectoires selon l'intention (conserver/renvoyer)</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">2</span><span class="obs-text">Différencier son rôle selon sa position sur le terrain</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">3</span><span class="obs-text">Attaque intentionnelle pour mettre en crise de temps l'adversaire</span></div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div>
+        <div class="timeline-title">Planification du cycle (8 séances)</div>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">1</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-diagnostic">👁️ Diagnostic</span><span class="session-num">Séance 1</span></div>
+                    <div class="session-title">Évaluation diagnostique N2</div>
+                    <div class="session-obj">Observer le niveau de jeu de renvoi acquis et diagnostiquer les besoins vers N2</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Observation globale des 3 critères pour situer les élèves</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Dispositif</h5>
+                  <ul>
+                    <li>Jeu 2×2, terrain 4.5×12m, filet 2m-2m24</li>
+                    <li>Engagement service cuillère ou balle lancée à 2 mains</li>
+                    <li>Match de 8 minutes</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Observables</h5>
+                  <ul>
+                    <li>Nombre de balles jouées en 1, 2 ou 3 touches</li>
+                    <li>Nombre de ballons envoyés dans chaque zone (avant, centrale, arrière)</li>
+                    <li>Lorsqu'il y a rupture : faute d'un joueur ou attaque efficace ?</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">2</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 2</span></div>
+                    <div class="session-title">Différencier trajectoires : conserver vs renvoyer</div>
+                    <div class="session-obj">Trajectoire haute pour conserver, tendue pour renvoyer</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : différenciation des trajectoires</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV1-SA1 : Fontaine (la bombe) — maintenir la balle au-dessus d'une surface définie sans qu'elle tombe</li>
+                    <li>AV1-SA2 : Réception haute sur service ½ terrain 1×1, récupérer à 2 mains au-dessus de la tête</li>
+                    <li>AV1-SA3 : Trajectoire tendue — ½ terrain 1+1, viser un cerceau en zone arrière (4-6m)</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Conserver : définir un point haut, frapper sous la balle pour maintenir une trajectoire haute. Renvoyer : frapper derrière la balle, utiliser la force des jambes, frappe ample jusqu'à l'extension complète</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">3</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 3</span></div>
+                    <div class="session-title">Apprentissage du smash</div>
+                    <div class="session-obj">Maîtriser la coordination impulsion-frappe pour le smash</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : technique d'attaque accélérée</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV1-SA4 : Jeu en triangle — recevoir la balle en la frappant à 1 main au sol</li>
+                    <li>AV1-SA4 : Depuis zone avant, partenaire lance une balle vers le haut pour qu'elle soit smashée dans le terrain adverse</li>
+                    <li>Self attaque : se lancer la balle «haut» dans la zone des 3m puis la frapper à 1 main après impulsion</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">S'aligner par rapport au ballon. Impulsion 2 pieds avec tirage des bras en arrière. Frappe ample et relâchée jusqu'à l'extension complète. Soit à 2 mains (balle placée) soit en smash (balle accélérée)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">4</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 4</span></div>
+                    <div class="session-title">Différencier son rôle selon sa position</div>
+                    <div class="session-obj">Joueur avant : renvoyer ou conserver. Joueur arrière : jouer haut en zone avant</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité collective : différenciation des rôles ZAV/ZAR</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV2-SA1 : Circuit 1 serveur + 1 réceptionneur ZAR + 1 relayeur ZAV, rotation d'un cran après chaque frappe</li>
+                    <li>AV2-SA2 : Idem mais choisir de renvoyer dans le terrain adverse ou garder en ZAV selon sa position</li>
+                    <li>AV2-SA3 : Jeu 2×2 avec 2 joueurs côte à côte</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Joueur avant (relayeur/attaquant) : orientation partagée, décide selon contexte de renvoyer ou de passer. Joueur arrière : oriente ses appuis vers la zone avant, vise un point haut dans la zone avant (3m)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">5</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 5</span></div>
+                    <div class="session-title">Attaque intentionnelle : zones vulnérables</div>
+                    <div class="session-obj">Mettre l'adversaire en crise de temps par placement ou accélération</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : attaque intentionnelle ciblée</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV3-SA1 : Self attaque — se lancer haut dans la zone des 3m puis smash après impulsion</li>
+                    <li>AV3-SA2 : Jeu 2×2, si balle tombe dans le terrain sans être touchée le score de l'équipe tombe à zéro (6×12m)</li>
+                    <li>AV3-SA3 : Enchaînement lanceur-relayeur-attaquant sur 1 terrain 6×12m</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Prendre des informations sur les zones libres du terrain adverse. Marquer en prenant de vitesse (smash) ou en mettant à distance (balle placée). Les zones vulnérables : zone arrière, zones d'interférence entre 2 joueurs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">6</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 6</span></div>
+                    <div class="session-title">Situation de référence &amp; arbitrage/observation</div>
+                    <div class="session-obj">Intégrer les rôles d'arbitre et d'observateur avec fiche de recueil</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité dans le rôle d'arbitre et d'observateur</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Contenu</h5>
+                  <ul>
+                    <li>Matchs 2×2 avec rotation : joueur → arbitre → observateur</li>
+                    <li>Fiche d'observation du jeu : nombre de touches, résultat (+/I/−) sur 20 engagements</li>
+                    <li>Valorisation des points directs depuis la zone avant (smash/balle placée descendante) = 3 pts</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Recueillir des données fiables sur le jeu adverse. Arbitrer avec aide, signaler les fautes. Exploiter les observations pour ajuster son projet de jeu</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">7</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 7</span></div>
+                    <div class="session-title">Consolidation tactique</div>
+                    <div class="session-obj">Stabiliser le jeu en construction collective d'attaque</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Les trois critères en situation de jeu réel</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Contenu</h5>
+                  <ul>
+                    <li>Circuits réception-passe-attaque-défense avec variables (serveur devient défenseur)</li>
+                    <li>Matchs 2×2 avec choix de modalité de jeu (−−/−/+)</li>
+                    <li>Travail du projet de jeu adapté à son niveau de maîtrise</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Jeu en relais efficace, choix tactique pertinent (utiliser la modalité optimale), attaque régulière vers la zone arrière adverse</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot">8</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-evaluation">✅ Évaluation</span><span class="session-num">Séance 8</span></div>
+                    <div class="session-title">Évaluation sommative N2 — DNB</div>
+                    <div class="session-obj">Évaluer la compétence de niveau 2 sur les 3 critères — note sur 20</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Évaluation DNB des 3 critères — Note finale sur 20</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Dispositif d'évaluation</h5>
+                  <ul>
+                    <li>Matchs par équipe de 3-4 joueurs, 2×2, terrain 4.5×14m, filet 2.10m</li>
+                    <li>3 modalités de jeu : (−−) balle bloquée, (−) jonglage en réception, (+) sans aménagement</li>
+                    <li>Points directs depuis zone avant (smash ou balle placée descendante) = 3 pts | Autres = 1 pt</li>
+                    <li>Rotation joueur-arbitre-observateur sur toute l'évaluation</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Barèmes</h5>
+                  <div class="bareme-grid">
+                    <div class="bareme-item bareme-ind">
+                      <span class="bareme-label">⚡ Individuel /8</span>
+                      Zone avant : 0-4 pts. Zone arrière : 0-4 pts. Joueur intermittent → mobile pour être efficace.
+                    </div>
+                    <div class="bareme-item bareme-coll">
+                      <span class="bareme-label">👥 Collectif /8</span>
+                      Gains /2 + Jeu en réaction (0-2.5) → Construction collective (3-4.5) → Intention de rupture (5-6)
+                    </div>
+                    <div class="bareme-item bareme-arb">
+                      <span class="bareme-label">⚖️ Arbitre &amp; Obs. /4</span>
+                      Rôles insuffisants (0-1.5) → Rôles assumés (2-3) → Rôles assurés (3.5-4)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Critères N2 -->
+      <div>
+        <div class="criteria-panel">
+          <div class="criteria-title">Critères d'observation</div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">👤</span><span class="crit-label">Efficacité individuelle</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body open">
+              <div class="crit-subtitle">Dans l'organisation collective — sur 8 pts</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Joueur intermittent <span class="crit-pts">0-1.75 pts</span></div><div class="crit-desc">Zone avant : renvoi avec/sans aménagement. Zone arrière : renvoi avec aménagement.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Efficace en situation favorable <span class="crit-pts">2-3 pts</span></div><div class="crit-desc">Zone avant : renvoi long ou balle d'attaque à 2 mains. Zone arrière : renvoi direct ou conserve sans aménagement.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Joueur mobile pour être efficace <span class="crit-pts">3.25-4 pts</span></div><div class="crit-desc">Zone avant : passe haute ou attaque à 1 main. Zone arrière : conserve en hauteur puis attaque ou soutient.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">👥</span><span class="crit-label">Efficacité collective</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body">
+              <div class="crit-subtitle">Dans le gain du match — sur 6 pts + gains /2</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Jeu en réaction <span class="crit-pts">0-2.5 pts</span></div><div class="crit-desc">Renvoi direct court puis renvoi direct long. Efficacité à renvoyer SEUL la balle chez l'adversaire.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Construction collective <span class="crit-pts">3-4.5 pts</span></div><div class="crit-desc">Construction aménagée. Renvoi long à 2. Efficacité à renvoyer à 2.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Intention collective de rupture <span class="crit-pts">5-6 pts</span></div><div class="crit-desc">Attaque en balle placée. Attaque en balle accélérée (tendue ou smash).</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">⚖️</span><span class="crit-label">Arbitre &amp; Observateur</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body">
+              <div class="crit-subtitle">Efficacité dans le rôle d'arbitre et d'observateur — sur 4 pts</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Rôles insuffisamment assurés <span class="crit-pts">0-1.5</span></div><div class="crit-desc">Recueille des données insuffisamment fiables. Hésite parfois sur des actions difficiles.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Rôles assumés <span class="crit-pts">2-3</span></div><div class="crit-desc">Recueille des données globales, justes et fiables. Assume le rôle d'arbitre avec de l'aide.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Rôles assurés <span class="crit-pts">3.5-4</span></div><div class="crit-desc">Recueille des données différenciées exploitables. Assure son rôle d'arbitre.</div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /panel-n2 -->
+
+
+  <!-- ══════════════════════════════════════
+       NIVEAU 3
+  ══════════════════════════════════════ -->
+  <div id="panel-n3" class="level-panel n3">
+
+    <div class="level-header">
+      <div class="level-header-text">
+        <div class="level-title-row">
+          <span class="level-title">Niveau 3</span>
+          <span class="badge badge-n3">Attaque différée</span>
+        </div>
+        <p class="level-cv-full">Jeu d'attaque différée face à une défense qui s'organise. Attaque qui atteint volontairement la cible en zone arrière, les joueurs assurent collectivement la protection du terrain</p>
+      </div>
+      <div class="format-pill">🏐 4×4 — 7m×14m — Filet 2m-2m30</div>
+    </div>
+
+    <div class="obstacles-bar">
+      <h4>Obstacles didactiques</h4>
+      <div class="obstacles-list">
+        <div class="obs-item"><span class="obs-num">1</span><span class="obs-text">Gérer la continuité de l'échange dans son camp</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">2</span><span class="obs-text">Mettre le partenaire en situation favorable (passe parallèle au filet)</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">3</span><span class="obs-text">Créer la rupture par une attaque efficace (smash)</span></div>
+        <span class="obs-arrow">→</span>
+        <div class="obs-item"><span class="obs-num">4</span><span class="obs-text">Organiser 2 niveaux de défense (contre + défense basse)</span></div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div>
+        <div class="timeline-title">Planification du cycle (8 séances)</div>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">1</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-diagnostic">👁️ Diagnostic</span><span class="session-num">Séance 1</span></div>
+                    <div class="session-title">Évaluation diagnostique N3</div>
+                    <div class="session-obj">Observer l'organisation collective et les capacités d'attaque</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Observation des 3 critères pour situer les élèves</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Dispositif</h5>
+                  <ul>
+                    <li>Jeu 4×4, terrain 7×14m, filet 2m-2m30</li>
+                    <li>Engagement en service, 3 services max par joueur</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Observables</h5>
+                  <ul>
+                    <li>Organisation collective : y a-t-il un joueur relais en zone avant ?</li>
+                    <li>Défense : y a-t-il 2 niveaux (un au filet = contre, une défense basse à l'arrière) ?</li>
+                    <li>Nombre de renvois après 1, 2, 3 touches et résultat de l'action</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">2</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 2</span></div>
+                    <div class="session-title">Gérer la continuité de l'échange</div>
+                    <div class="session-obj">Construire une attaque en 3 touches avec communication et soutien</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité collective : continuité de l'échange dans son camp</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV1-SA1 : 3 joueurs assis, au signal du serveur se lèvent et s'organisent pour renvoyer après que chacun ait touché la balle</li>
+                    <li>AV1-SA2 : 2 contre 1 sur ½ terrain, réceptionneur + passeur vs serveur, enchaîner réception-attaque</li>
+                    <li>AV1-SA3 : 4×4 avec passeur ZAV et 3 réceptionneurs ZAR formant un triangle de soutien</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Répartition des rôles PB/NPB. Enchaînement de tâches (réception-attaque / contre-passe). Jeu en anticipation : porter attention sur la phase à venir. Prévoir l'erreur probable : attitude préparatoire, communiquer «j'ai»</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">3</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 3</span></div>
+                    <div class="session-title">La passe haute parallèle au filet</div>
+                    <div class="session-obj">Réaliser une passe de qualité en zone avant pour le passeur</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : qualité de la passe en zone avant</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV2-SA1 : Passe et suit dans la zone des 3m parallèle au filet en passe haute</li>
+                    <li>AV2-SA2 : Lanceur engage balle au sol rebondissant en ZAV, passeur s'engage et réalise passe haute au-dessus de lui</li>
+                    <li>AV2-SA3 : Par 3, échanges en triangle avec un côté parallèle au filet en zone avant</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Se positionner sur le côté du terrain en orientation partagée, à 1 bras du filet. Se positionner épaules et pieds perpendiculaires au filet. Extension complète des bras pour une trajectoire haute et contrôlée</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">4</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 4</span></div>
+                    <div class="session-title">Créer la rupture par le smash</div>
+                    <div class="session-obj">Maîtriser le smash et atteindre les zones cibles adverses</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle : attaque efficace créatrice de rupture</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV3-SA1 : Self attaque — se lancer la balle en haut dans la zone des 3m, impulsion et smash</li>
+                    <li>AV3-SA2 : 1×1 face à face, 1 joueur smash en visant les genoux du partenaire qui défend et smash à son tour</li>
+                    <li>AV3-SA3 : Sur ½ terrain, par 2, tenter d'attaquer les zones cibles (9m-7m, 7m-5m, 5m-3m). Varier les hauteurs de filet</li>
+                    <li>AV3-SA4 : Jeu 4×4 avec joueur cible (dossard fluo) — viser la zone défendue par le joueur cible</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Être derrière la ligne des 3m quand le passeur touche la balle. Impulsion 2 pieds, tirage des bras en arrière, main gauche vise, épaule droite recule pour armer, fouetté (épaule-coude-main). Être en arrière de la balle au moment de la frappe</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">5</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 5</span></div>
+                    <div class="session-title">Prise d'information &amp; zones vulnérables</div>
+                    <div class="session-obj">Prendre des informations pendant l'échange pour placer l'attaque</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité individuelle et collective : intelligence tactique offensive</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>Jeu 4×4 terrain divisé en 4 zones (chacun 1 carré), 1 joueur avec dossard fluo = cible à atteindre</li>
+                    <li>La cible peut changer de zone entre les échanges mais pas pendant</li>
+                    <li>Jeu sur 40 services, chaque joueur sert 5× de suite, rotation toutes les 10 services</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Observer le placement adverse avant de frapper. Prendre des informations sur les zones libres pendant la transmission en zone avant. Placer une balle dans une zone vulnérable adverse</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">6</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 6</span></div>
+                    <div class="session-title">Défense organisée en 2 niveaux</div>
+                    <div class="session-obj">Organiser le contre et la défense basse</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité collective : organisation défensive</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Situations d'apprentissage</h5>
+                  <ul>
+                    <li>AV4-SA1 : Technique du contre — sur balle lancée avec trajectoire tendue au ras du filet, contreur bras fléchis prêt à bondir</li>
+                    <li>AV4-SA2 : Match 2×2 sans filet avec zone neutre (environ 3m) — dans la zone neutre on peut jouer mais pas attaquer dans le terrain adverse</li>
+                    <li>AV4-SA3 : 2×2 sur ½ terrain : 1 joueur devant au contre, 1 joueur derrière qui défend et se place en dehors de la zone du contre</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Contre : saut vertical (flexion profonde), bras tendus près des oreilles, mains symétriques, déclencher l'impulsion juste après l'attaquant. Défense arrière : manchette en espace bas, attitude préparatoire, se placer derrière la zone à défendre</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">7</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-apprentissage">📖 Apprentissage</span><span class="session-num">Séance 7</span></div>
+                    <div class="session-title">Consolidation &amp; rôles sociaux</div>
+                    <div class="session-obj">Intégrer attaque différée et défense 2 niveaux, rôles d'observateur et échauffement</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Efficacité dans le rôle d'observateur + échauffement autonome</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Contenu</h5>
+                  <ul>
+                    <li>Matchs 4×4 avec rotation joueur-observateur-échauffeur</li>
+                    <li>Utilisation des fiches de notes élèves (6 critères)</li>
+                    <li>Échauffement autonome évalué formativement par l'enseignant</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Acquisitions visées</h5>
+                  <div class="session-acq">Autonomie dans l'échauffement (construit et réfléchi pour l'APS). Observation et recueil de données différenciées et exploitables pour l'équipe</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot">8</div>
+            <div class="session-card">
+              <div class="session-header" onclick="toggleSession(this)">
+                <div class="session-top">
+                  <div>
+                    <div class="session-meta"><span class="type-badge type-evaluation">✅ Évaluation</span><span class="session-num">Séance 8</span></div>
+                    <div class="session-title">Évaluation sommative N3</div>
+                    <div class="session-obj">Évaluer la compétence de niveau 3 sur les 3 critères — note sur 20</div>
+                  </div>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="session-focus">● Évaluation des 3 critères — Note finale sur 20</div>
+              </div>
+              <div class="session-body">
+                <div class="session-section">
+                  <h5>Dispositif d'évaluation</h5>
+                  <ul>
+                    <li>Équipes de 4 joueurs homogènes, terrain 7×14m, filet 2m-2m30</li>
+                    <li>2 sets de 15 points, maximum 3 services consécutifs par le même joueur</li>
+                    <li>Évaluation continue de l'échauffement sur tout le cycle</li>
+                  </ul>
+                </div>
+                <div class="session-section">
+                  <h5>Barèmes</h5>
+                  <div class="bareme-grid">
+                    <div class="bareme-item bareme-ind">
+                      <span class="bareme-label">⚡ Individuel /9</span>
+                      Attaque /5 : passif (0-2) → engagé (2.5-3.5) → organisateur (4-5). Défense /4 : passif (0-1.75) → engagé (2-2.75) → ressource (3-4)
+                    </div>
+                    <div class="bareme-item bareme-coll">
+                      <span class="bareme-label">👥 Collectif /9</span>
+                      Org. att. /4 + Org. déf. /3 + Gain matchs /2. Organisation identifiable → met en danger → attaque organisée régulièrement avec passeur en ZAV
+                    </div>
+                    <div class="bareme-item bareme-arb">
+                      <span class="bareme-label">⚖️ Échauffement /2</span>
+                      Pas d'échauffement (0-0.5) → Élève suiveur (1) → Élève autonome (2). Évalué sur tout le cycle
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Critères N3 -->
+      <div>
+        <div class="criteria-panel">
+          <div class="criteria-title">Critères d'observation</div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">👤</span><span class="crit-label">Efficacité individuelle</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body open">
+              <div class="crit-subtitle">Contribution offensive et défensive — sur 9 pts</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Joueur passif / opportuniste <span class="crit-pts">0-3.75 pts</span></div><div class="crit-desc">PB : donne du temps sur balle facile, NPB : en retard. Défense : surpris, ralentit les balles faciles.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Joueur engagé <span class="crit-pts">4.5-6.5 pts</span></div><div class="crit-desc">Enchaîne att/déf. PB : passe haute en ZAV, attaques volontaires, service régulier. Début de contre, NPB réagit.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Joueur organisateur / ressource <span class="crit-pts">7-9 pts</span></div><div class="crit-desc">Anticipe. PB : passes hautes en ZAV, attaques en ZAR. Défend hors de son secteur, très mobile, NPB anticipe.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">👥</span><span class="crit-label">Efficacité collective</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body">
+              <div class="crit-subtitle">Organisation attaque + défense — sur 7 pts + gain /2</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Organisation peu identifiable <span class="crit-pts">0-2.75 pts</span></div><div class="crit-desc">Jeu aléatoire, ne met pas en danger l'adversaire. Organisation identifiable en réception seulement.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Met en danger sur envoi facile <span class="crit-pts">3-4.75 pts</span></div><div class="crit-desc">Privilégie le jeu avec relais en ZAV. Organisation identifiable en réception ET en défense (contre placé).</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Attaque organisée régulièrement <span class="crit-pts">5-7 pts</span></div><div class="crit-desc">Attaque avec passeur en ZAV. Organisation défensive efficace : contre et défense basse permettent de conserver en ZAV ou de marquer.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="criteria-accordion">
+            <div class="crit-header" onclick="toggleCrit(this)">
+              <div class="crit-header-left"><span class="crit-icon">⚖️</span><span class="crit-label">Arbitre &amp; Observateur</span></div>
+              <span class="crit-chev">▼</span>
+            </div>
+            <div class="crit-body">
+              <div class="crit-subtitle">Échauffement (évalué sur tout le cycle) — sur 2 pts</div>
+              <div class="crit-level">
+                <div class="crit-dot dot-low"></div>
+                <div><div class="crit-nv-label">Pas d'échauffement ou incomplet <span class="crit-pts">0-0.5</span></div><div class="crit-desc">Échauffement très sommaire ou inexistant. Élève passif ou suiveur.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-mid"></div>
+                <div><div class="crit-nv-label">Élève suiveur <span class="crit-pts">1</span></div><div class="crit-desc">Échauffement respectant les grands principes. Suit les propositions des autres.</div></div>
+              </div>
+              <div class="crit-level">
+                <div class="crit-dot dot-high"></div>
+                <div><div class="crit-nv-label">Élève autonome <span class="crit-pts">2</span></div><div class="crit-desc">Échauffement construit et réfléchi pour l'APS volley-ball. Prend des initiatives et organise le groupe.</div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /panel-n3 -->
+
+</main>
+
+<footer>
+  Source : FPC Volley-ball — I.Chastain, V.Vauloup — Académie de La Réunion
+</footer>
+
+<script>
+  // ── LEVEL SWITCHING ──
+  function showLevel(level) {
+    // hide all panels
+    document.querySelectorAll('.level-panel').forEach(p => p.classList.remove('active'));
+    // remove active class from all cards
+    document.querySelectorAll('.level-card').forEach(c => {
+      c.classList.remove('active-n1','active-n2','active-n3');
+      c.querySelector('.active-dot').style.display = 'none';
+    });
+    // show selected panel
+    document.getElementById('panel-' + level).classList.add('active');
+    // activate selected card
+    const card = document.querySelector('.level-card.' + level);
+    card.classList.add('active-' + level);
+    card.querySelector('.active-dot').style.display = 'block';
+  }
+
+  // ── SESSION TOGGLE ──
+  function toggleSession(header) {
+    const body = header.nextElementSibling;
+    const chev = header.querySelector('.chevron');
+    body.classList.toggle('open');
+    chev.classList.toggle('open');
+  }
+
+  // ── CRITERIA TOGGLE ──
+  function toggleCrit(header) {
+    const body = header.nextElementSibling;
+    const chev = header.querySelector('.crit-chev');
+    body.classList.toggle('open');
+    chev.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
