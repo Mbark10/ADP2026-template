@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Planificateur de Cycle Volley-ball — CRMEF Inezgane 2025/2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:#f1f4f9;color:#1a2035;line-height:1.6;}
+  .page{display:none;}.page.active{display:block;}
+  .hero{background:linear-gradient(135deg,#1d3a7a 0%,#2b52aa 100%);color:#fff;padding:48px 24px 40px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(240,130,30,0.15);}
+  .hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(40,160,100,0.12);}
+  .hero-inner{max-width:900px;margin:0 auto;position:relative;z-index:1;}
+  .hero-badge{display:inline-block;background:rgba(255,255,255,0.18);color:#fff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:14px;letter-spacing:.5px;}
+  .hero h1{font-size:clamp(26px,5vw,44px);font-weight:800;line-height:1.15;margin-bottom:10px;}
+  .hero h1 span{color:#f8a836;}
+  .hero p{font-size:15px;opacity:.82;max-width:600px;margin-bottom:18px;}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .hero-tag{background:rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:500;padding:4px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.25);}
+  .main-nav{background:#fff;border-bottom:1px solid #e0e5ef;padding:0 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+  .main-nav-inner{max-width:900px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;}
+  .nav-btn{flex-shrink:0;background:none;border:none;padding:14px 16px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#6b7a99;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;}
+  .nav-btn.active{color:#1d3a7a;border-bottom-color:#1d3a7a;font-weight:600;}
+  .nav-btn:hover{color:#1d3a7a;}
+  .container{max-width:900px;margin:0 auto;padding:32px 20px;}
+  .section-title{font-size:20px;font-weight:700;margin-bottom:6px;}
+  .section-sub{font-size:13px;color:#6b7a99;margin-bottom:24px;}
+  .level-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;}
+  .level-card{background:#fff;border-radius:14px;border:2px solid transparent;padding:22px;cursor:pointer;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+  .level-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.12);transform:translateY(-3px);}
+  .level-card.n1{border-color:#f8d7d7;}.level-card.n2{border-color:#fde9cc;}.level-card.n3{border-color:#c8f0dc;}
+  .level-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .lvl-badge{font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;}
+  .n1 .lvl-badge{background:#fde2e2;color:#c0392b;}.n2 .lvl-badge{background:#fde9cc;color:#e07b00;}.n3 .lvl-badge{background:#c8f0dc;color:#1a7a48;}
+  .level-card h3{font-size:16px;font-weight:700;margin-bottom:4px;}
+  .level-card .subtitle{font-size:12px;color:#6b7a99;margin-bottom:10px;}
+  .level-card .desc{font-size:13px;margin-bottom:14px;}
+  .crit-row{font-size:11px;font-weight:500;padding:6px 10px;border-radius:8px;margin-bottom:5px;}
+  .n1 .crit-row{background:#fff5f5;color:#c0392b;}.n2 .crit-row{background:#fff8ee;color:#e07b00;}.n3 .crit-row{background:#edfaf4;color:#1a7a48;}
+  .level-card .format{font-size:11px;color:#9aabb5;margin-top:10px;font-style:italic;}
+  .back-btn{background:none;border:none;color:rgba(255,255,255,.75);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:14px;padding:0;transition:color .2s;}
+  .back-btn:hover{color:#fff;}
+  .back-btn::before{content:'←';font-size:16px;}
+  .detail-hero{background:linear-gradient(135deg,#1d3a7a 0%,#2b52aa 100%);color:#fff;padding:40px 24px 32px;}
+  .detail-hero-inner{max-width:900px;margin:0 auto;position:relative;z-index:1;}
+  .detail-level-badge{display:inline-block;font-size:14px;font-weight:700;padding:6px 18px;border-radius:24px;margin-bottom:14px;}
+  .n1 .detail-level-badge{background:#fde2e2;color:#c0392b;}.n2 .detail-level-badge{background:#fde9cc;color:#e07b00;}.n3 .detail-level-badge{background:#c8f0dc;color:#1a7a48;}
+  .detail-hero h2{font-size:clamp(20px,4vw,30px);font-weight:800;margin-bottom:8px;}
+  .detail-hero .competence{font-size:14px;opacity:.8;max-width:680px;margin-bottom:14px;}
+  .detail-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .detail-tag{background:rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:500;padding:4px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.25);}
+  .sub-tabs{background:#fff;border-bottom:1px solid #e0e5ef;padding:0 20px;}
+  .sub-tabs-inner{max-width:900px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;}
+  .sub-btn{flex-shrink:0;background:none;border:none;padding:12px 14px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#6b7a99;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;}
+  .sub-btn.active{color:#1d3a7a;border-bottom-color:#1d3a7a;font-weight:600;}
+  .sub-content{display:none;}.sub-content.active{display:block;}
+  .timeline-wrap{background:#fff;border-radius:14px;border:1px solid #e0e5ef;padding:18px;margin-bottom:20px;overflow-x:auto;}
+  .timeline{display:flex;gap:6px;}
+  .tl-btn{flex-shrink:0;background:none;border:1px solid #e0e5ef;border-radius:12px;padding:8px 6px;min-width:52px;cursor:pointer;text-align:center;transition:all .2s;font-family:'Inter',sans-serif;}
+  .tl-btn:hover{border-color:#1d3a7a;background:#f0f4ff;}
+  .tl-btn.active{background:#1d3a7a;border-color:#1d3a7a;color:#fff;}
+  .tl-num{font-size:12px;font-weight:700;display:block;}
+  .tl-phase{font-size:9px;font-weight:600;padding:2px 4px;border-radius:6px;margin-top:3px;display:inline-block;}
+  .tl-btn.active .tl-phase{background:rgba(255,255,255,0.25);color:#fff;}
+  .phase-diag{background:#fde2e2;color:#c0392b;}.phase-app{background:#dce8ff;color:#1d3a7a;}.phase-cons{background:#fde9cc;color:#e07b00;}.phase-eval{background:#c8f0dc;color:#1a7a48;}
+  .session-card{background:#fff;border-radius:14px;border:1px solid #e0e5ef;padding:22px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+  .session-card:hover{box-shadow:0 6px 18px rgba(0,0,0,.09);}
+  .session-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;}
+  .s-num{min-width:42px;height:42px;border-radius:12px;background:#1d3a7a;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;}
+  .s-meta{flex:1;}
+  .s-title{font-size:16px;font-weight:700;margin-bottom:4px;}
+  .s-badges{display:flex;gap:6px;flex-wrap:wrap;}
+  .phase-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;}
+  .dur-badge{font-size:11px;color:#6b7a99;padding:3px 8px;border:1px solid #e0e5ef;border-radius:10px;}
+  .s-obj{display:flex;align-items:flex-start;gap:8px;margin-bottom:14px;font-size:13px;}
+  .s-obj::before{content:'🎯';font-size:14px;margin-top:1px;}
+  .criteria-grid{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:14px;}
+  @media(min-width:600px){.criteria-grid{grid-template-columns:1fr 1fr 1fr;}}
+  .crit-item{padding:8px 10px;border-radius:10px;font-size:12px;}
+  .crit-c1{background:#eef2ff;}.crit-c2{background:#fff8ee;}.crit-c3{background:#edfaf4;}
+  .crit-item strong{display:block;font-size:11px;font-weight:700;margin-bottom:2px;}
+  .crit-c1 strong{color:#1d3a7a;}.crit-c2 strong{color:#e07b00;}.crit-c3 strong{color:#1a7a48;}
+  .sit-toggle{background:none;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#1a2035;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 0;width:100%;text-align:left;}
+  .sit-toggle .arrow{transition:transform .2s;font-size:12px;}
+  .sit-toggle.open .arrow{transform:rotate(90deg);}
+  .sit-list{display:none;margin-top:8px;}
+  .sit-list.open{display:block;}
+  .sit-item{background:#f8fafc;border:1px solid #e8ecf2;border-radius:10px;padding:12px;margin-bottom:8px;}
+  .sit-item-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .sit-name{font-size:13px;font-weight:600;}
+  .sit-dur{font-size:11px;color:#6b7a99;}
+  .sit-crit{font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;}
+  .crit-C1{background:#dce8ff;color:#1d3a7a;}.crit-C2{background:#fde9cc;color:#e07b00;}.crit-C3{background:#c8f0dc;color:#1a7a48;}
+  .crit-echauffement{background:#f1f1f1;color:#666;}.crit-evaluation{background:#fde2e2;color:#c0392b;}
+  .sit-desc{font-size:12px;color:#555;margin-bottom:4px;}
+  .sit-setup{font-size:11px;color:#8a9ab5;font-style:italic;}
+  .all-sessions-title{font-size:16px;font-weight:700;margin:28px 0 14px;}
+  .criteria-detail-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:600px){.criteria-detail-grid{grid-template-columns:1fr 1fr 1fr;}}
+  .crit-detail-card{background:#fff;border-radius:14px;border:1px solid #e0e5ef;padding:18px;}
+  .crit-detail-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .crit-icon{width:36px;height:36px;border-radius:10px;background:#eef2ff;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .crit-detail-title{font-size:14px;font-weight:700;}
+  .crit-pts-badge{font-size:11px;font-weight:500;padding:3px 8px;border-radius:10px;border:1px solid #e0e5ef;color:#6b7a99;margin-top:3px;display:inline-block;}
+  .crit-detail-section{margin-bottom:12px;}
+  .crit-detail-section label{font-size:11px;font-weight:600;color:#6b7a99;display:block;margin-bottom:4px;}
+  .crit-detail-section p{font-size:13px;}
+  .crit-cible{font-size:13px;color:#1a7a48;}
+  .warn-box{background:#fff8ee;border:1px solid #fde9cc;border-radius:12px;padding:16px;margin-top:20px;display:flex;gap:10px;}
+  .warn-icon{font-size:18px;flex-shrink:0;}
+  .warn-title{font-size:13px;font-weight:700;margin-bottom:6px;}
+  .warn-text{font-size:12px;color:#555;margin-bottom:6px;}
+  .obstacles-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px;}
+  @media(min-width:600px){.obstacles-grid{grid-template-columns:1fr 1fr;}}
+  .obstacle-card{background:#fff;border-radius:12px;border:1px solid #e0e5ef;padding:14px;display:flex;gap:12px;}
+  .obs-num{min-width:34px;height:34px;border-radius:10px;background:#eef2ff;color:#1d3a7a;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .obs-text{font-size:13px;}
+  .obs-label{font-size:11px;font-weight:600;color:#6b7a99;margin-bottom:3px;}
+  .eduscol-box{background:#f1f4f9;border-radius:12px;padding:16px;margin-bottom:20px;}
+  .eduscol-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:13px;}
+  .eduscol-dot{width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;}
+  .dot-n1{background:#fde2e2;color:#c0392b;}.dot-n2{background:#fde9cc;color:#e07b00;}.dot-n3{background:#c8f0dc;color:#1a7a48;}
+  .lacune-box{background:#fff5f5;border:1px solid #fde2e2;border-radius:12px;padding:16px;}
+  .lacune-title{font-size:13px;font-weight:700;margin-bottom:8px;color:#c0392b;}
+  .lacune-text{font-size:13px;color:#555;}
+  .ref-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .ref-table th{background:#eef2ff;padding:10px 12px;text-align:left;font-size:12px;}
+  .ref-table th:first-child{border-radius:10px 0 0 0;}.ref-table th:last-child{border-radius:0 10px 0 0;}
+  .ref-table td{padding:10px 12px;border-bottom:1px solid #e0e5ef;vertical-align:top;}
+  .ref-table tr:last-child td{border-bottom:0;}
+  .pts-badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:8px;border:1px solid #e0e5ef;color:#6b7a99;margin-bottom:5px;}
+  .sources-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:20px;}
+  @media(min-width:600px){.sources-grid{grid-template-columns:1fr 1fr;}}
+  .source-card{background:#fff;border-radius:14px;border:1px solid #e0e5ef;padding:16px;display:flex;gap:14px;}
+  .source-icon{width:40px;height:40px;border-radius:12px;background:#eef2ff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+  .source-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+  .source-desc{font-size:12px;color:#6b7a99;}
+  .note-box{background:#f1f4f9;border-radius:12px;padding:14px;font-size:12px;color:#6b7a99;}
+  .note-box strong{color:#1a2035;}
+</style>
+</head>
+<body>
+
+<!-- ======================== PAGE HOME ======================== -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">ADP 2026 · CRMEF Inezgane · Section EPS · BOUARGANE</div>
+      <h1>Planificateur de Cycle<br><span>Volley-ball</span></h1>
+      <p>Planification de cycle d'apprentissage en volleyball basée sur 3 critères d'observation et 3 niveaux de maîtrise. Référentiel fusionné DNB + Bac GT.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">3 Critères</span>
+        <span class="hero-tag">3 Niveaux</span>
+        <span class="hero-tag">Collège &amp; Lycée</span>
+        <span class="hero-tag">12–20 ans</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="main-nav">
+    <div class="main-nav-inner">
+      <button class="nav-btn active" onclick="showHomeTab('levels',this)">🎯 Niveaux</button>
+      <button class="nav-btn" onclick="showHomeTab('grid',this)">📊 Grille de référence</button>
+      <button class="nav-btn" onclick="showHomeTab('sources',this)">📄 Sources</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- TAB NIVEAUX -->
+    <div id="htab-levels" class="sub-content active">
+      <p class="section-title">Choisir le niveau cible du cycle</p>
+      <p class="section-sub">Sélectionnez le niveau correspondant aux conduites observées lors du diagnostic initial.</p>
+      <div class="level-grid">
+        <div class="level-card n1" onclick="openLevel('N1')">
+          <div class="level-card-top"><span class="lvl-badge">N1</span><span>→</span></div>
+          <h3>Niveau 1 — Joueur passif</h3>
+          <p class="subtitle">Maîtrise insuffisante</p>
+          <p class="desc">Jeu en réaction · Renvoi direct · Aucune organisation</p>
+          <div class="crit-row"><strong>C1</strong> Efficacité collective · 0–2,5 pts</div>
+          <div class="crit-row"><strong>C2</strong> Efficacité individuelle · 0–3,5 pts</div>
+          <div class="crit-row"><strong>C3</strong> Arbitre/Observateur · 0–1,5 pt</div>
+          <p class="format">2×2 aménagé · Terrain 4,5×9m · Filet 2m10–2m35</p>
+        </div>
+        <div class="level-card n2" onclick="openLevel('N2')">
+          <div class="level-card-top"><span class="lvl-badge">N2</span><span>→</span></div>
+          <h3>Niveau 2 — Joueur intermittent</h3>
+          <p class="subtitle">Maîtrise fragile</p>
+          <p class="desc">Construction collective · Jeu 1–2 touches · Rôles limités</p>
+          <div class="crit-row"><strong>C1</strong> Efficacité collective · 3–4,5 pts</div>
+          <div class="crit-row"><strong>C2</strong> Efficacité individuelle · 4–6 pts</div>
+          <div class="crit-row"><strong>C3</strong> Arbitre/Observateur · 2–3 pts</div>
+          <p class="format">2×2 · Terrain 4,5×14m · Filet 2m10–2m24</p>
+        </div>
+        <div class="level-card n3" onclick="openLevel('N3')">
+          <div class="level-card-top"><span class="lvl-badge">N3</span><span>→</span></div>
+          <h3>Niveau 3 — Joueur engagé</h3>
+          <p class="subtitle">Maîtrise satisfaisante</p>
+          <p class="desc">Intention de rupture · Jeu 2–3 touches · Replacement collectif</p>
+          <div class="crit-row"><strong>C1</strong> Efficacité collective · 5–6 pts</div>
+          <div class="crit-row"><strong>C2</strong> Efficacité individuelle · 6,5–8 pts</div>
+          <div class="crit-row"><strong>C3</strong> Arbitre/Observateur · 3,5–4 pts</div>
+          <p class="format">3×3 ou 4×4 · Terrain 7×14m · Filet 2m–2m30</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB GRILLE -->
+    <div id="htab-grid" class="sub-content">
+      <p class="section-title">Grille d'observation fusionnée</p>
+      <p class="section-sub">Référentiel DNB + Bac GT (Lycée Jean Prévost) · 3 critères × 3 niveaux</p>
+      <div style="background:#fff;border-radius:14px;border:1px solid #e0e5ef;overflow:auto;">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Critère</th>
+              <th>❌ N1 — Maîtrise insuffisante</th>
+              <th>⚠️ N2 — Maîtrise fragile</th>
+              <th>✅ N3 — Maîtrise satisfaisante</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>C1 — Efficacité collective</strong><br><span style="color:#9aabb5;font-size:11px">jeu gain du match · /6 pts</span></td>
+              <td><span class="pts-badge">0–2,5 pts</span><br>Actions individuelles, renvoi direct systématique. Aucune organisation collective. Pas de différenciation des rôles. Jeu à 1 touche.</td>
+              <td><span class="pts-badge">3–4,5 pts</span><br>Progression vers zone favorable, organisation simple, zones avant/arrière émergentes. Jeu 1-2 touches. Communication sporadique.</td>
+              <td><span class="pts-badge">5–6 pts</span><br>Attaque intentionnelle, rôles précis, replacement collectif effectif. Jeu à 2-3 touches organisé.</td>
+            </tr>
+            <tr>
+              <td><strong>C2 — Efficacité individuelle</strong><br><span style="color:#9aabb5;font-size:11px">Attaque + Défense · /8 pts</span></td>
+              <td><span class="pts-badge">0–3,5 pts</span><br>Volume faible, évite la balle. Frappe à 1 main non maîtrisée. Aucune différenciation passe/manchette. Service aléatoire. Reste figé.</td>
+              <td><span class="pts-badge">4–6 pts</span><br>Participation intermittente, frappes explosives non maîtrisées. Service assuré sans placement. Peu de déplacement défensif.</td>
+              <td><span class="pts-badge">6,5–8 pts</span><br>Participation active, différenciation passe/manchette, service placé, déplacements efficaces, manchettes orientées.</td>
+            </tr>
+            <tr>
+              <td><strong>C3 — Arbitre/Observateur</strong><br><span style="color:#9aabb5;font-size:11px">rôles assurés · /4 pts</span></td>
+              <td><span class="pts-badge">0–1,5 pt</span><br>Données non fiables, fiche mal renseignée, vocabulaire absent. Hésite sur les décisions.</td>
+              <td><span class="pts-badge">2–3 pts</span><br>Données globales justes, assume le rôle avec aide. Vocabulaire correct mais limité.</td>
+              <td><span class="pts-badge">3,5–4 pts</span><br>Données différenciées exploitables. Rôle d'arbitre en autonomie. Vocabulaire précis et spécifique VB.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB SOURCES -->
+    <div id="htab-sources" class="sub-content">
+      <p class="section-title">Sources et références</p>
+      <p class="section-sub">Documents fondateurs de cette planification</p>
+      <div class="sources-grid">
+        <div class="source-card"><div class="source-icon">📘</div><div><p class="source-title">Educ Volley — FFVolley</p><p class="source-desc">Aide méthodologique du volley scolaire de la 6ème à la terminale. Groupe de réflexion mixte CTS FFVolley / Enseignants EPS. Oct. 2012, MAJ 2017.</p></div></div>
+        <div class="source-card"><div class="source-icon">📗</div><div><p class="source-title">FPC Volley-ball — Acad. La Réunion</p><p class="source-desc">I. Chastain, V. Vauloup. Cadre didactique de référence vers les niveaux 1, 2, 3 et 4. Formation Professionnelle Continue.</p></div></div>
+        <div class="source-card"><div class="source-icon">📋</div><div><p class="source-title">Analyse Réf. Volleyball — DNB</p><p class="source-desc">Fusion Référentiel DNB + Bac GT (Lycée Jean Prévost oct. 2021). Fiche enseignant pour diagnostic initial. Réf. ADP2026.</p></div></div>
+        <div class="source-card"><div class="source-icon">📄</div><div><p class="source-title">Ressources VLB DI-VLB</p><p class="source-desc">Correspondance Eduscol N1/N2 ←→ Degrés A/B/C de la grille. Capacités et conduites par niveau. BOUARGANE · CRMEF Inezgane.</p></div></div>
+      </div>
+      <div class="note-box"><strong>Note de propriété :</strong> Logique de scénarisation en 4 niveaux articulés — Planificateur de Cycle EPS v5 — BOUARGANE · CRMEF Inezgane · 2025/2026. À citer en Section C1 du CDC — Source n°1.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE DETAIL ======================== -->
+<div id="page-detail" class="page">
+  <div id="detail-hero" class="detail-hero">
+    <div class="detail-hero-inner" id="detail-hero-content"></div>
+  </div>
+  <div class="sub-tabs">
+    <div class="sub-tabs-inner">
+      <button class="sub-btn active" onclick="showSubTab('planning',this)">📅 Planification</button>
+      <button class="sub-btn" onclick="showSubTab('criteria',this)">🎯 Critères détaillés</button>
+      <button class="sub-btn" onclick="showSubTab('axes',this)">📚 Axes &amp; Obstacles</button>
+    </div>
+  </div>
+  <div class="container">
+    <div id="sub-planning" class="sub-content active"></div>
+    <div id="sub-criteria" class="sub-content"></div>
+    <div id="sub-axes" class="sub-content"></div>
+  </div>
+</div>
+
+<script>
+/* ===================== DONNÉES ===================== */
+const LEVELS = {
+  N1:{id:"N1",cls:"n1",label:"Niveau 1 — Joueur passif",subtitle:"Maîtrise insuffisante",competence:"Rechercher le gain du match par le renvoi de la balle, seul ou à l'aide d'un partenaire, en exploitant la profondeur du terrain adverse.",format:"2×2 aménagé · Terrain 4,5×9m · Filet 2m10–2m35",eduscol:"Eduscol N1 (bas) — Degrés A/B de la grille",obstacles:["Adopter une attitude préparatoire à la frappe","Maîtriser la trajectoire du ballon","Prendre en compte son partenaire","Identifier le terrain adverse comme cible"],c1:{label:"C1 — Efficacité collective",points:"0–2,5 pts",conduites:"Actions individuelles, renvoi direct systématique. Aucune organisation collective. Pas de différenciation des rôles. Jeu à 1 touche.",cible:"Progression vers zone de renvoi favorable, jeu 1-2 touches, zones émergentes."},c2:{label:"C2 — Efficacité individuelle",points:"0–3,5 pts",conduites:"Volume faible, évite la balle. Frappe à 1 main non maîtrisée. Aucune différenciation passe/manchette. Service aléatoire. Reste figé.",cible:"Participation intermittente, frappes sur balles faciles, service assuré sans placement."},c3:{label:"C3 — Arbitre/Observateur",points:"0–1,5 pt",conduites:"Données non fiables, fiche mal renseignée, vocabulaire absent. Hésite sur les décisions.",cible:"Données globales correctes, assume le rôle avec aide, vocabulaire limité."},lacune:"<strong>C2-A Joueur passif</strong> : volume de jeu faible, évite la balle ou intervient trop tard. Frappe à une seule main non maîtrisée. Aucune lecture de trajectoire. Cette lacune conditionne l'ensemble des capacités N1 et doit être traitée en priorité (Axes 1 et 2)."},
+  N2:{id:"N2",cls:"n2",label:"Niveau 2 — Joueur intermittent",subtitle:"Maîtrise fragile",competence:"Rechercher le gain du match en organisant l'attaque intentionnelle de la cible adverse par des balles accélérées ou placées.",format:"2×2 · Terrain 4,5×14m · Filet 2m10–2m24",eduscol:"Eduscol N1 (haut) / N2 — Degrés B/C de la grille",obstacles:["Différencier les trajectoires (conserver vs renvoyer)","Différencier son rôle selon sa position terrain","Attaque intentionnelle pour mettre l'adversaire en crise de temps"],c1:{label:"C1 — Efficacité collective",points:"3–4,5 pts",conduites:"Progression vers zone favorable, organisation simple, zones avant/arrière émergentes. Jeu 1-2 touches. Communication sporadique.",cible:"Attaque intentionnelle, rôles précis (passeur, réceptionneur, attaquant). Jeu 2-3 touches. Replacement collectif."},c2:{label:"C2 — Efficacité individuelle",points:"4–6 pts",conduites:"Participation intermittente, frappes explosives non maîtrisées. Service assuré sans placement. Peu de déplacement défensif.",cible:"Différenciation passe haute/manchette, service placé, déplacements efficaces, manchettes orientées vers le passeur."},c3:{label:"C3 — Arbitre/Observateur",points:"2–3 pts",conduites:"Données globales justes, assume le rôle avec aide. Vocabulaire correct mais limité.",cible:"Données différenciées exploitables. Rôle d'arbitre en autonomie. Vocabulaire précis VB."},lacune:"<strong>C1-B Construction fragile</strong> : la conservation en 2-3 touches est amorcée mais non stabilisée. L'attaque reste non intentionnelle. La transition construction → rupture est le prérequis clé du N2."},
+  N3:{id:"N3",cls:"n3",label:"Niveau 3 — Joueur engagé",subtitle:"Maîtrise satisfaisante",competence:"Mettre en œuvre une attaque qui atteint volontairement la cible, prioritairement la zone arrière. Protection collective du terrain.",format:"3×3 ou 4×4 · Terrain 7×14m · Filet 2m–2m30",eduscol:"Eduscol N2 — Degré C de la grille (cible du cycle)",obstacles:["Gérer la continuité de l'échange dans son camp","Mettre le partenaire en situation favorable de marque","Créer la rupture par une attaque efficace","Organiser la défense sur 2 niveaux"],c1:{label:"C1 — Efficacité collective",points:"5–6 pts",conduites:"Attaque intentionnelle, rôles précis, replacement collectif effectif. Jeu à 2-3 touches organisé.",cible:"Organisation collective de l'attaque créant incertitude. Mobilisation de 2-3 attaquants."},c2:{label:"C2 — Efficacité individuelle",points:"6,5–8 pts",conduites:"Participation active, différenciation passe/manchette, service placé, déplacements efficaces, manchettes orientées.",cible:"Enchaîne les actions att/déf. Passes hautes en ZAV. Attaques volontaires. Anticipe pour aider."},c3:{label:"C3 — Arbitre/Observateur",points:"3,5–4 pts",conduites:"Données différenciées exploitables. Rôle d'arbitre en autonomie. Vocabulaire précis et spécifique VB.",cible:"Dirige le jeu avec assurance. Reconnu par les pairs. Décisions justes et rapides."},lacune:"<strong>Organisation collective insuffisante</strong> : l'attaque manque de coordination (passeur souvent dos au filet, attaquant trop tôt au filet). La défense est spontanée sans 2 niveaux organisés. Le prérequis clé est la structuration du jeu en triangle avec rôles différenciés."}
+};
+
+const PHASES={diagnostic:{label:"Diag.",cls:"phase-diag"},apprentissage:{label:"App.",cls:"phase-app"},consolidation:{label:"Cons.",cls:"phase-cons"},evaluation:{label:"Éval.",cls:"phase-eval"}};
+
+const SESSIONS={
+  N1:[
+    {session_number:1,title:"Évaluation diagnostique",objective:"Observer et évaluer le niveau initial des élèves sur les 3 critères",phase:"diagnostic",c1_focus:"Observer : jeu à combien de touches ? Organisation collective ?",c2_focus:"Observer : l'élève cherche-t-il la balle ? Différencie-t-il passe/manchette ?",c3_focus:"Observer : l'élève sait-il renseigner une fiche ? Connaît-il le vocabulaire ?",situations:[{name:"Échauffement ludique",description:"Jonglage individuel : lancer-attraper au-dessus de soi. Puis échanges 1+1 coopératifs.",duration:10,criterion:"echauffement",setup:"Ballons légers (200-220g), espace libre"},{name:"Situation de référence diagnostique",description:"Jeu 2×2, terrain 4,5×7m, filet 2m10. Engagement lancé 2 mains. Observer 2-3 échanges par élève. Remplir la grille N1/N2/N3.",duration:35,criterion:"evaluation",setup:"Terrain 4,5×7m, filet 2m10, grille d'observation"},{name:"Bilan collectif",description:"Retour au calme. Présentation des 3 critères aux élèves. Auto-évaluation guidée.",duration:10,criterion:"C3",setup:"Tableau / fiche récapitulative"}]},
+    {session_number:2,title:"Lecture de trajectoire et attitude préparatoire",objective:"Passer d'une attitude passive à une attitude préparatoire (AV1 — Obstacle didactique 1)",phase:"apprentissage",c1_focus:"Non ciblé — travail individuel",c2_focus:"Attitude dynamique : jambes fléchies, regard sur la balle. Se déplacer pour se positionner sous la balle.",c3_focus:"Initiation : vocabulaire de base (service, passe, filet, faute)",situations:[{name:"Échauffement trajectoire",description:"Lancer la balle au-dessus de soi et courir la rattraper avant qu'elle tombe (7-8m). Varier les hauteurs.",duration:8,criterion:"echauffement",setup:"1 ballon par élève"},{name:"Coordination déplacement-frappe",description:"Envoyer le ballon au-dessus de soi, réaliser une action (s'accroupir, tour complet) puis rattraper. Record personnel.",duration:10,criterion:"C2",setup:"1 ballon par élève, espace libre"},{name:"1×1 attrapé-lancé avec plot",description:"Étape 1 EducVolley : attraper à 2 mains au-dessus de la tête, renvoyer par en bas. Faire le tour du plot après chaque renvoi.",duration:20,criterion:"C2",setup:"Terrain 4,5×9m, filet 2m35, 2 plots par terrain"},{name:"Match 1×1 adapté",description:"Match 1×1 en attrapé-lancé. Gain au 1er franchissement = 1pt, 2e = 2pts. Montante-descendante.",duration:15,criterion:"C2",setup:"Terrains 4,5×9m"},{name:"Vocabulaire arbitrage",description:"En binôme, observer et nommer : engagement, faute de filet, dehors, point. Fiche simple.",duration:7,criterion:"C3",setup:"Fiches vocabulaire illustrées"}]},
+    {session_number:3,title:"Maîtrise de la trajectoire du ballon",objective:"Passer d'une frappe aléatoire à une frappe maîtrisée (AV2 — Obstacle didactique 2)",phase:"apprentissage",c1_focus:"Non ciblé — travail individuel",c2_focus:"Passe à 10 doigts : contact au sommet du front, extension bras. Manchette : avant-bras orientés, ne pas frapper mais porter.",c3_focus:"Observer un camarade : compter les balles renvoyées / non renvoyées",situations:[{name:"Jonglage technique",description:"Jonglage en passe à 10 doigts contre le mur. Record d'échanges. Puis alterner passe/manchette.",duration:10,criterion:"C2",setup:"1 ballon par élève, mur"},{name:"1×1 dribble et renvoi",description:"Étape 2 EducVolley : intercepter à 1 main, faire rebondir 2 fois, renvoyer en passe à 10 doigts. Tour du plot.",duration:15,criterion:"C2",setup:"Terrain 4,5×9m, filet 2m35"},{name:"Service bas + réception",description:"Circuit : 1 serveur centre terrain + 1 réceptionneur qui doit renvoyer haut puis récupérer au-dessus de la tête.",duration:12,criterion:"C2",setup:"Demi-terrain, 1 joueur en attente à chaque poste"},{name:"Match 1×1 en passe",description:"1×1 avec 3 touches successives possibles. Engagement en passe. Filet haut. Points en zone arrière = double.",duration:15,criterion:"C2",setup:"Terrain 4,5×7m, filet haut"},{name:"Rôle observateur",description:"Chaque observateur compte : balles non touchées, touchées non renvoyées, renvoyées. Fiche simple.",duration:8,criterion:"C3",setup:"Fiche d'observation simplifiée"}]},
+    {session_number:4,title:"Prise en compte du partenaire — communication",objective:"Passer d'une centration sur soi à la prise en compte du partenaire (AV3 — Obstacle didactique 3)",phase:"apprentissage",c1_focus:"Communication : dire « j'ai ! » avant que la balle franchisse le filet. Sortir de l'alignement.",c2_focus:"Trajectoire haute vers la zone avant pour le partenaire. Se rendre disponible.",c3_focus:"Observer la communication dans une équipe : combien de fois les joueurs se parlent-ils ?",situations:[{name:"Fontaine coopérative",description:"Groupe de 4-6 : frapper la balle à tour de rôle pour la maintenir au-dessus d'une zone délimitée. Trajectoire haute.",duration:10,criterion:"C1",setup:"Zone délimitée par 4 cônes, ballon léger"},{name:"Réception-relais guidé",description:"2 réceptionneurs côte à côte + 2 serveurs. Dire 'j'ai', envoyer haut au centre pour que le NPB bloque. 1pt par balle bloquée.",duration:15,criterion:"C1",setup:"Terrain 3×7m, 2 serveurs alternés"},{name:"2×2 avec rebond accompagné",description:"Étape 3 EducVolley : intercepter à 1 main, rebond, passe au passeur qui bloque et relance. Attaquant renvoie en passe ou à 1 main. 3 touches obligatoires.",duration:20,criterion:"C1",setup:"Terrain 4,5×9m, filet 2m10, 4 plots"},{name:"Match 2×2 aménagé",description:"Match avec bonus : double point pour smash gagnant. Tour des plots obligatoire après renvoi.",duration:12,criterion:"C1",setup:"Terrain 4,5×9m"},{name:"Observation communication",description:"En 2 min d'observation, compter combien de fois les joueurs communiquent ('j'ai', 'à toi'). Partager les résultats.",duration:8,criterion:"C3",setup:"Fiche d'observation communication"}]},
+    {session_number:5,title:"Le terrain adverse comme cible",objective:"Identifier et exploiter la profondeur du terrain adverse (AV4 — Obstacle didactique 4)",phase:"apprentissage",c1_focus:"Conserver ou renvoyer : trajectoire haute pour le partenaire vs trajectoire tendue pour l'adversaire",c2_focus:"Orienter les appuis et surfaces de frappe vers la cible. Viser la zone arrière adverse.",c3_focus:"Arbitrer un match simplifié avec aide (sifflet, gestes de base)",situations:[{name:"Jeu de zones",description:"1×1 terrain 3×6m. Engagement en passe. 5pts quand la balle tombe en zone arrière, 1pt sinon.",duration:10,criterion:"C2",setup:"Terrain 3×6m, zones marquées"},{name:"Puissance de frappe",description:"En face à face : réceptionner à 3m et renvoyer en passe le plus loin possible. 3 zones : 0-3m=1pt, 3-5m=3pts, 5-7m=5pts.",duration:10,criterion:"C2",setup:"Demi-terrain, zones marquées au sol"},{name:"2×2 avec différenciation",description:"Si balle en ZAV : renvoi direct vers ZAR adverse. Si balle en ZAR : utiliser le partenaire relais. Filet bas 2m10.",duration:20,criterion:"C1",setup:"Terrain 4,5×9m, filet 2m10"},{name:"Matchs à thème",description:"2×2 : point dans la zone arrière = 3pts, zone avant = 1pt. Encourager la profondeur.",duration:15,criterion:"C1",setup:"Terrain 4,5×9m"},{name:"Arbitrage accompagné",description:"Par rotation, chaque élève arbitre 3 min avec un camarade expérimenté. Fiche gestes à effectuer.",duration:10,criterion:"C3",setup:"Sifflet, fiche gestes d'arbitrage"}]},
+    {session_number:6,title:"Construction du jeu en triangle",objective:"Organiser le jeu à 2 en 3 touches de balle : réception → passe → attaque",phase:"apprentissage",c1_focus:"3 touches de balle obligatoires. Passeur identifié en zone avant. Replacement après renvoi.",c2_focus:"Se déterminer passeur. Placer le partenaire. Préparer une attaque.",c3_focus:"Observer le nombre de touches de balle par échange",situations:[{name:"Passe et va",description:"A lance vers B, B intercepte en rebond accompagné, passe à A monté en ZAV. A renvoie en passe ou frappe. Rotation.",duration:12,criterion:"C1",setup:"Terrain 4,5×9m"},{name:"2×2 bloqué-relancé",description:"Étape 5 EducVolley : 3 touches obligatoires. Le passeur bloque et relance sans déplacement dans l'axe épaules. Filet 2m10.",duration:18,criterion:"C1",setup:"Terrain 4,5×9m, filet 2m10"},{name:"Initiation smash",description:"Self-attaque : se lancer la balle en ZAV puis frapper à 1 main au-dessus du filet. Pieds au sol d'abord, puis avec saut.",duration:10,criterion:"C2",setup:"Filet 2m10"},{name:"Match 2×2 en triangle",description:"Étape 6 EducVolley : construction offensive classique. 3 touches. Permutation droite/gauche après chaque renvoi.",duration:15,criterion:"C1",setup:"Terrain 4,5×9m, filet 2m10"},{name:"Fiche observation touches",description:"Observer une équipe : combien de jeux en 1, 2, 3 touches ? Résultat de chaque échange (+, -, =). Bilan.",duration:10,criterion:"C3",setup:"Fiche observation jeu"}]},
+    {session_number:7,title:"Consolidation du jeu collectif",objective:"Stabiliser le jeu en 3 touches et le placement en zone avant/zone arrière",phase:"consolidation",c1_focus:"Différenciation ZAV/ZAR. Joueur arrière → réceptionne et monte. Joueur avant → passe et/ou attaque.",c2_focus:"Différencier passe (haute pour partenaire) et attaque (tendue pour adversaire). Enchaîner réception + déplacement.",c3_focus:"Arbitrage en binôme : 1 au filet, 1 à la ligne. Répartition des rôles.",situations:[{name:"Circuit réception-passe-attaque",description:"Serveur + réceptionneur ZAR + passeur ZAV. Réception haute vers ZAV → passeur relance → attaque en ZAR adverse. Rotation après 5 services.",duration:15,criterion:"C1",setup:"Demi-terrain"},{name:"Matchs montante-descendante 2×2",description:"Équipes de 3 (2 joueurs + 1 observateur/arbitre). Rotation à tous les rôles. 3 services par joueur.",duration:25,criterion:"C1",setup:"Terrain 4,5×14m, filet 2m10-2m24"},{name:"Travail smash ciblé",description:"Sur balle lancée par le passeur, smasher en visant une zone du terrain (2 cerceaux). Points selon précision.",duration:10,criterion:"C2",setup:"Demi-terrain, cerceaux cibles"},{name:"Arbitrage et observation autonomes",description:"Chaque binôme arbitre un set complet. Fiche d'observation à remplir sur l'efficacité d'une équipe.",duration:15,criterion:"C3",setup:"Sifflet, fiche, score"}]},
+    {session_number:8,title:"Perfectionnement et projet de jeu",objective:"Élaborer un projet de jeu simple lié au renvoi de la balle et l'appliquer en match",phase:"consolidation",c1_focus:"Projet collectif : qui fait quoi ? Stratégie simple d'attaque (cibler la zone faible adverse).",c2_focus:"Enchaîner 2 actions : réception puis se rendre disponible pour attaquer ou soutenir.",c3_focus:"Données exploitables : l'observateur fournit des conseils à l'équipe lors du temps mort.",situations:[{name:"Temps de concertation",description:"Chaque équipe de 3 élabore un projet : répartition des rôles, zone de service, choix d'attaque. Fiche projet.",duration:8,criterion:"C1",setup:"Fiche projet de jeu"},{name:"Matchs avec temps morts",description:"Sets de 15 points. 1 temps mort par set. L'observateur communique ses données pour ajuster le projet.",duration:30,criterion:"C1",setup:"Terrain 4,5×14m"},{name:"Score à zéro",description:"Jeu 2×2 : si la balle tombe dans le terrain sans être touchée, le score de l'équipe tombe à zéro. Encourage la mobilité.",duration:12,criterion:"C2",setup:"Terrain 4,5×9m"},{name:"Bilan observations",description:"L'observateur présente oralement les résultats. Vocabulaire : efficacité d'attaque, taux de renvoi.",duration:10,criterion:"C3",setup:"Fiches remplies"}]},
+    {session_number:9,title:"Évaluation formative",objective:"Évaluer les progrès sur les 3 critères dans une situation de match",phase:"evaluation",c1_focus:"Évaluer : jeu en réaction (N1) / construction collective (N2) / intention de rupture (N3)",c2_focus:"Évaluer : joueur passif (N1) / intermittent (N2) / engagé (N3)",c3_focus:"Évaluer : rôles insuffisamment assurés (N1) / assumés (N2) / assurés (N3)",situations:[{name:"Échauffement libre",description:"Échanges coopératifs libres en 1+1 ou 2+2. Révision des acquis du cycle.",duration:10,criterion:"echauffement",setup:"Ballons"},{name:"Matchs d'évaluation",description:"Équipes de 3 (2+1). 2×2 sur terrain 4,5×14m. Chaque élève joue et observe. Sets de 15 pts. Grille de notation.",duration:40,criterion:"evaluation",setup:"Terrain 4,5×14m, grille DNB"},{name:"Auto-évaluation guidée",description:"Chaque élève se positionne N1/N2/N3 sur chaque critère. Comparaison avec l'évaluation enseignant.",duration:10,criterion:"C3",setup:"Fiche auto-évaluation"}]},
+    {session_number:10,title:"Évaluation sommative — DNB",objective:"Évaluation finale sur les 3 critères : C1(/6) + C2(/8) + C3(/4) + matchs(/2) = /20",phase:"evaluation",c1_focus:"Note C1 : jeu en réaction (0-2,5) / construction (3-4,5) / rupture (5-6) + gain matchs (/2)",c2_focus:"Note C2 : joueur passif (0-3,5) / intermittent (4-6) / engagé (6,5-8)",c3_focus:"Note C3 : rôles insuffisamment assurés (0-1,5) / assumés (2-3) / assurés (3,5-4)",situations:[{name:"Échauffement autonome",description:"Chaque équipe prépare son échauffement. Évaluation possible de l'autonomie.",duration:10,criterion:"echauffement",setup:""},{name:"Épreuve DNB Volley-ball",description:"Matchs en 2×2, équipes de 3 joueurs homogènes. Rotation à tous les rôles. Sets de 15 pts. Service aménagé possible. Fiche de match complète.",duration:45,criterion:"evaluation",setup:"Terrain 4,5×14m, filet 2m10-2m30, sifflet, fiche de match, grille de notation"},{name:"Retour et bilan de cycle",description:"Annonce des résultats. Bilan des progrès individuels. Perspectives pour le cycle suivant.",duration:5,criterion:"evaluation",setup:""}]}
+  ],
+  N2:[
+    {session_number:1,title:"Évaluation diagnostique N2",objective:"Évaluer les acquis N1 et identifier les points de progression vers N2",phase:"diagnostic",c1_focus:"Observer : continuité du jeu, utilisation du partenaire, nombre de touches par échange",c2_focus:"Observer : différencie-t-il passe/manchette ? Service régulier ? Choix tactiques ?",c3_focus:"Observer : l'élève assume-t-il un rôle d'observation autonome ?",situations:[{name:"Échauffement technique",description:"Échanges en passe à 10 doigts 1+1, puis manchette. Record d'échanges sans chute.",duration:10,criterion:"echauffement",setup:"1 ballon pour 2"},{name:"Situation de référence N2",description:"2×2 terrain 4,5×14m, filet 2m10-2m24. Service cuillère ou lancé. Sets de 15 pts. Observer le niveau de construction.",duration:35,criterion:"evaluation",setup:"Terrain 4,5×14m, grille"},{name:"Bilan et objectifs",description:"Présentation des objectifs N2 : attaque intentionnelle, différenciation trajectoires, arbitrage autonome.",duration:10,criterion:"C3",setup:"Tableau"}]},
+    {session_number:2,title:"Différencier les trajectoires : conserver vs renvoyer",objective:"Passer de trajectoires indifférenciées à des trajectoires adaptées à l'intention de jeu",phase:"apprentissage",c1_focus:"Trajectoire haute dans son terrain = donner du temps au partenaire. Trajectoire tendue = enlever du temps à l'adversaire.",c2_focus:"Construire un point haut en passe. Orienter les surfaces de frappe. Dissociation bras-jambes.",c3_focus:"Observer : compter les trajectoires hautes (conservation) vs tendues (renvoi) par équipe",situations:[{name:"La fontaine (la bombe)",description:"En frappant alternativement, maintenir la balle au-dessus d'une surface définie. Point haut = clé.",duration:10,criterion:"C2",setup:"Zone délimitée, ballon"},{name:"Réception haute en zone avant",description:"1×1 demi-terrain : sur service, réceptionner haut vers ZAV puis récupérer au-dessus de la tête.",duration:12,criterion:"C2",setup:"Demi-terrain"},{name:"Trajectoire tendue ciblée",description:"Sur balle lancée par partenaire, viser un cerceau en ZAR adverse (entre 4 et 6m). Score sur 10 lancers.",duration:10,criterion:"C2",setup:"Demi-terrain, cerceau"},{name:"2×2 valorisant la profondeur",description:"Points en ZAR adverse = 3pts, ZAV = 1pt. Forcer la différenciation des trajectoires.",duration:20,criterion:"C1",setup:"Terrain 4,5×14m"},{name:"Observation trajectoires",description:"Compter et classifier : combien de renvois directs courts / directs longs / à 2 joueurs ?",duration:8,criterion:"C3",setup:"Fiche observation"}]},
+    {session_number:3,title:"Différencier son rôle selon sa position",objective:"Joueur avant = relayeur ou attaquant. Joueur arrière = réceptionneur puis attaquant.",phase:"apprentissage",c1_focus:"Joueur ZAV : orientation partagée, décide de renvoyer ou passer. Joueur ZAR : envoie haut en ZAV puis enchaîne.",c2_focus:"En ZAV : renvoi direct en fond de terrain ou passe haute pour le partenaire. En ZAR : réception haute vers ZAV.",c3_focus:"Arbitrage des règles complètes : faute de filet, pénétration, tenu, 4 touches",situations:[{name:"Circuit par postes",description:"Serveur + réceptionneur ZAR + relayeur ZAV. Rotation après 5 services. Le réceptionneur enchaîne réception + montée pour attaquer.",duration:15,criterion:"C1",setup:"Demi-terrain"},{name:"Jeu direct ou indirect",description:"Lanceur varie ZAV/ZAR. Si ZAV : renvoi direct. Si ZAR : utiliser le relais. Les joueurs font le tour du plot avant.",duration:15,criterion:"C1",setup:"Terrain 4,5×9m"},{name:"2×2 joueurs côte à côte",description:"2×2 avec permutation obligatoire : le réceptionneur monte en ZAV après sa frappe. Le passeur recule.",duration:15,criterion:"C1",setup:"Terrain 4,5×14m"},{name:"Arbitrage autonome",description:"Chaque élève arbitre un set entier. Utilisation du sifflet. Signaler fautes de filet, pénétration, tenu. Évaluation par les pairs.",duration:15,criterion:"C3",setup:"Sifflet, fiche arbitrage"}]},
+    {session_number:4,title:"L'attaque intentionnelle — balle placée",objective:"Attaquer intentionnellement la cible adverse en plaçant la balle dans les zones vulnérables",phase:"apprentissage",c1_focus:"Construction de l'attaque en 2-3 touches visant une zone précise du terrain adverse",c2_focus:"Prendre des informations sur le placement adverse. Placer la balle loin des défenseurs.",c3_focus:"Observer les zones d'attaque : cartographier où tombent les points",situations:[{name:"Score à zéro",description:"2×2 : si la balle tombe sans être touchée, le score tombe à zéro. Encourage la lecture des zones libres.",duration:15,criterion:"C2",setup:"Terrain 6×12m"},{name:"Self-attaque ciblée",description:"Se lancer la balle haut en ZAV puis la frapper à 1 main en visant une zone du terrain (cerceaux). Score.",duration:10,criterion:"C2",setup:"Demi-terrain, cerceaux"},{name:"Enchaînement passe-attaque",description:"Lanceur frappe au sol pour rebond en ZAV. Passeur se déplace sous la balle, passe haute. Attaquant derrière 3m smash ou place.",duration:12,criterion:"C2",setup:"Demi-terrain, lanceur"},{name:"Matchs avec valorisation",description:"Points en ZAV sur balle placée ou smash (trajectoire descendante) = 3pts. Autres points = 1pt.",duration:18,criterion:"C1",setup:"Terrain 4,5×14m"},{name:"Cartographie des points",description:"L'observateur note sur un schéma de terrain où tombe chaque point marqué. Analyse collective.",duration:10,criterion:"C3",setup:"Fiche schéma terrain"}]},
+    {session_number:5,title:"L'attaque intentionnelle — balle accélérée",objective:"Mettre l'adversaire en crise de temps par des trajectoires tendues ou smashées",phase:"apprentissage",c1_focus:"Enchaînement collectif : réception → passe haute ZAV → attaque accélérée",c2_focus:"Smash : coordination impulsion-frappe. Se placer derrière la balle. Fouetté du poignet.",c3_focus:"Vocabulaire spécifique : smash, passe, manchette, service cuillère, let, ace",situations:[{name:"Travail coordination smash",description:"Self-attaque : se lancer haut dans les 3m, impulsion 2 pieds, frappe 1 main. D'abord pieds au sol puis avec saut.",duration:12,criterion:"C2",setup:"Zone 3m, filet"},{name:"Enchaînement en triangle",description:"Le jeu en triangle EducVolley : recevoir la balle en la frappant à 1 main au sol. Puis passeur → attaquant.",duration:15,criterion:"C1",setup:"Demi-terrain"},{name:"Matchs avec bonus smash",description:"2×2 : point en smash gagnant = 5pts. Encourage la prise de risque dans l'attaque.",duration:20,criterion:"C1",setup:"Terrain 4,5×14m"},{name:"Quiz vocabulaire",description:"Quiz oral en équipe : nommer les gestes d'arbitrage, les termes techniques. Points bonus.",duration:8,criterion:"C3",setup:"Questions préparées"}]},
+    {session_number:6,title:"Consolidation du jeu de construction",objective:"Stabiliser le jeu en 3 touches avec alternance conservation/attaque",phase:"consolidation",c1_focus:"Passeur identifié, communication systématique, replacement collectif après chaque action",c2_focus:"Différencier situation favorable (attaque directe) et défavorable (conservation → relais)",c3_focus:"Observation fine : ratio victoires/défaites, points directs vs points sur faute",situations:[{name:"Passe et va avancé",description:"3 touches sans aménagement. Passe à 10 doigts. Cible de l'attaquant définie par le passeur pendant son déplacement.",duration:15,criterion:"C1",setup:"Terrain 4,5×9m"},{name:"Tournoi montante-descendante",description:"Équipes de 3. Rotation joueurs/observateur. Sets de 11 pts. Montante-descendante au temps (5 min/match).",duration:30,criterion:"C1",setup:"Plusieurs terrains"},{name:"Statistiques de match",description:"Observateur remplit fiche complète : % de jeu en 1, 2, 3 touches ; points directs ; fautes. Restitution orale.",duration:15,criterion:"C3",setup:"Fiche statistique"}]},
+    {session_number:7,title:"Projet de jeu et adaptation tactique",objective:"Élaborer un projet de jeu lié à l'efficacité de l'attaque et l'adapter en cours de match",phase:"consolidation",c1_focus:"Utiliser le temps mort pour ajuster la stratégie. Cibler les points faibles adverses.",c2_focus:"Service placé pour déstabiliser la réception adverse. Enchaîner 2 rôles (réception → attaque).",c3_focus:"L'observateur conseille l'équipe pendant le temps mort avec des données chiffrées.",situations:[{name:"Élaboration projet",description:"Par équipe : choisir une stratégie d'attaque (cibler le joueur faible, zone arrière, alternance placé/accéléré). Écrire le projet.",duration:8,criterion:"C1",setup:"Fiche projet"},{name:"Matchs avec temps morts tactiques",description:"2 sets de 15 pts. 1 temps mort par set. L'observateur communique les données et conseille.",duration:35,criterion:"C1",setup:"Terrain 4,5×14m"},{name:"Bilan et auto-évaluation",description:"Comparer le projet initial avec la réalité du match. Ajustements. Auto-positionnement N1/N2/N3.",duration:12,criterion:"C3",setup:"Fiche bilan"}]},
+    {session_number:8,title:"Évaluation sommative N2",objective:"Évaluation finale N2 : C1(/8) + C2(/8) + C3(/4) = /20",phase:"evaluation",c1_focus:"Note C1 : jeu en réaction (0-2,5) / construction (3-4,5) / rupture (5-6) + gain matchs (/2)",c2_focus:"Note C2 : joueur passif (0-3,5) / intermittent (4-6) / engagé (6,5-8)",c3_focus:"Note C3 : rôles insuffisamment assurés (0-1,5) / assumés (2-3) / assurés (3,5-4)",situations:[{name:"Échauffement autonome",description:"Chaque équipe s'échauffe. Évaluation de l'autonomie et de la qualité.",duration:10,criterion:"echauffement",setup:""},{name:"Épreuve DNB N2",description:"Matchs 2×2 par équipe de 3-4 joueurs. Rotation joueur/observateur/arbitre. Sets 15 pts. Valorisation points directs ×3.",duration:45,criterion:"evaluation",setup:"Terrain 4,5×14m, filet 2m10, fiche de match, grille notation"},{name:"Bilan cycle",description:"Annonce résultats. Progrès identifiés. Perspectives N3.",duration:5,criterion:"evaluation",setup:""}]}
+  ],
+  N3:[
+    {session_number:1,title:"Évaluation diagnostique N3",objective:"Évaluer les acquis N2 et identifier les axes de progression vers N3",phase:"diagnostic",c1_focus:"Observer : l'équipe construit-elle des attaques en 3 touches ? Passeur identifié ? Replacement ?",c2_focus:"Observer : l'élève enchaîne-t-il les actions ? Attaque volontaire ? Défense organisée ?",c3_focus:"Observer : l'élève dirige-t-il le jeu en tant qu'arbitre ? Données exploitables ?",situations:[{name:"Échauffement complet",description:"Par équipe de 4 : échanges en triangle, service ciblé, manchettes orientées. Autonomie dans l'échauffement.",duration:10,criterion:"echauffement",setup:""},{name:"Situation de référence N3",description:"4×4 terrain 7×14m, filet 2m-2m30. Service bas. 3 services max par joueur. Observer l'organisation collective.",duration:40,criterion:"evaluation",setup:"Terrain 7×14m, grille N3"},{name:"Bilan et axes N3",description:"Présentation : continuité échange, passe parallèle au filet, attaque efficace, défense 2 niveaux.",duration:10,criterion:"C3",setup:"Tableau"}]},
+    {session_number:2,title:"Gérer la continuité de l'échange dans son camp",objective:"Organiser la conservation du ballon en 3 touches avec répartition des rôles",phase:"apprentissage",c1_focus:"3 joueurs touchent la balle. Passeur désigné intervient à la 2e touche. NPB en soutien (triangle autour du PB).",c2_focus:"Se reconnaître PB/NPB avant que la balle passe le filet. Communiquer 'j'ai'. Soutien du NPB.",c3_focus:"Vocabulaire avancé : rotation, poste 1-4, libero, contre, défense basse",situations:[{name:"Communication et soutien",description:"3 joueurs en réception assis au milieu. Au signal du serveur, se lever et s'organiser pour que chacun touche la balle avant le renvoi.",duration:12,criterion:"C1",setup:"Terrain 7×14m"},{name:"Enchaînement réception-attaque",description:"2 contre 1 : 2 joueurs (réception + passe) sur demi-terrain vs 1 serveur. Attaques depuis ZAV = 3pts, autres = 1pt. Rotation.",duration:15,criterion:"C2",setup:"Demi-terrain 6m"},{name:"Défense du terrain malgré erreurs",description:"4×4 : passeur fixe en ZAV + 3 réceptionneurs ZAR. Si réception mauvaise, NPB forment un triangle de soutien autour du PB.",duration:15,criterion:"C1",setup:"Terrain 7×14m"},{name:"Matchs 3×3 en triangle",description:"3×3, terrain 7×14m, organisation en triangle (2 arrières + 1 relais avant). 3 touches obligatoires.",duration:15,criterion:"C1",setup:"Terrain 7×14m"},{name:"Lexique avancé",description:"Travail sur le vocabulaire complet : postes, rotations, gestes d'arbitrage. Quiz rapide.",duration:8,criterion:"C3",setup:"Fiche vocabulaire avancé"}]},
+    {session_number:3,title:"Passe haute parallèle au filet",objective:"Améliorer la qualité de passe du relayeur pour permettre une attaque efficace",phase:"apprentissage",c1_focus:"Passeur perpendiculaire au filet, pieds et épaules orientés. Passe haute parallèle au filet.",c2_focus:"Extension complète des bras, poussée bas en haut. Se déplacer rapidement sous la trajectoire. Orientation partagée.",c3_focus:"Observer la qualité de la passe : hauteur, distance du filet, parallélisme. Fiche d'analyse.",situations:[{name:"Passe et suit",description:"File indienne le long de la zone 3m parallèle au filet. Passe haute puis suivre la balle. Record sans chute.",duration:10,criterion:"C2",setup:"Zone 3m, filet"},{name:"Travail placement-passe",description:"Lanceur frappe au sol pour rebond en ZAV. Passeur part du côté droit, se place sous la balle, passe haute. Attaquant enchaîne.",duration:15,criterion:"C2",setup:"Terrain 7×14m"},{name:"Passes en triangle",description:"3 joueurs en triangle, côté parallèle au filet en ZAV. Échanges en rotation sens aiguilles montre. Passe haute systématique.",duration:10,criterion:"C2",setup:"Zone avant"},{name:"Matchs 3×3 avec passeur fixe",description:"3×3 : le passeur est toujours le joueur de ZAV (poste 3 ou décalé). Évaluer la régularité des passes.",duration:20,criterion:"C1",setup:"Terrain 7×14m"},{name:"Analyse de la passe",description:"Observer 10 passes : noter hauteur (H/M/B), parallélisme (oui/non), distance filet (proche/loin). Bilan.",duration:10,criterion:"C3",setup:"Fiche analyse passes"}]},
+    {session_number:4,title:"Créer la rupture par l'attaque",objective:"Passer d'une attaque peu efficace à une attaque qui crée la rupture (smash, placement)",phase:"apprentissage",c1_focus:"Construction collective : réception → passe haute ZAV → attaque smashée ou placée en ZAR adverse",c2_focus:"Smash : impulsion 2 pieds, bras tiré en arrière, fouetté épaule-coude-main. Rester derrière la balle.",c3_focus:"Observer l'attaque : distinguer smash / balle placée / renvoi direct. Compter l'efficacité.",situations:[{name:"Self-attaque avancée",description:"Se lancer haut en zone 3m. Impulsion et smash en visant une zone précise (5-7m, 7-9m). Score de précision.",duration:10,criterion:"C2",setup:"Demi-terrain, zones cibles"},{name:"Smash face à face",description:"1×1 échange : 1 joueur smash en visant les genoux, partenaire défend en manchette et smash à son tour.",duration:10,criterion:"C2",setup:"Face à face, filet"},{name:"Atteindre la zone cible",description:"Sur demi-terrain en longueur, par 2 (passeur + attaquant). Attaquer les zones cibles entre 3m et 9m. Varier hauteur de filet.",duration:12,criterion:"C2",setup:"Demi-terrain, zones marquées"},{name:"Jeu de la cible mouvante",description:"4×4 : 1 joueur cible avec dossard dans chaque équipe. Marquer 5pts si la balle atteint sa zone. Change de zone chaque fois.",duration:18,criterion:"C1",setup:"Terrain 7×14m, dossards"},{name:"Statistiques d'attaque",description:"Observer : nombre d'attaques smashées/placées/directes. Taux de réussite. Communiquer les résultats.",duration:10,criterion:"C3",setup:"Fiche stats attaque"}]},
+    {session_number:5,title:"Organisation défensive — 2 niveaux",objective:"Passer d'une défense spontanée à une défense organisée (contre + défense basse)",phase:"apprentissage",c1_focus:"2 niveaux de défense : joueur avant au contre (blocage), joueurs arrière en défense basse (manchette).",c2_focus:"Contre : bras fléchis, saut vertical, mains au-dessus du filet. Défense : jambes fléchies, anticipation, orientation vers ZAV.",c3_focus:"Observer la défense : contre présent ? Efficace ? Défense basse organisée ? Fiche d'analyse.",situations:[{name:"Technique du contre",description:"Sur balle lancée tendue au ras du filet par partenaire à 3m. Le contreur bras fléchis bondit. Puis sur self-attaque.",duration:12,criterion:"C2",setup:"Filet, ballon"},{name:"Construction espace bas",description:"2×2 sans filet avec zone neutre. Dans la zone neutre on peut jouer mais pas attaquer. Service trajectoire montante.",duration:12,criterion:"C2",setup:"Demi-terrains avec zone neutre 3m"},{name:"2×2 contre + défense basse",description:"1 joueur devant qui contre systématiquement + 1 joueur AR qui défend tout ce qui passe au-delà du contre. Rotation.",duration:15,criterion:"C1",setup:"Demi-terrain"},{name:"4×4 défense organisée",description:"Matchs 4×4 : obligation de tenter le contre à chaque attaque adverse. Défenseurs arrière se placent hors de l'ombre du contre.",duration:18,criterion:"C1",setup:"Terrain 7×14m"},{name:"Analyse défensive",description:"Observer : balles bloquées au contre, manchettes orientées vers passeur, balles tombées sans défense. Données chiffrées.",duration:8,criterion:"C3",setup:"Fiche analyse défense"}]},
+    {session_number:6,title:"Consolidation du système de jeu complet",objective:"Stabiliser le jeu offensif en 3 touches et le système défensif à 2 niveaux",phase:"consolidation",c1_focus:"Système en 3+1 (3×3 ou 4×4 avec organisation). Attaque régulière en 3 touches. Défense contre + basse.",c2_focus:"Enchaîner les actions : réception → passe → attaque puis transition défense. Service régulier et placé.",c3_focus:"Arbitrage complet en autonomie. Gestes précis. Chronologie gestuelle respectée.",situations:[{name:"Circuit offensif complet",description:"Service → réception ZAR → passe passeur ZAV → attaque. Puis le serveur devient défenseur en ZAR. Rotation toutes les 5 balles.",duration:15,criterion:"C1",setup:"Terrain 7×14m"},{name:"Tournoi 3×3 ou 4×4",description:"Matchs 3×3 (7×14m) ou 4×4. Sets de 15 pts. Montante-descendante. Rotation des rôles (joueur, arbitre, observateur).",duration:30,criterion:"C1",setup:"Terrains 7×14m"},{name:"Arbitrage compétition",description:"Arbitrer seul un set complet. Coup de sifflet franc, gestes précis, chronologie respectée. Évaluation par les pairs.",duration:15,criterion:"C3",setup:"Sifflet, fiche"}]},
+    {session_number:7,title:"Projet collectif et adaptation",objective:"Construire et adapter un projet de jeu collectif face à l'adversité",phase:"consolidation",c1_focus:"Temps de concertation : adapter l'organisation (réception, système de passe, zones d'attaque) au jeu adverse.",c2_focus:"Service comme arme tactique. Varier les zones de service. S'adapter aux rotations.",c3_focus:"L'observateur fournit une analyse complète exploitable par l'équipe pendant le temps mort.",situations:[{name:"Construction du projet",description:"Chaque équipe élabore son projet : système offensif (passeur décalé), système défensif (qui contre ?), plan B.",duration:10,criterion:"C1",setup:"Fiche projet collectif"},{name:"Matchs avec adaptation",description:"2 sets de 25 pts. 2 temps morts par set. L'observateur analyse et communique pendant les temps morts.",duration:35,criterion:"C1",setup:"Terrain 7×14m"},{name:"Analyse et ajustement",description:"Bilan post-match : le projet a-t-il fonctionné ? Que modifier ? Auto-évaluation sur les 3 critères.",duration:15,criterion:"C3",setup:"Fiche bilan + auto-évaluation"}]},
+    {session_number:8,title:"Évaluation sommative N3",objective:"Évaluation finale N3 : évaluation complète sur les 3 critères",phase:"evaluation",c1_focus:"Efficacité de l'organisation collective en attaque (/4) + en défense (/3) + gain matchs (/2)",c2_focus:"Contribution individuelle offensive (/5) + défensive (/4) + échauffement (/2)",c3_focus:"Rôles d'arbitre et d'observateur assurés en autonomie (/4)",situations:[{name:"Échauffement autonome évalué",description:"Chaque équipe prépare et conduit son échauffement. Évaluation : pas d'échauffement (0-0,5), suiveur (1), autonome (2).",duration:10,criterion:"echauffement",setup:""},{name:"Épreuve N3",description:"4×4 terrain 7×14m. 2 sets de 15 pts. Max 3 services consécutifs par joueur. Rotation et remplacement. Grille notation complète.",duration:45,criterion:"evaluation",setup:"Terrain 7×14m, filet 2m-2m30, grille notation N3"},{name:"Bilan de cycle",description:"Résultats, progrès, perspectives. Lien avec le Baccalauréat pour les lycéens.",duration:5,criterion:"evaluation",setup:""}]}
+  ]
+};
+
+/* ===================== NAVIGATION ===================== */
+let currentLevel=null, activeSessionIdx=0;
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function showHomeTab(tab,btn){
+  document.querySelectorAll('#page-home .sub-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('htab-'+tab).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+function showSubTab(tab,btn){
+  document.querySelectorAll('#page-detail .sub-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sub-'+tab).classList.add('active');
+  document.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+
+/* ===================== OPEN LEVEL ===================== */
+function openLevel(id){
+  currentLevel=id; activeSessionIdx=0;
+  const level=LEVELS[id], sessions=SESSIONS[id];
+  document.getElementById('detail-hero-content').innerHTML=`
+    <button class="back-btn" onclick="showPage('page-home')">Retour aux niveaux</button>
+    <span class="detail-level-badge ${level.cls}">${level.id}</span>
+    <h2>${level.label}</h2>
+    <p class="competence">${level.competence}</p>
+    <div class="detail-tags">
+      <span class="detail-tag">${level.format}</span>
+      <span class="detail-tag">${sessions.length} séances</span>
+      <span class="detail-tag">${level.eduscol}</span>
+    </div>`;
+  document.querySelectorAll('#page-detail .sub-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sub-planning').classList.add('active');
+  document.querySelectorAll('.sub-btn').forEach((b,i)=>{b.classList.remove('active');if(i===0)b.classList.add('active');});
+  buildPlanning(level,sessions);
+  buildCriteria(level);
+  buildAxes(level);
+  showPage('page-detail');
+}
+
+/* ===================== BUILD PLANNING ===================== */
+function buildPlanning(level,sessions){
+  let tl='<div class="timeline-wrap"><p style="font-size:14px;font-weight:700;margin-bottom:12px">Progression du cycle — '+sessions.length+' séances</p><div class="timeline">';
+  sessions.forEach((s,i)=>{
+    const ph=PHASES[s.phase];
+    tl+=`<button class="tl-btn${i===0?' active':''}" onclick="selectSession(${i})">
+      <span class="tl-num">S${s.session_number}</span>
+      <span class="tl-phase${i===0?'':' '+ph.cls}">${ph.label}</span>
+    </button>`;
+  });
+  tl+='</div></div>';
+  let all='<p class="all-sessions-title">Vue d\'ensemble — Toutes les séances</p>';
+  sessions.forEach((s,i)=>{ all+=buildSessionCard(s,i); });
+  document.getElementById('sub-planning').innerHTML=tl+'<div id="active-session">'+buildSessionCard(sessions[0],0)+'</div>'+all;
+}
+
+function selectSession(idx){
+  const sessions=SESSIONS[currentLevel];
+  activeSessionIdx=idx;
+  document.querySelectorAll('.tl-btn').forEach((b,i)=>{
+    b.classList.toggle('active',i===idx);
+    const ph=b.querySelector('.tl-phase');
+    ph.className=i===idx?'tl-phase':'tl-phase '+PHASES[sessions[i].phase].cls;
+  });
+  document.getElementById('active-session').innerHTML=buildSessionCard(sessions[idx],idx);
+  document.getElementById('active-session').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function buildSessionCard(s,idx){
+  const phMap={diagnostic:"Diagnostic",apprentissage:"Apprentissage",consolidation:"Consolidation",evaluation:"Évaluation"};
+  const phCls={diagnostic:"phase-diag",apprentissage:"phase-app",consolidation:"phase-cons",evaluation:"phase-eval"};
+  const dur=s.situations.reduce((a,x)=>a+(x.duration||0),0);
+  let sits='';
+  if(s.situations.length>0){
+    const sid='sit-'+idx;
+    sits=`<button class="sit-toggle" onclick="toggleSit('${sid}',this);event.stopPropagation()">
+      <span class="arrow">▶</span> ${s.situations.length} situation${s.situations.length>1?'s':''} d'apprentissage
+    </button><div class="sit-list" id="${sid}">`;
+    s.situations.forEach(sit=>{
+      sits+=`<div class="sit-item">
+        <div class="sit-item-top">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="sit-crit crit-${sit.criterion}">${sit.criterion}</span>
+            <span class="sit-name">${sit.name}</span>
+          </div>
+          <span class="sit-dur">${sit.duration} min</span>
+        </div>
+        <p class="sit-desc">${sit.description}</p>
+        ${sit.setup?`<p class="sit-setup">Matériel : ${sit.setup}</p>`:''}
+      </div>`;
+    });
+    sits+='</div>';
+  }
+  return `<div class="session-card" onclick="selectSession(${idx})">
+    <div class="session-top">
+      <div class="s-num">S${s.session_number}</div>
+      <div class="s-meta">
+        <div class="s-title">${s.title}</div>
+        <div class="s-badges">
+          <span class="phase-badge ${phCls[s.phase]}">${phMap[s.phase]}</span>
+          <span class="dur-badge">⏱ ${dur} min</span>
+        </div>
+      </div>
+    </div>
+    <div class="s-obj">${s.objective}</div>
+    <div class="criteria-grid">
+      <div class="crit-item crit-c1"><strong>C1</strong>${s.c1_focus}</div>
+      <div class="crit-item crit-c2"><strong>C2</strong>${s.c2_focus}</div>
+      <div class="crit-item crit-c3"><strong>C3</strong>${s.c3_focus}</div>
+    </div>
+    ${sits}
+  </div>`;
+}
+
+function toggleSit(id,btn){
+  document.getElementById(id).classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+/* ===================== BUILD CRITERIA ===================== */
+function buildCriteria(level){
+  const icons=['👥','👤','⚖️'];
+  const cards=['c1','c2','c3'].map((k,i)=>{
+    const c=level[k];
+    return `<div class="crit-detail-card">
+      <div class="crit-detail-header">
+        <div class="crit-icon">${icons[i]}</div>
+        <div><div class="crit-detail-title">${c.label}</div><span class="crit-pts-badge">${c.points}</span></div>
+      </div>
+      <div class="crit-detail-section"><label>Conduites observées</label><p>${c.conduites}</p></div>
+      <div class="crit-detail-section" style="border-top:1px solid #e0e5ef;padding-top:12px">
+        <label style="color:#1a7a48">Cible de progression</label><p class="crit-cible">${c.cible}</p>
+      </div>
+    </div>`;
+  }).join('');
+  let warn='';
+  if(level.id==='N2'||level.id==='N3'){
+    warn=`<div class="warn-box"><div class="warn-icon">⚠️</div><div>
+      <div class="warn-title">Distinction clé — « Rôles assumés » (N2) vs « Rôles assurés » (N3)</div>
+      <p class="warn-text">Au degré B (N2) — <strong>Rôles assumés</strong> : l'élève a encore besoin d'une aide extérieure (enseignant, co-arbitre) pour assumer ses responsabilités.</p>
+      <p class="warn-text">Au degré C (N3) — <strong>Rôles assurés</strong> : l'élève est pleinement autonome, fiable et reconnu par ses pairs dans son rôle.</p>
+    </div></div>`;
+  }
+  document.getElementById('sub-criteria').innerHTML=`
+    <p class="section-title" style="margin-bottom:4px">Critères d'observation — ${level.id}</p>
+    <p class="section-sub">Conduites observées et cibles de progression pour chaque critère</p>
+    <div class="criteria-detail-grid">${cards}</div>${warn}`;
+}
+
+/* ===================== BUILD AXES ===================== */
+function buildAxes(level){
+  const obs=level.obstacles.map((o,i)=>`
+    <div class="obstacle-card">
+      <div class="obs-num">${i+1}</div>
+      <div><div class="obs-label">Obstacle didactique ${i+1}</div><div class="obs-text">${o}</div></div>
+    </div>`).join('');
+  document.getElementById('sub-axes').innerHTML=`
+    <p class="section-title" style="margin-bottom:4px">Obstacles didactiques &amp; Axes de travail</p>
+    <p class="section-sub">Source : FPC Volley-ball Acad. La Réunion + Educ Volley FFVolley</p>
+    <div class="obstacles-grid">${obs}</div>
+    <div class="eduscol-box">
+      <p style="font-size:14px;font-weight:700;margin-bottom:12px">ℹ️ Correspondance Eduscol ←→ Grille</p>
+      <div class="eduscol-row"><div class="eduscol-dot dot-n1">A</div><div><strong>Degré A</strong> ←→ Eduscol N1 (bas) : 6 capacités · lacunes dominantes</div></div>
+      <div class="eduscol-row"><div class="eduscol-dot dot-n2">B</div><div><strong>Degré B</strong> ←→ Eduscol N1 (haut) : 3 capacités complémentaires · en construction</div></div>
+      <div class="eduscol-row" style="margin-bottom:0"><div class="eduscol-dot dot-n3">C</div><div><strong>Degré C</strong> ←→ Eduscol N2 : 14 capacités cibles du cycle</div></div>
+      <p style="font-size:11px;color:#9aabb5;margin-top:10px;padding-top:10px;border-top:1px solid #dce3ed">Source : ressources_VLB_DI-VLB · BOUARGANE · CRMEF Inezgane · Section EPS · ADP 2026</p>
+    </div>
+    <div class="lacune-box">
+      <div class="lacune-title">⚠️ Lacune dominante identifiée</div>
+      <p class="lacune-text">${level.lacune}</p>
+    </div>`;
+}
+</script>
+</body>
+</html>
