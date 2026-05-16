@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ADP Volley-Ball — Diagnostic & Planification · CRMEF Inezgane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Literata',serif;background:#F2F5F9;color:#0B1F35;min-height:100vh}
+button,select,input{font-family:inherit;cursor:pointer}
+table{border-collapse:collapse;width:100%}
+.app{display:flex;flex-direction:column;min-height:100vh}
+/* HEADER */
+header{background:linear-gradient(135deg,#0B1F35 0%,#1A3A5A 100%);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(11,31,53,.18)}
+.hdr{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.hdr-logo{display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;padding:0}
+.hdr-logo-t{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;line-height:1.1;text-align:left}
+.hdr-logo-s{font-family:'DM Mono',monospace;font-size:9px;color:#7AABCE;letter-spacing:.06em;text-transform:uppercase}
+.hdr-steps{display:flex;align-items:center;flex:1;justify-content:center;gap:0}
+.hdr-step{display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.4;min-width:60px;transition:opacity .2s}
+.hdr-step.active,.hdr-step.done{opacity:1}
+.hdr-dot{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;color:#fff}
+.hdr-step.active .hdr-dot{background:#E8621A}
+.hdr-step.done .hdr-dot{background:#16A34A}
+.hdr-lbl{font-family:'DM Mono',monospace;font-size:8px;color:#7AABCE;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.hdr-step.active .hdr-lbl{color:#F5A96A}
+.hdr-conn{flex:1;height:1px;background:rgba(255,255,255,.12);max-width:32px}
+.hdr-conn.done{background:#16A34A}
+.hdr-act{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn-sm{font-family:'DM Mono',monospace;font-size:10px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:5px 12px;letter-spacing:.04em}
+.btn-nav{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff;border:none;border-radius:8px;padding:7px 16px;cursor:pointer}
+.btn-nav.start{background:#E8621A}
+.btn-nav.back{background:rgba(255,255,255,.1)}
+/* VIEW MANAGEMENT */
+.view{display:none}.view.active{display:block}
+/* HOME */
+.hero{background:linear-gradient(145deg,#0B1F35 0%,#1A4A7A 55%,#1E6AAA 100%);color:#fff;padding:80px 24px 100px;text-align:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(232,98,26,.18);border:1px solid rgba(232,98,26,.4);border-radius:100px;padding:5px 16px;margin-bottom:20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;color:#F5A96A;text-transform:uppercase}
+.hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,5vw,52px);line-height:1.1;margin-bottom:16px}
+.hero h1 span{color:#F5A96A}
+.hero-sub{font-family:'Literata',serif;font-size:17px;color:rgba(255,255,255,.72);line-height:1.65;margin-bottom:12px;font-style:italic}
+.hero-note{font-family:'Literata',serif;font-size:14px;color:rgba(255,255,255,.50);margin-bottom:40px}
+.btn-hero{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;background:#E8621A;color:#fff;border:none;border-radius:12px;padding:16px 40px;cursor:pointer}
+.btn-hero:hover{background:#C85214}
+.hs{padding:60px 24px}.hs.g{background:#fff}.hs.w{background:#F2F5F9}
+.si{max-width:1000px;margin:0 auto}
+.sc{text-align:center;margin-bottom:32px}
+.stag{font-family:'DM Mono',monospace;font-size:11px;color:#E8621A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.sh2{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;color:#0B1F35}
+/* OBS CARDS */
+.obs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.obs-card{background:#fff;border:1.5px solid #D4DDE8;border-radius:12px;overflow:hidden}
+.obs-head{background:#0B1F35;padding:12px 16px;display:flex;gap:8px;align-items:center}
+.obs-code{font-family:'DM Mono',monospace;font-size:13px;color:#E8621A;font-weight:500}
+.obs-crit{font-family:'DM Mono',monospace;font-size:10px;color:#7AABCE;letter-spacing:.05em}
+.obs-lbl{font-family:'Syne',sans-serif;font-weight:600;font-size:12px;color:#fff;flex:1}
+.obs-body{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.deg-row{display:flex;gap:10px;align-items:flex-start}
+.deg-badge{font-family:'DM Mono',monospace;font-weight:500;font-size:13px;border-radius:6px;padding:2px 8px;flex-shrink:0}
+.deg-badge.A{color:#DC2626;background:#FEF2F2}
+.deg-badge.B{color:#D97706;background:#FFF7ED}
+.deg-badge.C{color:#16A34A;background:#F0FDF4}
+.deg-txt{font-family:'Literata',serif;font-size:12.5px;color:#2D4059;line-height:1.45;padding-top:2px;font-style:italic}
+/* STEPS BAR */
+.steps-bar{background:#0B1F35;border-radius:14px;padding:28px;display:flex;gap:0;align-items:stretch;flex-wrap:wrap}
+.step-block{flex:1;min-width:140px;padding:16px;border-right:1px solid rgba(255,255,255,.1);text-align:center}
+.step-block:last-child{border-right:none}
+.step-num{font-family:'DM Mono',monospace;font-size:26px;color:#E8621A;font-weight:500;margin-bottom:8px}
+.step-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;margin-bottom:6px}
+.step-desc{font-family:'Literata',serif;font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;font-style:italic}
+.cta-s{background:#E8621A;padding:48px 24px;text-align:center}
+.cta-s h2{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;color:#fff;margin-bottom:16px}
+.cta-s p{font-family:'Literata',serif;font-size:15px;color:rgba(255,255,255,.85);line-height:1.6;margin-bottom:28px;font-style:italic}
+.btn-ctai{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;background:#fff;color:#E8621A;border:none;border-radius:10px;padding:14px 36px;cursor:pointer}
+/* CSV format */
+.csv-box{background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;padding:12px 16px;margin-top:8px}
+.csv-box-t{font-family:'DM Mono',monospace;font-size:10px;color:#16A34A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.csv-box-c{font-family:'DM Mono',monospace;font-size:11px;color:#0B1F35;line-height:1.6}
+/* TOOL */
+main{flex:1}
+.tool-inner{max-width:1200px;margin:0 auto;padding:36px 24px 64px}
+.tool-inner.narrow{max-width:900px}
+.tool-inner.mid{max-width:800px}
+.step-tag{font-family:'DM Mono',monospace;font-size:11px;color:#E8621A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.step-h{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:#0B1F35;margin-bottom:6px}
+.step-note{font-family:'Literata',serif;font-size:14px;color:#4A6278;font-style:italic;line-height:1.55}
+.card{background:#fff;border:1.5px solid #D4DDE8;border-radius:14px;overflow:hidden;margin-bottom:20px}
+.card-head{background:#F8FAFC;border-bottom:1px solid #E2EAF2;padding:14px 20px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#0B1F35;display:flex;justify-content:space-between;align-items:center}
+.card-body{padding:16px 20px}
+/* LEVEL BUTTONS */
+.lvl-grp{display:flex;gap:4px}
+.lvl-btn{font-family:'DM Mono',monospace;font-weight:500;font-size:12px;border-radius:6px;padding:5px 10px;border:1.5px solid #D4DDE8;cursor:pointer;transition:all .15s;background:#F2F5F9;color:#4A6278}
+.lvl-btn.N1{background:#FEF2F2;color:#DC2626;border-color:#FCA5A5}
+.lvl-btn.N2{background:#FFF7ED;color:#D97706;border-color:#FCD34D}
+.lvl-btn.N3{background:#F0FDF4;color:#16A34A;border-color:#86EFAC}
+/* OBS LEGEND */
+.obs-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.obs-chip{background:#F8FAFC;border:1px solid #D4DDE8;border-radius:8px;padding:7px 12px;display:flex;gap:8px;align-items:center}
+.obs-chip-code{font-family:'DM Mono',monospace;font-size:11px;color:#E8621A;font-weight:500}
+.obs-chip-lbl{font-family:'Literata',serif;font-size:12px;color:#4A6278}
+/* CSV ROW */
+.csv-row{padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-csv{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;background:#F2F5F9;color:#0B1F35;border:1.5px solid #D4DDE8;border-radius:8px;padding:9px 18px;cursor:pointer}
+.csv-hint{font-family:'Literata',serif;font-size:12px;color:#7A8FA6;font-style:italic}
+.csv-err{font-family:'DM Mono',monospace;font-size:11px;color:#DC2626}
+.btn-demo{font-family:'DM Mono',monospace;font-size:10px;background:#E8F4FD;color:#1A4A7A;border:1px solid #B3D0E8;border-radius:6px;padding:4px 10px;cursor:pointer}
+/* FORM TABLE */
+.form-table th{font-family:'Syne',sans-serif;font-weight:600;font-size:11px;color:#4A6278;padding:10px 12px;text-align:left;white-space:nowrap;background:#F2F5F9}
+.form-table td{padding:6px 10px;border-top:1px solid #E8EEF4;vertical-align:middle}
+.form-input{padding:6px 10px;border:1px solid #D4DDE8;border-radius:7px;font-family:'Literata',serif;font-size:13px;color:#0B1F35;background:#fff;outline:none;width:100%}
+.form-input.nm{width:130px}.form-input.tm{width:90px}.form-input.rm{width:90px}
+.btn-rm{background:none;border:none;color:#FCA5A5;font-size:16px;line-height:1;padding:2px 4px;cursor:pointer}
+.btn-add{font-family:'DM Mono',monospace;font-size:11px;color:#1A4A7A;background:none;border:1.5px dashed #B3D0E8;border-radius:8px;padding:6px 16px;cursor:pointer}
+.btn-analyse{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;background:#E8621A;color:#fff;border:none;border-radius:10px;padding:14px 36px;cursor:pointer;margin-top:8px}
+/* PROFILE BADGES */
+.pbadge{font-family:'DM Mono',monospace;font-weight:500;font-size:12px;border-radius:6px;padding:2px 8px;display:inline-block;border:1.5px solid}
+.pbadge.A{color:#DC2626;background:#FEF2F2;border-color:#FCA5A5}
+.pbadge.B{color:#D97706;background:#FFF7ED;border-color:#FCD34D}
+.pbadge.C{color:#16A34A;background:#F0FDF4;border-color:#86EFAC}
+/* DIAG TABLE */
+.diag-table th{font-family:'Syne',sans-serif;font-weight:600;font-size:11px;color:#94B8D4;padding:10px;text-align:left;white-space:nowrap;background:#0B1F35}
+.diag-table td{padding:8px 10px;border-top:1px solid #E8EEF4;font-size:12px;vertical-align:middle}
+/* BILAN */
+.bilan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.bilan-card{border-radius:12px;padding:16px;text-align:center;border:2px solid}
+.bilan-count{font-family:'Syne',sans-serif;font-weight:800;font-size:28px}
+.bilan-lbl{font-family:'DM Mono',monospace;font-size:12px;margin-bottom:4px}
+.bilan-pct{font-family:'Literata',serif;font-size:12px;color:#4A6278}
+/* BARS */
+.bar-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.bar-lbl{font-family:'DM Mono',monospace;font-size:12px;color:#4A6278;min-width:230px}
+.bar-track{flex:1;min-width:120px;background:#E8EEF4;border-radius:4px;height:20px;display:flex;overflow:hidden}
+.bar-seg{height:100%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;color:#fff;font-weight:500;min-width:20px}
+.bar-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:#0B1F35;min-width:120px}
+.bar-status{font-family:'Literata',serif;font-size:12px;font-style:italic}
+/* GROUPS */
+.grp-row{display:flex;gap:12px;align-items:flex-start;border-radius:8px;padding:10px 14px;margin-bottom:8px}
+.grp-names{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;color:#0B1F35}
+.grp-sa{font-family:'DM Mono',monospace;font-size:10px;color:#4A6278;margin-top:3px;letter-spacing:.04em}
+/* DECISION BAR */
+.dec-bar{background:#0B1F35;border-radius:12px;padding:16px 20px;display:flex;gap:14px;align-items:center;margin-top:12px}
+.dec-txt{flex:1}
+.dec-code{font-family:'DM Mono',monospace;font-size:10px;color:#7AABCE;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.dec-msg{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#fff}
+.dec-note{font-family:'Literata',serif;font-size:12px;color:rgba(255,255,255,.5);font-style:italic;margin-top:4px}
+/* AXES */
+.axe-card{background:#fff;border:2px solid #D4DDE8;border-radius:12px;padding:16px 20px;cursor:pointer;transition:border-color .15s,background .15s;margin-bottom:14px}
+.axe-card.sel{background:#EEF6FF;border-color:#2563A8}
+.axe-inner{display:flex;gap:14px;align-items:flex-start}
+.axe-check{flex-shrink:0;width:24px;height:24px;border:2px solid #D4DDE8;border-radius:5px;background:#fff;display:flex;align-items:center;justify-content:center;margin-top:2px;font-size:13px;color:#fff;transition:all .15s}
+.axe-card.sel .axe-check{background:#2563A8;border-color:#2563A8}
+.axe-content{flex:1}
+.axe-badges{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.axe-id{font-family:'DM Mono',monospace;font-size:11px;color:#E8621A;font-weight:500}
+.axe-rank{font-family:'DM Mono',monospace;font-size:10px;color:#7A8FA6;background:#F2F5F9;border-radius:6px;padding:2px 8px}
+.axe-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#0B1F35;margin-bottom:8px;line-height:1.4}
+.axe-stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.axe-stat{font-family:'DM Mono',monospace;font-size:11px}
+.axe-stat.hi{color:#DC2626}.axe-stat.mi{color:#D97706}.axe-stat.lo{color:#16A34A}.axe-stat.bl{color:#1A4A7A}
+.axe-caps{display:flex;gap:6px;flex-wrap:wrap}
+.axe-cap{font-family:'DM Mono',monospace;font-size:10px;color:#4A6278;background:#F2F5F9;border-radius:5px;padding:2px 8px}
+.axes-meta{margin-top:10px;font-family:'DM Mono',monospace;font-size:12px}
+.axes-meta.ok{color:#16A34A}.axes-meta.warn{color:#D97706}
+/* STEP 3 */
+.range-row{display:flex;align-items:center;gap:20px;margin-bottom:20px}
+.range-row input[type=range]{flex:1;accent-color:#E8621A;cursor:pointer}
+.range-val{text-align:center;min-width:140px}
+.range-num{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:#E8621A;line-height:1}
+.range-unit{font-family:'DM Mono',monospace;font-size:10px;color:#7A8FA6;letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+.range-info{background:#F8FAFC;border-radius:10px;padding:12px 16px;font-family:'DM Mono',monospace;font-size:12px;color:#1A4A7A;margin-bottom:20px}
+.seq-prev{display:flex;flex-direction:column;gap:10px}
+.seq-row{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1.5px solid #E2EAF2;border-radius:10px;padding:14px 16px}
+.seq-num-box{background:#0B1F35;color:#E8621A;border-radius:8px;width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.seq-num-lbl{font-size:8px;color:#7AABCE;letter-spacing:.04em}
+.seq-num-v{font-size:14px;font-weight:500;line-height:1}
+.seq-seances{font-family:'DM Mono',monospace;font-size:10px;color:#E8621A;margin-bottom:3px}
+.seq-title{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;color:#0B1F35;line-height:1.35}
+.seq-note-t{font-family:'DM Mono',monospace;font-size:10px;color:#7A8FA6;margin-top:4px}
+/* STEP 4 */
+.plan-section{margin-bottom:32px}
+.seq-header{background:#0B1F35;border-radius:12px 12px 0 0;padding:16px 20px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.seq-info{flex:1}
+.seq-meta{font-family:'DM Mono',monospace;font-size:10px;color:#7AABCE;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.seq-main-t{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:#fff;margin-bottom:4px}
+.seq-obj-t{font-family:'Literata',serif;font-size:13px;color:rgba(255,255,255,.65);font-style:italic}
+.seq-axe-tags{display:flex;gap:8px;flex-wrap:wrap}
+.seq-axe-tag{font-family:'DM Mono',monospace;font-size:10px;color:#F5A96A;background:rgba(232,98,26,.15);border:1px solid rgba(232,98,26,.3);border-radius:6px;padding:3px 10px}
+.plan-tw{border:1.5px solid #D4DDE8;border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
+.plan-t{overflow-x:auto}
+.plan-t table th{font-family:'Syne',sans-serif;font-weight:600;font-size:11px;color:#4A6278;padding:10px 12px;text-align:left;white-space:nowrap;border-bottom:1px solid #D4DDE8;background:#F2F5F9}
+.plan-t table td{padding:10px 12px;border-top:1px solid #E8EEF4;vertical-align:top;font-size:11px}
+.td-s{font-family:'DM Mono',monospace;font-weight:500;font-size:13px;color:#E8621A;white-space:nowrap}
+.td-a{font-family:'DM Mono',monospace;font-size:11px;color:#1A4A7A}
+.td-o{font-family:'Syne',sans-serif;font-weight:600;font-size:12px;color:#0B1F35;max-width:160px}
+.td-g{max-width:200px}
+.td-g-code{font-family:'DM Mono',monospace;font-size:10px;margin-bottom:3px}
+.td-g-desc{font-family:'Literata',serif;font-size:11px;color:#2D4059;line-height:1.4;margin-bottom:4px}
+.td-g-crit{font-family:'DM Mono',monospace;font-size:10px;font-style:italic}
+.td-g.ga{background:#FEF2F2}.td-g.gb{background:#FFFBEB}.td-g.gc{background:#F0FDF4}
+.td-g.ga .td-g-code{color:#DC2626}.td-g.gb .td-g-code{color:#D97706}.td-g.gc .td-g-code{color:#16A34A}
+.td-g.ga .td-g-crit{color:#DC2626}.td-g.gb .td-g-crit{color:#D97706}.td-g.gc .td-g-crit{color:#16A34A}
+.indic-row{background:#F8FAFC}
+.indic-c{display:flex;gap:10px;align-items:flex-start;font-family:'DM Mono',monospace;font-size:10px;padding:6px 12px 8px 48px;border-bottom:1px solid #E8EEF4}
+.indic-note{color:#4A6278;letter-spacing:.04em}
+.indic-sub{color:#7A8FA6;font-style:italic}
+.res-table th{font-family:'Syne',sans-serif;font-weight:600;font-size:11px;color:#4A6278;padding:10px 14px;text-align:left}
+.res-table td{padding:10px 14px;border-top:1px solid #E8EEF4}
+.plan-footer{background:#0B1F35;border-radius:0 0 12px 12px;padding:16px 20px}
+.plan-footer p{font-family:'Literata',serif;font-size:13px;color:rgba(255,255,255,.8);line-height:1.6}
+.plan-footer .nt{font-family:'Literata',serif;font-size:11px;color:rgba(255,255,255,.4);margin-top:8px;font-style:italic}
+/* BUTTONS */
+.btn-next{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;background:#E8621A;color:#fff;border:none;border-radius:10px;padding:14px 36px;margin-top:20px;cursor:pointer}
+.btn-back{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;background:#fff;color:#4A6278;border:1.5px solid #D4DDE8;border-radius:8px;padding:12px 24px;cursor:pointer}
+.btn-exp{font-family:'DM Mono',monospace;font-size:11px;background:#F2F5F9;color:#0B1F35;border:1.5px solid #D4DDE8;border-radius:8px;padding:8px 16px;cursor:pointer}
+.flex-btns{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+footer{background:#0B1F35;color:rgba(255,255,255,.35);text-align:center;padding:16px 24px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em}
+@media print{.no-print{display:none!important}header{position:static}body{background:#fff}}
+@media(max-width:640px){.hdr-steps{display:none}.tool-inner{padding:20px 16px 48px}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- HEADER -->
+<header>
+  <div class="hdr">
+    <button class="hdr-logo" onclick="showView('home')">
+      <span style="font-size:22px">🏐</span>
+      <div>
+        <div class="hdr-logo-t">ADP Volley-Ball</div>
+        <div class="hdr-logo-s">CRMEF Inezgane · DI-VLB</div>
+      </div>
+    </button>
+    <div class="hdr-steps no-print" id="hdr-steps"></div>
+    <div class="hdr-act no-print">
+      <button class="btn-sm" onclick="window.print()">🖨️ Imprimer</button>
+      <button class="btn-nav back" onclick="showView('home')">Accueil</button>
+    </div>
+  </div>
+</header>
+
+<!-- HOME VIEW -->
+<div id="view-home" class="view active">
+  <main>
+    <div class="hero">
+      <div class="hero-tag">🏐 Diagnostic Initial · DI-VLB · 2025-2026</div>
+      <h1>Évaluation Diagnostique<br><span>Volley-Ball</span></h1>
+      <p class="hero-sub">Situez le niveau initial de vos élèves selon 3 critères et 3 niveaux — importez vos résultats terrain en CSV et planifiez votre cycle d'apprentissage en quelques secondes.</p>
+      <p class="hero-note">Collège & Lycée · Équipes de 2 élèves · 12–20 ans · Réf. Grille_Volleyball_ADP2026</p>
+      <button class="btn-hero" onclick="startTool()">Démarrer le diagnostic →</button>
+    </div>
+    <div class="hs w">
+      <div class="si">
+        <div class="sc"><div class="stag">Référentiel d'observation</div><div class="sh2">3 Critères · 3 Niveaux</div></div>
+        <div class="obs-grid">
+          <div class="obs-card">
+            <div class="obs-head"><span class="obs-code">C1</span><span class="obs-crit">C1</span><span class="obs-lbl">Efficacité collective dans le gain du match</span></div>
+            <div class="obs-body">
+              <div class="deg-row"><span class="deg-badge A">N1</span><span class="deg-txt"><strong>N1 — Joueur passif</strong><br>Jeu à 1 touche, aucune organisation, renvoi direct systématique, pas de communication</span></div>
+              <div class="deg-row"><span class="deg-badge B">N2</span><span class="deg-txt"><strong>N2 — Joueur intermittent</strong><br>Zones se profilent, jeu 1–2 touches, rôles limités, communication sporadique</span></div>
+              <div class="deg-row"><span class="deg-badge C">N3</span><span class="deg-txt"><strong>N3 — Joueur engagé</strong><br>Passeur identifié, 2–3 touches, replacement collectif, communication présente</span></div>
+            </div>
+          </div>
+          <div class="obs-card">
+            <div class="obs-head"><span class="obs-code">C2</span><span class="obs-crit">C2</span><span class="obs-lbl">Efficacité individuelle — Attaque + Défense</span></div>
+            <div class="obs-body">
+              <div class="deg-row"><span class="deg-badge A">N1</span><span class="deg-txt"><strong>N1 — Joueur passif</strong><br>Évite la balle, 1 main, service aléatoire, pas de déplacement défensif, contacts fortuits</span></div>
+              <div class="deg-row"><span class="deg-badge B">N2</span><span class="deg-txt"><strong>N2 — Joueur intermittent</strong><br>Frappes non maîtrisées, peu de différenciation passe/manchette, balles faciles uniquement</span></div>
+              <div class="deg-row"><span class="deg-badge C">N3</span><span class="deg-txt"><strong>N3 — Joueur engagé</strong><br>Passe/manchette différenciée, service placé, manchettes orientées, déplacements efficaces</span></div>
+            </div>
+          </div>
+          <div class="obs-card">
+            <div class="obs-head"><span class="obs-code">C3</span><span class="obs-crit">C3</span><span class="obs-lbl">Rôle arbitre / observateur — assurés / assumés</span></div>
+            <div class="obs-body">
+              <div class="deg-row"><span class="deg-badge A">N1</span><span class="deg-txt"><strong>N1 — Rôles insuffisamment assurés</strong><br>Données non fiables, hésite, vocabulaire absent, décisions arbitrales inexactes</span></div>
+              <div class="deg-row"><span class="deg-badge B">N2</span><span class="deg-txt"><strong>N2 — Rôles assumés (avec aide)</strong><br>Rôles assumés avec aide, données globales correctes, vocabulaire limité</span></div>
+              <div class="deg-row"><span class="deg-badge C">N3</span><span class="deg-txt"><strong>N3 — Rôles assurés (en autonomie)</strong><br>Données exploitables, arbitrage autonome, vocabulaire précis, décisions justes</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hs g">
+      <div class="si">
+        <div class="sc"><div class="stag">Format CSV attendu</div><div class="sh2">Modèle de grille à remplir sur le terrain</div></div>
+        <div class="csv-box" style="max-width:700px;margin:0 auto">
+          <div class="csv-box-t">Colonnes CSV (séparateur ; ou ,)</div>
+          <div class="csv-box-c">Nom_Eleve ; Equipe ; Resultat ; Victoire ; C1 ; C2 ; C3<br><span style="color:#16A34A">Amina ; E1 ; 15-10 ; O ; N1 ; N2 ; N1</span><br><span style="color:#D97706">Youssef ; E1 ; 15-10 ; O ; N2 ; N1 ; N2</span><br><span style="color:#7A8FA6">/* C1/C2/C3 : valeurs N1 ou A, N2 ou B, N3 ou C */</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hs w">
+      <div class="si">
+        <div class="sc"><div class="stag">Déroulement</div><div class="sh2">Comment utiliser l'outil</div></div>
+        <div class="steps-bar">
+          <div class="step-block"><div class="step-num">01</div><div class="step-title">Remplir la grille terrain</div><div class="step-desc">Notez N1, N2 ou N3 pour chaque élève sur les 3 critères lors du match diagnostique</div></div>
+          <div class="step-block"><div class="step-num">02</div><div class="step-title">Importer en CSV ou saisir</div><div class="step-desc">Importez votre fichier CSV ou saisissez manuellement les niveaux observés par élève</div></div>
+          <div class="step-block"><div class="step-num">03</div><div class="step-title">Diagnostic automatique</div><div class="step-desc">Obtenez le profil de chaque élève, les groupes de besoin et le bilan de classe</div></div>
+          <div class="step-block"><div class="step-num">04</div><div class="step-title">Planifier le cycle</div><div class="step-desc">Sélectionnez vos axes prioritaires et générez la planification différenciée N1/N2/N3</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-s">
+      <div style="max-width:600px;margin:0 auto">
+        <h2>Prêt à diagnostiquer votre classe ?</h2>
+        <p>Saisissez les niveaux terrain (N1/N2/N3) ou importez votre CSV et obtenez en quelques secondes le profil de chaque élève et une planification adaptée.</p>
+        <button class="btn-ctai" onclick="startTool()">Démarrer le diagnostic →</button>
+      </div>
+    </div>
+  </main>
+  <footer>ADP Volley-Ball · DI-VLB · CRMEF Inezgane · 2025-2026 · EPS Stagiaires · Outil pédagogique — aucune note produite</footer>
+</div>
+
+<!-- TOOL VIEW -->
+<div id="view-tool" class="view">
+  <main id="tool-main"></main>
+  <footer>ADP Volley-Ball · DI-VLB · CRMEF Inezgane · 2025-2026 · EPS Stagiaires · Outil pédagogique — aucune note produite</footer>
+</div>
+
+<input type="file" id="csv-file-input" accept=".csv,.txt" style="display:none" onchange="handleCSVFile(this)">
+
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────────────
+const state = {
+  step: 0,
+  rows: [],
+  students: [],
+  selectedAxes: [],
+  nbSeances: 8,
+  csvError: ''
+};
+
+const STEPS = ['Saisie','Diagnostic','Axes','Cycle','Planning'];
+
+const OBSERVABLES = [
+  {
+    code:'C1', label:'Efficacité collective dans le gain du match', shortLabel:'Efficacité collective',
+    saA:'SA-A1 — Jeu 3c3 consigne « 1-2-3 touches »',
+    saB:'SA-B1 — Tournoi 4c4 avec passeur désigné et rôles définis',
+    saC:'SA-C1 — Match à thème avec projet de jeu concerté',
+    axePrioritaire:'Construire l\'organisation collective simple : différencier les rôles (réceptionneur / relayeur / attaquant) et occuper l\'espace partagé — N1-2 · N1-4 · N1-6',
+    conduiteIndicateur:'L\'élève choisit spontanément un coéquipier à qui passer avant de renvoyer dans au moins 2 échanges sur 3'
+  },
+  {
+    code:'C2', label:'Efficacité individuelle — Attaque + Défense', shortLabel:'Efficacité individuelle',
+    saA:'SA-A2 — Circuit manchette / passe haute en face à face',
+    saB:'SA-B2 — Relais réception → passe haute → manchette → renvoi',
+    saC:'SA-C2 — Match différencié avec obligation de varier les gestes',
+    axePrioritaire:'Construire le déplacement équilibré avant contact et différencier passe haute / manchette — N1-3 (verrou didactique principal)',
+    conduiteIndicateur:'L\'élève se déplace avant la réception et différencie passe haute et manchette dans au moins 2 actions consécutives'
+  },
+  {
+    code:'C3', label:'Rôle arbitre / observateur — assurés / assumés', shortLabel:'Arbitre / Observateur',
+    saA:'SA-A3 — Co-arbitrage guidé avec fiche aide-mémoire simplifiée',
+    saB:'SA-B3 — Arbitrage à deux avec fiche d\'observation standardisée',
+    saC:'SA-C3 — Arbitrage autonome + rendre compte en fin de séance',
+    axePrioritaire:'Assurer les rôles d\'arbitre et d\'observateur avec autonomie progressive — N2-10 · N2-11 · N2-12 · N2-14',
+    conduiteIndicateur:'L\'élève arbitre 2 échanges consécutifs sans erreur ni aide et renseigne sa fiche correctement'
+  }
+];
+
+const AXES = [
+  {id:1,titre:'Déplacement équilibré avant contact et différenciation passe haute / manchette',obsLie:'C2',
+   capacites:['N1-3 — Se déplacer pour jouer équilibré et choisir un mode d\'intervention adapté'],
+   saA:'SA-A2 — Circuit manchette / passe haute en face à face',saB:'SA-B2 — Relais réception → passe haute → manchette → renvoi',saC:'SA-C2 — Match différencié avec obligation de varier les gestes',
+   conduiteIndicateur:'L\'élève se déplace avant la réception et choisit spontanément entre passe haute et manchette dans au moins 2 actions sur 3'},
+  {id:2,titre:'Différenciation des rôles selon l\'ordre d\'intervention (réceptionneur / relayeur / attaquant)',obsLie:'C1',
+   capacites:['N1-2 — Différencier son rôle selon l\'ordre d\'intervention','N1-4 — Sortir de l\'alignement pour faciliter le relais'],
+   saA:'SA-A1 — Jeu 3c3 avec consigne rôles tournants',saB:'SA-B1 — Tournoi 4c4 avec passeur désigné et rôles définis',saC:'SA-C1 — Match à thème avec projet de jeu concerté',
+   conduiteIndicateur:'L\'élève identifie son rôle (1er, 2ème ou 3ème contact) et se déplace en conséquence sans consigne de l\'enseignant'},
+  {id:3,titre:'Organisation collective simple et occupation partagée de l\'espace de jeu',obsLie:'C1',
+   capacites:['N1-5 — Communiquer pour s\'identifier intervenant sur la balle','N1-6 — S\'organiser pour occuper seul ou à deux l\'espace de jeu'],
+   saA:'SA-A1 — Jeu 3c3 avec zones délimitées et communication obligatoire',saB:'SA-B1 — Tournoi 4c4 avec zones avant / arrière matérialisées',saC:'SA-C1 — Match à thème : jeu à 2-3 touches avec replacement collectif',
+   conduiteIndicateur:'L\'élève appelle la balle verbalement et se place dans une zone libre dans au moins 2 situations sur 3'},
+  {id:4,titre:'Lecture du jeu adverse — repérage des zones vulnérables et décision d\'attaque',obsLie:'C2',
+   capacites:['N2-4 — Différencier situations favorables / défavorables d\'attaque','N2-7 — S\'orienter, repérer les zones vulnérables','N2-8 — Placer la balle dans une zone vulnérable'],
+   saA:'SA-A2 — Circuit de tirs dirigés sur cibles au sol',saB:'SA-B2 — Match avec points bonus pour attaque en zone libre',saC:'SA-C2 — Match à thème : obligation de repérer la zone avant de frapper',
+   conduiteIndicateur:'L\'élève oriente son regard vers le camp adverse avant de frapper et dirige la balle dans une zone non défendue dans au moins 1 action sur 3'},
+  {id:5,titre:'Élaboration d\'un projet de jeu simple à deux ou trois joueurs',obsLie:'C1',
+   capacites:['N2-5 — Conserver ou renvoyer après perception d\'une zone vulnérable','N2-9 — Élaborer un projet de jeu simple à 2 ou 3'],
+   saA:'SA-A1 — Jeu 3c3 : obligation 3 contacts avant renvoi',saB:'SA-B1 — Tournoi avec passeur fixe et plan d\'attaque concerté',saC:'SA-C1 — Match officiel avec fiche projet de jeu',
+   conduiteIndicateur:'L\'équipe réalise au moins 2 échanges à 3 contacts incluant une passe haute vers un attaquant identifié par set de 5 minutes'},
+  {id:6,titre:'Arbitrage autonome et observation des conduites — rôles assurés en pleine autonomie',obsLie:'C3',
+   capacites:['N2-10 — Repérer les fautes au filet et effectuer les gestes','N2-11 — Arbitrer à deux en se répartissant les rôles','N2-12 — Connaître le score à tout moment','N2-14 — Rendre compte de l\'efficacité des actions observées'],
+   saA:'SA-A3 — Co-arbitrage guidé avec fiche aide-mémoire simplifiée',saB:'SA-B3 — Arbitrage à deux avec fiche d\'observation standardisée',saC:'SA-C3 — Arbitrage autonome + restitution en fin de séance',
+   conduiteIndicateur:'L\'élève arbitre un set complet sans intervention de l\'enseignant et renseigne sa fiche avec des données exploitables'}
+];
+
+const DIST = {
+  3:{6:[2,2,2],7:[2,2,3],8:[3,2,3],9:[3,3,3],10:[3,4,3]},
+  4:{6:[1,2,2,1],7:[2,2,2,1],8:[2,2,2,2],9:[2,3,2,2],10:[3,2,3,2]}
+};
+
+// ─── HELPERS ────────────────────────────────────────────────────────────────
+function lvlToProf(l){return l==='N1'?'A':l==='N2'?'B':'C'}
+function profColor(p){
+  const m={A:{bg:'#FEF2F2',border:'#FCA5A5',badge:'#DC2626'},B:{bg:'#FFF7ED',border:'#FCD34D',badge:'#D97706'},C:{bg:'#F0FDF4',border:'#86EFAC',badge:'#16A34A'}};
+  return m[p];
+}
+function dominant(levels){
+  const c={N1:0,N2:0,N3:0};levels.forEach(l=>c[l]++);
+  if(c.N1>=c.N2&&c.N1>=c.N3)return'A';
+  if(c.N3>=c.N1&&c.N3>=c.N2)return'C';
+  return'B';
+}
+function lacunePct(obsCode){
+  if(!state.students.length)return 0;
+  const k=obsCode==='C1'?'c1':obsCode==='C2'?'c2':'c3';
+  return Math.round(state.students.filter(s=>s[k]==='N1').length/state.students.length*100);
+}
+function pct(n,t){return Math.round(n/t*100)}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function computeStudents(raw){
+  return raw.map(r=>{
+    const pg=dominant([r.c1,r.c2,r.c3]);
+    const p1=lvlToProf(r.c1),p2=lvlToProf(r.c2),p3=lvlToProf(r.c3);
+    const lacunes=[];
+    if(r.c1==='N1')lacunes.push('C1 — Efficacité collective');
+    if(r.c2==='N1')lacunes.push('C2 — Efficacité individuelle');
+    if(r.c3==='N1')lacunes.push('C3 — Arbitre/Observateur');
+    const worstObs=r.c1==='N1'?OBSERVABLES[0]:r.c2==='N1'?OBSERVABLES[1]:r.c3==='N1'?OBSERVABLES[2]:null;
+    const axePri=worstObs?worstObs.axePrioritaire:'Approfondir le projet de jeu collectif et la lecture du jeu adverse (N2-7 · N2-9)';
+    const saRec=worstObs?(pg==='A'?worstObs.saA:pg==='B'?worstObs.saB:worstObs.saC):OBSERVABLES[0].saC;
+    const score=(p1==='A'?0:p1==='B'?1:2)+(p2==='A'?0:p2==='B'?1:2)+(p3==='A'?0:p3==='B'?1:2);
+    return{...r,profilGlobal:pg,profC1:p1,profC2:p2,profC3:p3,lacunes,axePrioritaire:axePri,saRecommandee:saRec,_score:score};
+  }).sort((a,b)=>b._score-a._score).map((s,i)=>({...s,rang:i+1}));
+}
+
+function makeEmptyRow(){return{prenom:'',equipe:'',resultat:'',victoire:'',c1:'',c2:'',c3:'',err:''}}
+function initRows(){state.rows=Array.from({length:5},makeEmptyRow)}
+
+// ─── VIEW MANAGEMENT ─────────────────────────────────────────────────────────
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  updateHeader();
+  window.scrollTo(0,0);
+}
+
+function updateHeader(){
+  const steps=document.getElementById('hdr-steps');
+  if(!steps)return;
+  const inTool=document.getElementById('view-tool').classList.contains('active');
+  if(!inTool){steps.innerHTML='';return}
+  steps.innerHTML=STEPS.map((s,i)=>{
+    const cls=i===state.step?'active':i<state.step?'done':'';
+    const dot=i<state.step?'✓':(i+1);
+    const conn=i>0?`<div class="hdr-conn ${i<=state.step?'done':''}"></div>`:'';
+    return`${conn}<div class="hdr-step ${cls}"><div class="hdr-dot">${dot}</div><div class="hdr-lbl">${s}</div></div>`;
+  }).join('');
+}
+
+function startTool(){
+  if(!state.rows.length)initRows();
+  showView('tool');
+  renderStep();
+}
+
+function goStep(n){
+  state.step=n;
+  updateHeader();
+  renderStep();
+  window.scrollTo(0,0);
+}
+
+function renderStep(){
+  const main=document.getElementById('tool-main');
+  if(state.step===0)main.innerHTML=renderStep0();
+  else if(state.step===1)main.innerHTML=renderStep1();
+  else if(state.step===2)main.innerHTML=renderStep2();
+  else if(state.step===3)main.innerHTML=renderStep3();
+  else if(state.step===4)main.innerHTML=renderStep4();
+}
+
+// ─── STEP 0 ──────────────────────────────────────────────────────────────────
+function renderStep0(){
+  const rows=state.rows;
+  const filled=rows.filter(r=>r.prenom.trim()).length;
+  let tbody=rows.map((r,i)=>`
+  <tr style="${r.err?'background:#FFF5F5':''}">
+    <td><input class="form-input nm" placeholder="Prénom" value="${esc(r.prenom)}" onchange="updateRow(${i},'prenom',this.value)" /></td>
+    <td><input class="form-input tm" placeholder="E1…" value="${esc(r.equipe)}" onchange="updateRow(${i},'equipe',this.value)" /></td>
+    <td><input class="form-input rm" placeholder="15-10" value="${esc(r.resultat)}" onchange="updateRow(${i},'resultat',this.value)" /></td>
+    <td><select class="form-input" style="width:70px" onchange="updateRow(${i},'victoire',this.value)">
+      <option value="" ${!r.victoire?'selected':''}>—</option>
+      <option value="O" ${r.victoire==='O'?'selected':''}>Oui</option>
+      <option value="N" ${r.victoire==='N'?'selected':''}>Non</option>
+    </select></td>
+    <td>${renderLvlBtns(i,'c1',r.c1)}</td>
+    <td>${renderLvlBtns(i,'c2',r.c2)}</td>
+    <td>${renderLvlBtns(i,'c3',r.c3)}</td>
+    <td><button class="btn-rm" onclick="removeRow(${i})">×</button>${r.err?`<span style="font-family:'DM Mono',monospace;font-size:9px;color:#DC2626;display:block;max-width:100px">${esc(r.err)}</span>`:''}</td>
+  </tr>`).join('');
+
+  return`<div class="tool-inner">
+  <div style="margin-bottom:28px">
+    <div class="step-tag">Saisie terrain</div>
+    <h2 class="step-h">Saisie des observations</h2>
+    <p class="step-note">Pour chaque élève, sélectionnez le niveau observé : <strong>N1</strong> (débutant/passif) · <strong>N2</strong> (intermittent) · <strong>N3</strong> (engagé/expert) pour chacun des 3 critères</p>
+  </div>
+  <div class="obs-legend">
+    <div class="obs-chip"><span class="obs-chip-code">C1</span><span class="obs-chip-lbl">Efficacité collective</span></div>
+    <div class="obs-chip"><span class="obs-chip-code">C2</span><span class="obs-chip-lbl">Efficacité individuelle</span></div>
+    <div class="obs-chip"><span class="obs-chip-code">C3</span><span class="obs-chip-lbl">Arbitre / Observateur</span></div>
+  </div>
+  <div class="card">
+    <div class="card-head">Import CSV (grille terrain)</div>
+    <div class="csv-row">
+      <button class="btn-csv no-print" onclick="document.getElementById('csv-file-input').click()">📂 Importer un CSV</button>
+      <span class="csv-hint">Colonnes : Nom_Eleve · Equipe · Resultat · Victoire · C1 · C2 · C3 (valeurs N1/N2/N3 ou A/B/C)</span>
+      ${state.csvError?`<span class="csv-err">${esc(state.csvError)}</span>`:''}
+    </div>
+    <div style="padding:0 20px 12px">
+      <div class="csv-box">
+        <div class="csv-box-t">Exemple de fichier CSV</div>
+        <div class="csv-box-c">Nom_Eleve;Equipe;Resultat;Victoire;C1;C2;C3<br>Amina;E1;15-10;O;N1;N2;N1<br>Youssef;E1;15-10;O;N2;N1;N2</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span>Saisie manuelle — ${filled} élève(s)</span><button class="btn-demo no-print" onclick="fillDemo()">Données démo</button></div>
+    <div style="overflow-x:auto">
+      <table class="form-table">
+        <thead><tr>
+          <th>Prénom *</th><th>Équipe</th><th>Résultat</th><th>Victoire</th>
+          <th style="min-width:160px">C1 — Efficacité collective *</th>
+          <th style="min-width:160px">C2 — Efficacité individuelle *</th>
+          <th style="min-width:160px">C3 — Arbitre/Observateur *</th>
+          <th></th>
+        </tr></thead>
+        <tbody>${tbody}</tbody>
+      </table>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #E2EAF2">
+      <button class="btn-add no-print" onclick="addRow()">+ Ajouter un élève</button>
+    </div>
+  </div>
+  <button class="btn-analyse" onclick="analyseClass()">Analyser la classe →</button>
+</div>`;
+}
+
+function renderLvlBtns(i,field,val){
+  return`<div class="lvl-grp">
+    <button class="lvl-btn ${val==='N1'?'N1':''}" onclick="setLevel(${i},'${field}','N1')">N1</button>
+    <button class="lvl-btn ${val==='N2'?'N2':''}" onclick="setLevel(${i},'${field}','N2')">N2</button>
+    <button class="lvl-btn ${val==='N3'?'N3':''}" onclick="setLevel(${i},'${field}','N3')">N3</button>
+  </div>`;
+}
+
+function setLevel(i,field,val){
+  state.rows[i][field]=val;
+  state.rows[i].err='';
+  renderStep();
+}
+function updateRow(i,field,val){state.rows[i][field]=val;state.rows[i].err='';renderStep();}
+function removeRow(i){state.rows.splice(i,1);if(!state.rows.length)state.rows=[makeEmptyRow()];renderStep();}
+function addRow(){state.rows.push(makeEmptyRow());renderStep();}
+
+function fillDemo(){
+  state.rows=[
+    {prenom:'Amina',equipe:'E1',resultat:'15-10',victoire:'O',c1:'N1',c2:'N1',c3:'N1',err:''},
+    {prenom:'Youssef',equipe:'E1',resultat:'15-10',victoire:'O',c1:'N2',c2:'N1',c3:'N2',err:''},
+    {prenom:'Fatima',equipe:'E2',resultat:'10-15',victoire:'N',c1:'N2',c2:'N2',c3:'N2',err:''},
+    {prenom:'Omar',equipe:'E2',resultat:'10-15',victoire:'N',c1:'N3',c2:'N3',c3:'N3',err:''},
+    {prenom:'Sara',equipe:'E3',resultat:'15-12',victoire:'O',c1:'N1',c2:'N2',c3:'N1',err:''},
+    {prenom:'Mehdi',equipe:'E3',resultat:'12-15',victoire:'N',c1:'N2',c2:'N2',c3:'N1',err:''},
+    {prenom:'Nadia',equipe:'E4',resultat:'15-8',victoire:'O',c1:'N3',c2:'N2',c3:'N3',err:''},
+    {prenom:'Khalid',equipe:'E4',resultat:'8-15',victoire:'N',c1:'N1',c2:'N1',c3:'N2',err:''}
+  ];
+  renderStep();
+}
+
+function handleCSVFile(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const text=e.target.result;
+    const result=parseCSV(text);
+    if(result.err){state.csvError=result.err;renderStep();return;}
+    state.csvError='';
+    state.rows=result.students.map(s=>({...s,err:''}));
+    renderStep();
+  };
+  reader.readAsText(file,'UTF-8');
+  input.value='';
+}
+
+function parseCSV(text){
+  const lines=text.split(/\r?\n/);
+  let hIdx=-1;
+  for(let i=0;i<lines.length;i++){if(lines[i].toLowerCase().includes('nom_eleve')||lines[i].toLowerCase().includes('prenom')){hIdx=i;break;}}
+  if(hIdx===-1)return{err:'En-tête "Nom_Eleve" introuvable dans le fichier CSV.'};
+  const headers=lines[hIdx].split(/[,;]/).map(h=>h.trim().toLowerCase());
+  const nameIdx=headers.findIndex(h=>h.includes('nom_eleve')||h.includes('prenom')||h==='nom');
+  if(nameIdx===-1)return{err:'Colonne nom/prénom introuvable.'};
+  const equipeIdx=headers.findIndex(h=>h.includes('equipe')||h.includes('team'));
+  const resultatIdx=headers.findIndex(h=>h.includes('resultat')||h.includes('score'));
+  const victoireIdx=headers.findIndex(h=>h.includes('victoire')||h.includes('win'));
+  const parseLvl=v=>{const u=v.trim().toUpperCase();if(u==='N1'||u==='A')return'N1';if(u==='N2'||u==='B')return'N2';if(u==='N3'||u==='C')return'N3';return null;};
+  const getLvl=(cols,names)=>{for(const n of names){const idx=headers.findIndex(h=>h===n||h.includes(n));if(idx!==-1&&cols[idx]){const v=parseLvl(cols[idx]);if(v)return v;}}return null;};
+  const students=[];let ign=0;
+  for(let i=hIdx+1;i<lines.length;i++){
+    const line=lines[i].trim();if(!line||line.toLowerCase().startsWith('bilan')){ign++;continue;}
+    const cols=line.split(/[,;]/).map(c=>c.trim());
+    const prenom=cols[nameIdx];if(!prenom){ign++;continue;}
+    const c1=getLvl(cols,['c1','critere1','crit1','obs1']);
+    const c2=getLvl(cols,['c2','critere2','crit2','obs2']);
+    const c3=getLvl(cols,['c3','critere3','crit3','obs3']);
+    if(!c1||!c2||!c3){ign++;continue;}
+    const equipe=equipeIdx!==-1&&cols[equipeIdx]?cols[equipeIdx]:'';
+    const resultat=resultatIdx!==-1&&cols[resultatIdx]?cols[resultatIdx]:'';
+    const victoire=victoireIdx!==-1&&cols[victoireIdx]?cols[victoireIdx]:'';
+    students.push({prenom,equipe,resultat,victoire,c1,c2,c3});
+  }
+  if(!students.length)return{err:`Aucun élève valide trouvé (${ign} lignes ignorées). Vérifiez les colonnes C1/C2/C3 avec valeurs N1, N2 ou N3.`};
+  return{students};
+}
+
+function analyseClass(){
+  const newRows=state.rows.map(r=>{
+    if(!r.prenom.trim())return r;
+    if(!r.c1||!r.c2||!r.c3)return{...r,err:'Sélectionnez un niveau pour chaque critère'};
+    return{...r,err:''};
+  });
+  state.rows=newRows;
+  const valid=newRows.filter(r=>r.prenom.trim()&&r.c1&&r.c2&&r.c3&&!r.err);
+  if(valid.length<2){state.csvError='Saisissez au moins 2 élèves complets.';renderStep();return;}
+  state.csvError='';
+  state.students=computeStudents(valid.map(r=>({prenom:r.prenom.trim(),equipe:r.equipe,resultat:r.resultat,victoire:r.victoire,c1:r.c1,c2:r.c2,c3:r.c3})));
+  state.selectedAxes=[];
+  goStep(1);
+}
+
+// ─── STEP 1 ──────────────────────────────────────────────────────────────────
+function renderStep1(){
+  const ss=state.students;
+  const cA=ss.filter(s=>s.profilGlobal==='A').length;
+  const cB=ss.filter(s=>s.profilGlobal==='B').length;
+  const cC=ss.filter(s=>s.profilGlobal==='C').length;
+  const dom=cA>=cB&&cA>=cC?'A':cC>=cA&&cC>=cB?'C':'B';
+  const domMsg=dom==='A'?'Classe débutante — Priorité fondamentaux (N1 dominant)':dom==='B'?'Classe intermédiaire — Différenciation N1/N2 (N2 dominant)':'Classe avancée — Approfondissement et tutorat (N3 dominant)';
+
+  const lvlCnt=(k,l)=>ss.filter(s=>s[k]===l).length;
+  const obsA=[
+    {label:'C1 — Efficacité collective',k:'c1',n1:lvlCnt('c1','N1'),n2:lvlCnt('c1','N2'),n3:lvlCnt('c1','N3')},
+    {label:'C2 — Efficacité individuelle',k:'c2',n1:lvlCnt('c2','N1'),n2:lvlCnt('c2','N2'),n3:lvlCnt('c2','N3')},
+    {label:'C3 — Arbitre / Observateur',k:'c3',n1:lvlCnt('c3','N1'),n2:lvlCnt('c3','N2'),n3:lvlCnt('c3','N3')}
+  ];
+
+  const tableRows=ss.map(s=>{
+    const c=profColor(s.profilGlobal);
+    const vic=s.victoire==='O'?`<span style="color:#16A34A;font-weight:700">✓</span>`:s.victoire==='N'?`<span style="color:#DC2626">✗</span>`:'—';
+    const lacs=s.lacunes.length===0?`<span style="color:#16A34A;font-style:italic">Aucune lacune N1</span>`:s.lacunes.map(l=>`<div>${esc(l)}</div>`).join('');
+    const axe=s.axePrioritaire.length>70?s.axePrioritaire.slice(0,70)+'…':s.axePrioritaire;
+    return`<tr style="background:${c.bg}">
+      <td style="font-family:'DM Mono',monospace;font-size:12px;color:#7A8FA6;text-align:center">${s.rang}</td>
+      <td style="font-family:'Syne',sans-serif;font-weight:600;font-size:13px;color:#0B1F35;white-space:nowrap">${esc(s.prenom)}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;color:#4A6278">${esc(s.equipe)||'—'}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;color:#4A6278">${esc(s.resultat)||'—'}</td>
+      <td style="text-align:center">${vic}</td>
+      <td style="text-align:center"><span class="pbadge ${lvlToProf(s.c1)}">${s.c1}</span></td>
+      <td style="text-align:center"><span class="pbadge ${lvlToProf(s.c2)}">${s.c2}</span></td>
+      <td style="text-align:center"><span class="pbadge ${lvlToProf(s.c3)}">${s.c3}</span></td>
+      <td style="text-align:center"><span class="pbadge ${s.profilGlobal}">${s.c1==='N1'&&s.c2==='N1'&&s.c3==='N1'?'N1':s.c1==='N3'&&s.c2==='N3'&&s.c3==='N3'?'N3':s.profilGlobal==='A'?'N1':s.profilGlobal==='B'?'N2':'N3'}</span></td>
+      <td style="font-family:'Literata',serif;font-size:11px;color:#2D4059;line-height:1.4;max-width:160px">${lacs}</td>
+      <td style="font-family:'Literata',serif;font-size:11px;color:#2D4059;line-height:1.4;max-width:200px">${esc(axe)}</td>
+    </tr>`;
+  }).join('');
+
+  const bilanHTML=['A','B','C'].map(p=>{
+    const cnt=p==='A'?cA:p==='B'?cB:cC;
+    const c=profColor(p);
+    const lbl=p==='A'?'N1 — Débutants':p==='B'?'N2 — Intermittents':'N3 — Engagés';
+    return`<div class="bilan-card" style="background:${c.bg};border-color:${c.border}">
+      <div class="bilan-count" style="color:${c.badge}">${cnt}</div>
+      <div class="bilan-lbl" style="color:${c.badge}">${lbl}</div>
+      <div class="bilan-pct">${pct(cnt,ss.length)}% des élèves</div>
+    </div>`;
+  }).join('');
+
+  const barsHTML=obsA.map(obs=>{
+    const dom2=obs.n1>=ss.length/2?{txt:'Lacune collective — SA prioritaire',col:'#DC2626'}:obs.n3>=ss.length/2?{txt:'Bon niveau collectif — Approfondir',col:'#16A34A'}:{txt:'Niveau mixte — Différencier N1/N2/N3',col:'#D97706'};
+    return`<div class="bar-row">
+      <span class="bar-lbl">${obs.label}</span>
+      <div class="bar-track">
+        ${obs.n1>0?`<div class="bar-seg" style="width:${pct(obs.n1,ss.length)}%;background:#DC2626">N1·${obs.n1}</div>`:''}
+        ${obs.n2>0?`<div class="bar-seg" style="width:${pct(obs.n2,ss.length)}%;background:#D97706">N2·${obs.n2}</div>`:''}
+        ${obs.n3>0?`<div class="bar-seg" style="width:${pct(obs.n3,ss.length)}%;background:#16A34A">N3·${obs.n3}</div>`:''}
+      </div>
+      <span class="bar-val">${obs.n1}N1 · ${obs.n2}N2 · ${obs.n3}N3</span>
+      <span class="bar-status" style="color:${dom2.col}">${dom2.txt}</span>
+    </div>`;
+  }).join('');
+
+  const grpHTML=['A','B','C'].map(p=>{
+    const grp=ss.filter(s=>s.profilGlobal===p);if(!grp.length)return'';
+    const c=profColor(p);
+    const lbl=p==='A'?'Groupe N1 — Débutants':p==='B'?'Groupe N2 — Intermittents':'Groupe N3 — Engagés';
+    const obs=OBSERVABLES[0];
+    const sa=p==='A'?obs.saA:p==='B'?obs.saB:obs.saC;
+    return`<div class="grp-row" style="background:${c.bg}">
+      <span class="pbadge ${p}">${p==='A'?'N1':p==='B'?'N2':'N3'}</span>
+      <div><div class="grp-names">${lbl} — ${grp.length} élève(s) : ${grp.map(s=>esc(s.prenom)).join(', ')}</div><div class="grp-sa">${sa}</div></div>
+    </div>`;
+  }).join('');
+
+  return`<div class="tool-inner" style="max-width:1200px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:28px">
+    <div><div class="step-tag">Étape 1 — Diagnostic de classe</div><h2 class="step-h">Tableau individuel & Bilan de classe</h2></div>
+    <button class="btn-exp no-print" onclick="exportCSV()">📥 Exporter CSV</button>
+  </div>
+  <div class="card">
+    <div class="card-head">Tableau individuel — ${ss.length} élèves</div>
+    <div style="overflow-x:auto"><table class="diag-table">
+      <thead><tr><th>Rang</th><th>Prénom</th><th>Équipe</th><th>Match</th><th>Victoire</th><th>C1</th><th>C2</th><th>C3</th><th>Profil</th><th>Lacune(s) N1</th><th>Axe prioritaire</th></tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table></div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#7A8FA6;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Bilan de classe</div>
+  <div class="bilan-grid">${bilanHTML}</div>
+  <div class="card"><div class="card-head">Analyse par critère</div><div class="card-body">${barsHTML}</div></div>
+  <div class="card"><div class="card-head">Groupes de besoin</div><div class="card-body">${grpHTML}</div></div>
+  <div class="dec-bar">
+    <span class="pbadge ${dom}">${dom==='A'?'N1':dom==='B'?'N2':'N3'}</span>
+    <div class="dec-txt"><div class="dec-code">Décision dominante automatique</div><div class="dec-msg">${domMsg}</div><div class="dec-note">La décision finale reste à l'enseignant(e)</div></div>
+  </div>
+  <button class="btn-next no-print" onclick="goStep(2)">Passer à l'étape 2 — Axes prioritaires →</button>
+</div>`;
+}
+
+function exportCSV(){
+  const ss=state.students;
+  const lines=['Nom_Eleve;Equipe;Resultat;Victoire;C1;C2;C3;Profil_Global'];
+  ss.forEach(s=>lines.push(`${s.prenom};${s.equipe};${s.resultat};${s.victoire};${s.c1};${s.c2};${s.c3};${s.profilGlobal}`));
+  const blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='diagnostic_volley.csv';a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─── STEP 2 ──────────────────────────────────────────────────────────────────
+function renderStep2(){
+  const sorted=[...AXES].sort((a,b)=>lacunePct(b.obsLie)-lacunePct(a.obsLie));
+  const sel=state.selectedAxes;
+  const axesHTML=sorted.map((axe,rank)=>{
+    const p=lacunePct(axe.obsLie);
+    const isSel=sel.includes(axe.id);
+    const pCls=p>=60?'hi':p>=30?'mi':'lo';
+    const caps=axe.capacites.map(c=>`<span class="axe-cap">${esc(c)}</span>`).join('');
+    return`<div class="axe-card ${isSel?'sel':''}" onclick="toggleAxe(${axe.id})">
+      <div class="axe-inner">
+        <div class="axe-check">${isSel?'✓':''}</div>
+        <div class="axe-content">
+          <div class="axe-badges"><span class="axe-id">Axe ${axe.id}</span><span class="axe-rank">#${rank+1} pertinence</span></div>
+          <div class="axe-title">${esc(axe.titre)}</div>
+          <div class="axe-stats">
+            <span class="axe-stat ${pCls}">Pertinence : ${p}% d'élèves N1 sur ${axe.obsLie}</span>
+            <span class="axe-stat bl">SA : ${esc(axe.saA.split(' — ')[0])}</span>
+          </div>
+          <div class="axe-caps">${caps}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const metaCls=sel.length>=3?'ok':'warn';
+  const btnTxt=sel.length>=3?'Paramétrer le cycle — Étape 3 →':`Sélectionnez encore ${3-sel.length} axe(s)`;
+
+  return`<div class="tool-inner narrow">
+  <div style="margin-bottom:28px">
+    <div class="step-tag">Étape 2 — Sélection des axes prioritaires</div>
+    <h2 class="step-h">Sélectionnez 3 ou 4 axes</h2>
+    <p class="step-note">Les axes sont classés par pertinence (% d'élèves N1 sur le critère lié). Sélectionnez 3 à 4 axes maximum.</p>
+    <div class="axes-meta ${metaCls}">${sel.length} axe(s) sélectionné(s) · minimum 3 · maximum 4</div>
+  </div>
+  ${axesHTML}
+  <div class="flex-btns">
+    <button class="btn-back no-print" onclick="goStep(1)">← Retour</button>
+    <button class="btn-next no-print" style="margin-top:0;background:${sel.length>=3?'#E8621A':'#D4DDE8'};${sel.length<3?'cursor:not-allowed':''}" onclick="${sel.length>=3?'goStep(3)':'void(0)'}">
+      ${btnTxt}
+    </button>
+  </div>
+</div>`;
+}
+
+function toggleAxe(id){
+  const idx=state.selectedAxes.indexOf(id);
+  if(idx!==-1){state.selectedAxes.splice(idx,1);}
+  else if(state.selectedAxes.length<4){state.selectedAxes.push(id);}
+  renderStep();
+}
+
+// ─── STEP 3 ──────────────────────────────────────────────────────────────────
+function renderStep3(){
+  const nb=state.nbSeances;
+  const nA=state.selectedAxes.length;
+  const dist=(DIST[nA]||{})[nb]||[];
+  const selAxes=state.selectedAxes.map(id=>AXES.find(a=>a.id===id));
+
+  const seqHTML=dist.map((n,i)=>{
+    const axe=selAxes[i],prev=i>0?selAxes[i-1]:null;
+    const titre=i===0?'Fondamentaux — '+((axe&&axe.titre.split(' ')[0])||'')
+      :i===dist.length-1?'Consolidation — '+((axe&&axe.titre.split(' ')[0])||'')
+      :'Différenciation — '+((prev&&prev.titre.split(' ')[0])||'')+' + '+((axe&&axe.titre.split(' ')[0])||'');
+    const note=i===0?'Tous groupes N1/N2/N3':i===dist.length-1?'Consolidation N2 · Approfondissement N3':'Différenciation N1/N2/N3 active';
+    return`<div class="seq-row">
+      <div class="seq-num-box"><span class="seq-num-lbl">SEQ</span><span class="seq-num-v">${i+1}</span></div>
+      <div style="flex:1"><div class="seq-seances">${n} séance(s)</div><div class="seq-title">${esc(titre)}</div><div class="seq-note-t">${note}</div></div>
+    </div>`;
+  }).join('');
+
+  return`<div class="tool-inner mid">
+  <div style="margin-bottom:28px">
+    <div class="step-tag">Étape 3 — Paramétrage du cycle</div>
+    <h2 class="step-h">Nombre de séances</h2>
+    <p class="step-note">${nA} axes sélectionnés · Ajustez le volume du cycle (6 à 10 séances)</p>
+  </div>
+  <div class="card"><div class="card-body">
+    <div class="range-row">
+      <input type="range" min="6" max="10" value="${nb}" oninput="updateNbSeances(this.value)">
+      <div class="range-val"><div class="range-num">${nb}</div><div class="range-unit">séances</div></div>
+    </div>
+    <div class="range-info">Cycle de ${nb} séances · ${dist.length} séquences · Distribution : ${dist.join(' + ')}</div>
+    <div class="seq-prev">${seqHTML}</div>
+  </div></div>
+  <div class="flex-btns">
+    <button class="btn-back no-print" onclick="goStep(2)">← Retour</button>
+    <button class="btn-next no-print" style="margin-top:0" onclick="goStep(4)">Générer la planification — Étape 4 →</button>
+  </div>
+</div>`;
+}
+
+function updateNbSeances(val){state.nbSeances=Number(val);renderStep();}
+
+// ─── STEP 4 ──────────────────────────────────────────────────────────────────
+function renderStep4(){
+  const ss=state.students;
+  const nb=state.nbSeances;
+  const nA=state.selectedAxes.length;
+  const dist=(DIST[nA]||{})[nb]||[];
+  const selAxes=state.selectedAxes.map(id=>AXES.find(a=>a.id===id));
+  const cA=ss.filter(s=>s.profilGlobal==='A').length;
+  const cB=ss.filter(s=>s.profilGlobal==='B').length;
+  const cC=ss.filter(s=>s.profilGlobal==='C').length;
+  const dom=cA>=cB&&cA>=cC?'A':cC>=cA&&cC>=cB?'C':'B';
+  const domCnt=dom==='A'?cA:dom==='B'?cB:cC;
+  let globalSeance=0;
+
+  const planSections=dist.map((nbSq,seqIdx)=>{
+    const axe=selAxes[seqIdx],prev=seqIdx>0?selAxes[seqIdx-1]:null;
+    const axesTravailles=seqIdx===0?[axe]:seqIdx<dist.length-1?[prev,axe]:[axe];
+    const titreSeq=seqIdx===0?'Fondamentaux — tous groupes':seqIdx===dist.length-1?'Consolidation N2 · Approfondissement N3 · Évaluation':'Différenciation N1/N2/N3';
+    const axeTagsHTML=axesTravailles.map(a=>a?`<span class="seq-axe-tag">Axe ${a.id}</span>`:'').join('');
+
+    let rows='';
+    for(let si=0;si<nbSq;si++){
+      globalSeance++;
+      const numS=globalSeance;
+      const isLast=si===nbSq-1&&seqIdx===dist.length-1;
+      const domAxe=si===0||seqIdx===0?axe:(prev||axe);
+      const objLabel=isLast?'Évaluation formative / Tournoi':(si===0?'Découvrir':'Consolider')+' — '+((domAxe&&domAxe.titre.split(' ')[0])||'');
+      const axeLabel=isLast?'Bilan':(domAxe?`Axe ${domAxe.id}`:'');
+      const saA=isLast?'':(domAxe&&domAxe.saA.split(' — ')[0])||'';
+      const saB=isLast?'':(domAxe&&domAxe.saB.split(' — ')[0])||'';
+      const saC=isLast?'':(domAxe&&domAxe.saC.split(' — ')[0])||'';
+      const descA=isLast?'Tournoi 3c3 · observer les conduites · fiche bilan':si===0?'Observer et reproduire le geste avec aide':'Enchaîner 2 actions correctes sur 3 tentatives';
+      const descB=isLast?'Tournoi 4c4 · arbitrage tournant · fiche C1/C2/C3':si===0?'Choisir spontanément entre les gestes selon la situation':'Réaliser 3 actions correctes consécutives en jeu réel';
+      const descC=isLast?'Match officiel · arbitrage autonome · rendre compte':si===0?'Varier intentionnellement les gestes et zones':'Transférer les acquis en match avec projet de jeu';
+      const critA=isLast?'':' Critère : ≥ 1 action réussie sur 3';
+      const critB=isLast?'':' Critère : ≥ 2 actions réussies sur 3';
+      const critC=isLast?'':' Critère : ≥ 3 actions réussies sur 3';
+      rows+=`<tr${isLast?' style="background:#F0FDF4"':''}>
+        <td class="td-s">S${numS}</td>
+        <td class="td-a">${axeLabel}</td>
+        <td class="td-o">${esc(objLabel)}</td>
+        <td class="td-g ga"><div class="td-g-code">${saA}</div><div class="td-g-desc">${descA}</div>${critA?`<div class="td-g-crit">${critA}</div>`:''}</td>
+        <td class="td-g gb"><div class="td-g-code">${saB}</div><div class="td-g-desc">${descB}</div>${critB?`<div class="td-g-crit">${critB}</div>`:''}</td>
+        <td class="td-g gc"><div class="td-g-code">${saC}</div><div class="td-g-desc">${descC}</div>${critC?`<div class="td-g-crit">${critC}</div>`:''}</td>
+      </tr>`;
+      if(!isLast&&si<nbSq-1){
+        rows+=`<tr class="indic-row"><td colspan="6"><div class="indic-c"><span>📋</span><span class="indic-note">À observer — ${esc((domAxe&&domAxe.conduiteIndicateur)||'')}</span><span class="indic-sub">(Indicatif — décision de progression : vous)</span></div></td></tr>`;
+      }
+    }
+
+    return`<div class="plan-section">
+      <div class="seq-header">
+        <div class="seq-info"><div class="seq-meta">Séquence ${seqIdx+1} · ${nbSq} séance(s)</div><div class="seq-main-t">${titreSeq}</div><div class="seq-obj-t">${seqIdx===0?'Construire les bases communes':'Consolider les acquis et évaluer les progrès'}</div></div>
+        <div class="seq-axe-tags">${axeTagsHTML}</div>
+      </div>
+      <div class="plan-tw"><div class="plan-t"><table>
+        <thead><tr><th>N° Séance</th><th>Axe dominant</th><th>Objectif de séance</th>
+          <th style="background:#FEF2F2">Groupe N1 — Débutants</th>
+          <th style="background:#FFFBEB">Groupe N2 — Intermittents</th>
+          <th style="background:#F0FDF4">Groupe N3 — Engagés</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div></div>
+    </div>`;
+  }).join('');
+
+  const resumeRows=dist.map((n,i)=>{
+    const a=selAxes[i],pa=i>0?selAxes[i-1]:null;
+    const axes=i===0?`Axe ${a&&a.id||''}`:`Axe ${pa&&pa.id||''} + Axe ${a&&a.id||''}`;
+    const cible=i===0?'N1/N2/N3 (tous groupes)':i===dist.length-1?'N2 (consolidation) · N3 (approfondissement)':'N1/N2/N3 (différenciation)';
+    return`<tr>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;color:#E8621A">Séq. ${i+1}</td>
+      <td style="font-family:'Literata',serif;font-size:12px;color:#2D4059">${axes}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;color:#0B1F35">${n}</td>
+      <td style="font-family:'Literata',serif;font-size:12px;color:#4A6278">${cible}</td>
+    </tr>`;
+  }).join('');
+
+  return`<div class="tool-inner" style="max-width:1200px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:28px">
+    <div><div class="step-tag">Étape 4 — Planification dynamique</div><h2 class="step-h">Cycle de ${nb} séances · ${dist.length} séquences</h2></div>
+    <button class="btn-exp no-print" onclick="window.print()">🖨️ Imprimer</button>
+  </div>
+  ${planSections}
+  <div class="card" style="margin-bottom:28px">
+    <div class="card-head">Résumé du cycle</div>
+    <div style="overflow-x:auto"><table class="res-table">
+      <thead><tr><th>Séquence</th><th>Axes travaillés</th><th>Nb séances</th><th>Profil dominant ciblé</th></tr></thead>
+      <tbody>${resumeRows}</tbody>
+    </table></div>
+    <div class="plan-footer">
+      <p>Ce cycle de ${nb} séances cible ${nA} axes prioritaires. Profil le plus concerné : ${dom} — ${dom==='A'?'N1':dom==='B'?'N2':'N3'} (${domCnt} élèves · ${pct(domCnt,ss.length)}%). Réévaluer après la séquence ${Math.ceil(dist.length/2)} avec une nouvelle collecte terrain.</p>
+      <p class="nt">Outil pédagogique — aucune note produite. La décision finale reste à l'enseignant(e).</p>
+    </div>
+  </div>
+  <button class="btn-back no-print" onclick="goStep(3)">← Retour étape 3</button>
+</div>`;
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+initRows();
+updateHeader();
+</script>
+</body>
+</html>
